@@ -1,0 +1,55 @@
+{% extends '@happyWeb/Layout/base.html.twig' %}
+{% block body %}
+    <div class="project-type-background">
+        <div class="medical-search">
+            <div class="container">
+                <div style="float: left;width: 50%"></div>
+                <div style="float: left;width: 50%"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="float: left;padding: 0">
+                {% for m in medical %}
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: left;margin-bottom: 25px;">
+                        {% include  '@happyWeb/inc/inc-medical.html.twig' with {'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
+                    </div>
+                {% endfor %}
+                {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals'} %}
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="float: left;margin-top:30px;margin-bottom:30px;padding: 0">
+                <img src="{{ asset('recource/images/blog1.jpg') }}" style="width: 100%;margin-bottom: 10px">
+                <img src="{{ asset('recource/images/blog1.jpg') }}" style="width: 100%;margin-bottom: 10px">
+                <img src="{{ asset('recource/images/blog1.jpg') }}" style="width: 100%;margin-bottom: 10px">
+                <img src="{{ asset('recource/images/blog1.jpg') }}" style="width: 100%;margin-bottom: 10px">
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $value = $(".selectBox option:selected").text();
+            if ($value != '') {
+                defaulttext = $value;
+            } else {
+                defaulttext = 'Сонгоно уу...';
+            }
+
+            $('.selectDefault').text(defaulttext);
+
+            $('.selectBox').on('change', function () {
+                var selectedText = $(this).find(":selected").text();
+                $('.selectDefault').text(selectedText);
+            });
+        });
+
+        if (window.location.search != '') {
+            $.each($('.pagination a'), function (key, val) {
+                $(this).attr('href', $(this).attr('href') + window.location.search);
+            });
+        }
+
+    </script>
+{% endblock %}

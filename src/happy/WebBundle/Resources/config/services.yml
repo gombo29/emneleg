@@ -1,0 +1,8 @@
+services:
+    imagegod:
+        class: happy\WebBundle\Util\ImageGod
+        arguments: ["%localstatfolder%", "%localstatfolder%", "%thumbsizes%"]
+
+    c_log:
+      class: happy\WebBundle\Util\CustomLogger
+      arguments: ["@service_container"]

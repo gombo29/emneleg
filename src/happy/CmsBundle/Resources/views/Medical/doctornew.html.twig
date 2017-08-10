@@ -1,0 +1,16 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Эмнэлэгт эмч нэмэх хэсэг{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input class="btn btn-success" type="submit" value="Хадгалах"/>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default"
+       href="{{ path('cms_medical_doctor', {'id': medical}) }}">Эмчийн
+        жагсаалт буцах</a>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default" href="{{ path('cms_medical_index') }}">Эмнэлэг
+        жагсаалт буцах</a>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default"
+       href="{{ path('cms_medical_show', {'id' : medical}) }}">Эмнэлэг дэлгэрэнгүй буцах</a>
+    {{ form_end(form) }}
+{% endblock %}

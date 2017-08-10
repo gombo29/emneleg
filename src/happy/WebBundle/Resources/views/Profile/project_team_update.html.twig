@@ -1,0 +1,49 @@
+{% extends 'happyWebBundle:Layout:base.html.twig' %}
+{% block body %}
+    <br>
+    <div class="container">
+        <div class="card card-block">
+
+            <h3>Багийн гишүүн засах</h3>
+            {{ form_start(teamForm) }}
+            {{ form_row(teamForm.name) }}
+            {{ form_row(teamForm.position) }}
+
+            <label for="happy_banner_team_bio">Зураг оруулах</label>
+            <div class="profile-img-block">
+                <p>
+                    <img id="avatarimg" src="{% if team.img %}/{{ localstatfolder }}{{ team.img }}{% else %}{{ asset('recource/user.png') }}{% endif %}" width="80">
+                </p>
+                {{ form_widget(teamForm.imagefile) }}
+            </div>
+
+            {{ form_row(teamForm.bio) }}
+            <input class="btn btn-primary" type="submit" value="Засах"/>
+            {{ form_end(teamForm) }}
+        </div>
+    </div>
+    <br>
+{% endblock %}
+{% block js %}
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#avatarimg').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#happy_banner_team_imagefile").change(function () {
+            readURL(this);
+        });
+
+    </script>
+{% endblock %}
+
+
+
+

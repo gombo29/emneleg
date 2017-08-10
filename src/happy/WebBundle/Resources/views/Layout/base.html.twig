@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block main %}
+    {% include '@happyWeb/Layout/header.html.twig' %}
+    <div class="body-margin">
+        {% block body %}
+        {% endblock %}
+    </div>
+    {% include '@happyWeb/Layout/footer.html.twig' %}
+{% endblock %}

@@ -1,0 +1,297 @@
+{% extends '@happyWeb/Layout/base.html.twig' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('recource/css/swiper.min.css') }}">
+
+    <style>
+        .swiper-pagination-bullet-active {
+            background: #31bdb6;
+        }
+
+        .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+            background-image: url("{{ asset('recource/left-arrow.png') }}");
+        }
+
+        .swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+            background-image: url("{{ asset('recource/right-arrow.png') }}");
+        }
+
+        .swiper-button-next, .swiper-button-prev {
+            background-size: 44px 44px;
+            width: 44px;
+            height: 44px;
+        }
+
+        .swiper-slide img {
+            max-height: 400px;
+            overflow: hidden
+        }
+
+        @media (max-width: 768px) {
+            .swiper-slide img {
+                max-height: inherit;
+                width: 100%;
+            }
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="project-type-background">
+        <div class="medical-search">
+            <div class="container">
+                <div style="float: left;width: 50%"></div>
+                <div style="float: left;width: 50%"></div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="height: 30px">
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs12"
+                 style="float: left;;overflow: hidden;">
+                <h4 style="text-align: center;"> {{ medical.name }}</h4>
+                <img src="/{{ localstatfolder }}{{ medical.photo }}" style="width: 100%;border: 1px solid #ccc">
+                <div style="margin-top: 15px">
+                    <h6 class="med-detail-icon"><i class="fa fa-map-marker "></i> Хаяг:</h6>
+                    <p class="med-detail-text">{{ medical.address }}</p>
+                </div>
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-phone"></i> Утасны дугаар:</h6>
+                    <p class="med-detail-text">{% set phone = medical.phone|split(';') %}
+                        {% for p in phone %}
+                            {{ p }}<br>
+                        {% endfor %}</p>
+                </div>
+                <a class="btn btn-warning"><i class="fa fa-calendar"></i> Цаг авах</a>
+                <div style="margin-top: 20px">
+                    <h6 class="med-detail-icon"><i class="fa fa-envelope "></i> Мэйл хаяг:</h6>
+                    <p class="med-detail-text"><a>{{ medical.email }}</a></p>
+                </div>
+
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-envelope "></i> Вебсайт хаяг:</h6>
+                    <p class="med-detail-text">{{ medical.website }}</p>
+                </div>
+
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-envelope "></i> Facebook хаяг:</h6>
+                    <p class="med-detail-text">{{ medical.fbAddress }}</p>
+                </div>
+
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-car "></i> Автомашины зогсоол:</h6>
+
+                    <p class="med-detail-text">{% if medical.isParking == true %}Гаднаа машины зогсоолтой /Төлбөр: {{ medical.parkingPrice }}₮/{% else %}Ойролцоо зогсоолгүй{% endif %}</p>
+                </div>
+
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-wifi "></i> Wifi интернэттэй эсэх:</h6>
+
+                    <p class="med-detail-text">{% if medical.isWifi == true %}Интернэттэй{% else %}Интернэтгүй{% endif %}</p>
+                </div>
+
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-cc-visa "></i> Картаар үйлчилдэг эсэх:</h6>
+
+                    <p class="med-detail-text">{% if medical.isCard == true %}Тйим{% else %}Үгүй{% endif %}</p>
+                </div>
+
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-bus"></i> Автобусны буудал:</h6>
+                    <p class="med-detail-text">{{ medical.busStation }}</p>
+                </div>
+
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-heartbeat"></i> Эмчилгээний тасагтай эсэх:</h6>
+                    <p class="med-detail-text">{% if medical.isTasag == true %}Тйим{% else %}Үгүй{% endif %}</p>
+                </div>
+
+                <div>
+                    <h6 class="med-detail-icon"><i class="fa fa-life-saver"></i> Даатгалаар үйлчилдэг эсэх:</h6>
+                    <p class="med-detail-text">{% if medical.isDaatgal == true %}Тйим{% else %}Үгүй{% endif %}</p>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs12 medical-detail-main">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        {% for m in medicalphoto %}
+                            <div class="swiper-slide"
+                                 style="text-align: center;background-color: #39adad;vertical-align: middle">
+                                <img src="/{{ localstatfolder }}{{ m.path }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+
+                <div class="medical-detail-gadnah">
+                    <h4 class="med-detail-icon">Эмнэлгийн товч танилцуулга</h4>
+
+                    <p class="med-detail-text" id="moretext"
+                       style="margin-left: 0;height: 93px;overflow: hidden;">{{ medical.headline }}</p>
+
+                    <a class="medical-detail-btn" href="javascript:void(0);" onclick="moreText()"
+                       style="cursor: pointer"> Дэлгэрэнгүй</a>
+
+                </div>
+
+                {% if medicalLabType != null %}
+                    <div class="medical-detail-gadnah">
+                        <h4 class="med-detail-icon">Эмнэлгийн үйлчилгээнүүд</h4>
+
+                        {% for key, m in medicalLabType %}
+
+                            <div class="medical-detail-list">
+                                <a
+                                        href="javascript:void(0);"
+                                        style="cursor: pointer"><i style="color: #F80;">-</i> {{ m.labType.name }}</a>
+
+                                <p style="margin-left: 10px;margin-top: 10px"><i class="fa fa-money"></i> Үйлчилгээний
+                                    төлбөр: {% if  m.price ==0 %}тодорхойгүй{% else %}{{ m.price }}₮{% endif %}</p>
+
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if tasagInfo != null %}
+                    <div class="medical-detail-gadnah">
+                        <h4 class="med-detail-icon">Эмнэлгийн хэвтэн эмчлүүлэх тасгийн мэдээлэл</h4>
+                        {% for t in tasagInfo %}
+                            {% if t.oroo_une != null %}
+                                <div class="medical-detail-list">
+                                    <a href="javascript:void(0);" style="cursor: pointer"> {{ t.oroo_ner }}</a>
+                                    <ul style="margin-top: 10px;margin-left: 5px">
+                                        <li><i style="color: #F80;">-</i> Үнэ: {{ t.oroo_une }}</li>
+                                        {% for o in t.oroo_ontslog %}
+                                            <li><i style="color: #F80;">-</i> {{ o }}</li> {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="medical-detail-gadnah">
+                    <h4 class="med-detail-icon">Эмнэлгийн байршил</h4>
+
+                    <div style="width:100%; height: 300px;margin-bottom: 15px" id="map-canvas">
+                    </div>
+                </div>
+                {% if medical.timeTable != null %}
+                    <div class="medical-detail-gadnah">
+                        <div class="medical-detail-list" style="border-right: 1px solid #ccc">
+                            <h4 class="med-detail-icon">Эмнэлгийн цагийннхуваарь хуваарь</h4>
+                            {% set phone = medical.timeTable|split(';') %}
+                            {% for key, p in phone %}
+                                {% if key == 0 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% elseif key == 1 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% elseif key == 2 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="medical-detail-list" style="border-right: 1px solid #ccc">
+                            <h4 class="med-detail-icon">Шинжилгээ авах цагийнн хуваарь</h4>
+                            {% set phone = medical.timeTable|split(';') %}
+                            {% for key, p in phone %}
+                                {% if key == 0 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% elseif key == 1 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% elseif key == 2 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="medical-detail-list">
+                            <h4 class="med-detail-icon">Эмч нарын үзлэгийн цагийн хуваарь</h4>
+                            {% set phone = medical.timeTable|split(';') %}
+                            {% for key, p in phone %}
+                                {% if key == 0 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% elseif key == 1 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% elseif key == 2 %}
+                                    <p class="medical-detail-timetable">{{ p }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if medicalDoctor %}
+                    <div style="margin-bottom: 50px">
+                        <h4 class="med-detail-icon">Эмч нар</h4>
+
+
+                        {% for d in medicalDoctor %}
+                            <a href="#" style="cursor: pointer;">
+                                <div class="medical-detail-list" style="margin-bottom: 10px;">
+                                    <img src="/{{ localstatfolder }}/{{ d.photo }}" style="float: left;" width="50">
+                                    <p class="medical-detail-doctor">{{ d.name }}<br>
+                                        <i style="font-style: normal;font-size: 12px;font-weight: 300;">{{ d.uzlegTorol }}</i>
+                                    </p>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('recource/js/swiper.min.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEyeyQLgmJ_Gv7X-Vs5FcfqoWZ3Nz2cM8"></script>
+    <script>
+        $(document).ready(function () {
+            var swiper = new Swiper('.swiper-container', {
+                pagination: '.swiper-pagination',
+                slidesPerView: 'auto',
+                centeredSlides: true,
+                paginationClickable: true,
+                spaceBetween: 30,
+                keyboardControl: true,
+                nextButton: '.swiper-button-next',
+                prevButton: '.swiper-button-prev',
+                loop: true
+            });
+        });
+        var count = 0;
+        function moreText() {
+            count = count + 1;
+            if (count % 2 != 0) {
+                $('#moretext').attr('style', 'height:auto;margin-left: 0');
+            } else {
+                $('#moretext').attr('style', 'margin-left: 0;height: 93px;overflow: hidden;');
+            }
+        }
+        var myLatlng = new google.maps.LatLng( {% set phone = medical.longLat|split(';') %}
+                {% for p in phone %}
+                {{ p }}{% if loop.last %}{% else %},{% endif %}
+                {% endfor %});
+        var mapOptions = {
+            zoom: 17,
+            center: myLatlng
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            title: "Hi!"
+        });
+
+        marker.setMap(map);
+
+
+    </script>
+{% endblock %}
+
+
+

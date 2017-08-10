@@ -1,0 +1,186 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Эмнэлэг засах хэсэг{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    <label for="happy_cmsbundle_medical_langlat" class="required">Байршил</label>
+    <div class="form-group input-group">
+
+        {{ form_widget(form.longLat) }}
+        <span class="input-group-addon" style="cursor: pointer" id="mapToggle"><i
+                    class="glyphicon glyphicon-eye-open"></i></span>
+        <span class="input-group-addon" style="cursor: pointer" id="mapClear"><i class="glyphicon glyphicon-remove"></i></span>
+    </div>
+
+    <div style="width:100%; height: 300px;margin-bottom: 15px" id="map-canvas">
+    </div>
+
+    <div>
+        <label for="happy_cmsbundle_medical_type" class="required">Эмнэлгийн үйл ажиллагааны чиглэл</label>
+        <div>
+            {% for t in medalltype %}
+                <input type="checkbox" name="medtype[{{ t.id }}]" value="{{ t.id }}"
+                       {% if t.selected is defined %}checked{% endif %}> {{ t.name }}<br>
+            {% endfor %}
+        </div>
+    </div>
+    {{ form_row(form.name) }}
+    {{ form_row(form.headline) }}
+    {% if medical.photo %}
+        <br>
+        <img src="/{{ localstatfolder }}{{ medical.photo }}" width="100">
+    {% endif %}
+    {{ form_row(form.imagefile) }}
+    {{ form_row(form.address) }}
+    {{ form_row(form.phone) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.fbAddress) }}
+    {{ form_row(form.website) }}
+    {{ form_row(form.busStation) }}
+    {{ form_row(form.isParking) }}
+    {{ form_row(form.parkingPrice) }}
+    {{ form_row(form.isCard) }}
+    {{ form_row(form.isWifi) }}
+    {{ form_row(form.isTasag) }}
+    <div>
+        <label for="happy_cmsbundle_medical_tasag_type" class="required">Эмнэлгийн хэвтэн эмчлүүлэх тасгийн
+            мэдээлэл</label>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Өрөөний тоо</th>
+                <th>Тоо ширхэг</th>
+                <th>Үнэ</th>
+                <th>Онцлог</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for key,t in tasagInfo %}
+                {% set key = key + 1 %}
+                {% set zuragt = false %}
+                {% set dotor_00 = false %}
+                {% set niitiin_00 = false %}
+                {% set dotor_shurshuur = false %}
+                {% set niitiin_shurshuur = false %}
+                {% set wifi = false %}
+                <tr>
+                    <td>{% if loop.last %} 6-с дээш хүний өрөө{% else %}{{ key }} хүний өрөө{% endif %}</td>
+                    <td>
+                        <input name="{{ key }}oroo" type="text" class="form-control" value="{{ t.oroo_too }}">
+                    </td>
+                    <td>
+                        <input name="{{ key }}une" type="text" class="form-control" value="{{ t.oroo_une }}">
+                    </td>
+                    <td>
+
+                        {% for o in t.oroo_ontslog %}
+                            {% if o == 'Зурагттай' %}{% set zuragt = true %}{% endif %}
+                            {% if o == '00 өрөөн дотроо байдаг' %}{% set dotor_00 = true %}{% endif %}
+                            {% if o == '00 нийтийнх' %}{% set dotor_00 = true %}{% endif %}
+                            {% if o == 'Өрөөн дотроо шүршүүртэй' %}{% set dotor_shurshuur = true %}{% endif %}
+                            {% if o == 'Нийтийн шүршүүртэй' %}{% set niitiin_shurshuur = true %}{% endif %}
+                            {% if o == 'Wifi интернэттэй' %} {% set wifi = true %}{% endif %}
+                        {% endfor %}
+
+                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="Зурагттай"
+                               {% if zuragt == true %}checked{% endif %}> Зурагттай<br>
+                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="00 өрөөн дотроо байдаг"
+                               {% if dotor_00 == true %}checked{% endif %}> 00 өрөөн дотроо байдаг<br>
+                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="00 нийтийнх"
+                               {% if niitiin_00 == true %}checked{% endif %}> 00 нийтийнх<br>
+                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"
+                               {% if dotor_shurshuur == true %}checked{% endif %}> Өрөөн дотроо шүршүүртэй<br>
+                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="Нийтийн шүршүүртэй"
+                               {% if niitiin_shurshuur == true %}checked{% endif %}> Нийтийн шүршүүртэй<br>
+                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="Wifi интернэттэй"
+                               {% if wifi == true %}checked{% endif %}> Wifi интернэттэй<br>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {{ form_row(form.hoolTotal) }}
+    {{ form_row(form.isSaturdayHool) }}
+    {{ form_row(form.isSundayHool) }}
+    {{ form_row(form.isDaatgal) }}
+    {{ form_row(form.isLaboratory) }}
+
+    <div>
+        <label for="happy_cmsbundle_medical_type" class="required">Шинжилгээ авдаг бол ямар төрлийн шинжилгээ авдаг
+            вэ?</label>
+        <div>
+            {% for t in laballtype %}
+                <input type="checkbox" name="labtype[{{ t.id }}]" value="{{ t.id }}"
+                       {% if  t.selected is defined %}checked{% endif %}> {{ t.name }}
+                <input placeholder="үнэ бичнэ үү..." type="text" name="labtype{{ t.id }}"
+                       {% if t.price is defined %}value="{{ t.price }}{% endif %}"> <br>
+            {% endfor %}
+        </div>
+    </div>
+
+    {{ form_row(form.timeTable  ) }}
+    {{ form_row(form.isDoctor  ) }}
+
+    <input class="btn btn-success" type="submit" value="Засах"/>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default" href="{{ path('cms_medical_index') }}">Эмнэлэг
+        жагсаалт буцах</a>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default"
+       href="{{ path('cms_medical_show', {'id' : medical.id}) }}">Эмнэлэг дэлгэрэнгүй буцах</a>
+    {{ form_end(form) }}
+
+{% endblock %}
+{% block js %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEyeyQLgmJ_Gv7X-Vs5FcfqoWZ3Nz2cM8"></script>
+    <script>
+        $map = $('#happy_cmsbundle_medical_longLat');
+        $(function () {
+            function initialize() {
+
+                if ($map.val() != null && $map.val() != '') {
+                    var location = $map.val().split(";");
+                    var myLatlng = new google.maps.LatLng(location[0], location[1]);
+                } else {
+                    var myLatlng = new google.maps.LatLng(47.92, 106.92);
+                }
+
+                var mapOptions = {
+                    zoom: 15,
+                    center: myLatlng
+                };
+                var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    title: "Hi!"
+                });
+
+                marker.setMap(map);
+
+
+                google.maps.event.addListener(map, 'click', function (e) {
+                    marker.setPosition(e.latLng);
+
+                    $map.val(e.latLng.lat() + ";" + e.latLng.lng());
+                });
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+        });
+
+        $("#mapToggle").click(function () {
+            $('#map-canvas').toggle(200);
+        });
+
+        $("#mapClear").click(function () {
+            $map.val('');
+        });
+    </script>
+{% endblock %}

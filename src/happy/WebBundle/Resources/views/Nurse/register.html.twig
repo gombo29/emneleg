@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="{{ asset('recource/ico.ico') }}" sizes="16x16">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Сувилагч бүртгэх</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link href="{{ asset("recource/MDBFree/css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("recource/MDBFree/css/mdb.min.css") }}" rel="stylesheet">
+    {#<link href="{{ asset('resource/web/apasl/css/style.css') }}" rel="stylesheet">#}
+
+        <meta property="og:url" content="http://emneleg.mcf4u.mn/"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Эмнэлэг.мн"/>
+        <meta property="og:description" content="Монголд анх удаа 24 цагийн дуудлагын сувилагчийн үйлчилгээг нэвтрүүлж байна. Сувилагч та бүхэн бидэнтэй хамтран ажиллана уу."/>
+        <meta property="og:image" content="{{ asset('recource/un.jpg') }}"/>
+    <style>
+        #happy_cmsbundle_nurse_imagefile {
+            height: 400px !important;
+            text-align: center;
+            width: 100%;
+            opacity: 0;
+        }
+
+        .image {
+            width: 100%;
+            overflow: hidden;
+            height: 200px;
+            position: relative;
+            text-align: center;
+            cursor: pointer
+        }
+
+        .text1 {
+            width: 33%;
+            display: inline-block
+        }
+
+        .text2 {
+            width: 33%;
+            display: inline-block;
+        }
+
+        .stepper-horizontal li:not(:first-child)::before, .stepper-horizontal li:not(:last-child)::after {
+            content: '';
+            position: relative;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            margin: 8px 0 0;
+            height: 1px;
+            background-color: #fb3;
+        }
+
+        .stepper-horizontal {
+            position: relative;
+            display: flex;
+            -webkit-box-pack: justify;
+            -webkit-justify-content: space-between;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+
+        .stepper-horizontal li {
+            -webkit-transition: .5s;
+            transition: .5s;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+        }
+
+        .stepper-horizontal, .stepper-horizontal li {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+        }
+
+        .stepper-horizontal li a .label {
+            margin-top: 10px;
+            font-weight: 600;
+            color: rgba(0, 0, 0);
+            display: inline-block;
+        }
+
+        .stepper li a .circle {
+            display: inline-block;
+            color: #fff;
+            border-radius: 50%;
+            background: #fb3;
+            background-color: #fb3;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            margin-right: 8px;
+            text-align: center;
+        }
+
+        .stepper li a {
+            color: #0275d8;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .text1 {
+                display: none;
+            }
+
+            .text2 {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container col-lg-8 col-md-6 col-sm-10 col-xs-12">
+    <div class="card">
+        <div class="text-center">
+            <a href="http://apasl-stc2017mongolia.mn/">
+                <img src="{{ asset('recource/un.jpg') }}" style="width:100%;"></a>
+        </div>
+        <div class="card-block">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                <ul class="stepper stepper-horizontal">
+                    <!-- First Step -->
+                    <li class="completed">
+                        <a href="#!">
+                            <span class="circle">1</span>
+                            <span class="label">Онлайнаар бүртгүүлнэ</span>
+                        </a>
+                    </li>
+
+                    <!-- Second Step -->
+                    <li class="active">
+                        <a href="#!">
+                            <span class="circle">2</span>
+                            <span class="label">Бид холбогдож гэрээ байгуулна</span>
+                        </a>
+                    </li>
+
+                    <!-- Third Step -->
+                    <li class="warning">
+                        <a href="#!">
+                            <span class="circle">3</span>
+                            <span class="label">Үйлчлүүлэгчтэй холбож өгнө</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <h6 class="card-header warning-color white-text">Хувийн мэдээлэл</h6>
+        {{ form_start(form) }}
+        <div class="card-block">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                <div style="width: 100%;text-align: center">
+
+                    <div class="text1"></div>
+                    <div class="text2">
+                        <div style="width: 100%">Өөрийн цээж зургаа оруулна уу!</div>
+                        <div class="image">
+
+                            <img id="def" src="{{ asset('recource/nurse.png') }}"
+                                 style="position: absolute;top: 0;height: 100%">
+                            {{ form_widget(form.imagefile) }}
+                        </div>
+
+                    </div>
+                    <div class="text1"></div>
+                </div>
+                <div class="md-form">
+                    {{ form_widget(form.name) }}
+                    {{ form_label(form.name) }}
+                    {{ form_errors(form.name) }}
+                </div>
+                <div class="md-form">
+                    {{ form_widget(form.phone) }}
+                    {{ form_label(form.phone) }}
+                    {{ form_errors(form.phone) }}
+                </div>
+
+                <div class="md-form">
+                    {{ form_widget(form.namtar) }}
+                    {{ form_label(form.namtar) }}
+                    {{ form_errors(form.namtar) }}
+                </div>
+            </div>
+        </div>
+
+        <h6 class="card-header warning-color white-text">Ур чадвар мэдээлэл</h6>
+
+        <div class="card-block">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="md-form">
+                    {{ form_widget(form.surguuli) }}
+                    {{ form_label(form.surguuli) }}
+                    {{ form_errors(form.surguuli) }}
+                </div>
+
+                <div class="md-form">
+                    {{ form_widget(form.turshlaga) }}
+                    {{ form_label(form.turshlaga) }}
+                    {{ form_errors(form.turshlaga) }}
+                </div>
+
+                <div class="md-form">
+                    {{ form_widget(form.mergeshil) }}
+                    {{ form_label(form.mergeshil) }}
+                    {{ form_errors(form.mergeshil) }}
+                </div>
+
+                <div class="md-form">
+                    {{ form_widget(form.timeTable) }}
+                    {{ form_label(form.timeTable) }}
+                    {{ form_errors(form.timeTable) }}
+                </div>
+
+                <a href="javascript:void(0);" onclick="$('#gereeModal').modal('show');">Ажлын нөхцөлийг унших</a>
+                <br>
+                {{ form_widget(form.isRequire) }}
+                {{ form_label(form.isRequire) }}
+            </div>
+        </div>
+        <div class="text-center">
+            <input class="btn btn-warning waves-effect waves-light" type="submit" value="Бүртгүүлэх"
+                   style="margin-top: 20px;margin-bottom: 25px"/>
+            <div class="call">
+                <br>
+                <p>Холбоо барихыг хүсвэл бидэнтэй доорх утсаар холбоо барина уу.
+                    <br>
+                    <span><i class="fa fa-phone"> </i></span> 99031675</p>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 style="text-align: center;">Бүртгүүлсэнд баярлалаа! Бид таньтай эргэж холбоо барих болно.</h3>
+                <hr>
+                <img src="{{ asset('recource/un.jpg') }}" style="width:100%;">
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="gereeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 style="text-align: center;">Ажлын нөхцөл</h3>
+                <p>
+                    Бид эмчилгээ шаардлагатай байгаа өвчтөн болон чадварлаг сувилагч нарыг холбох гүүр болох зорилготой
+                    байгаа билээ. Тиймээс тодорхой шаардлага хангасан сувилагч нартай гэрээ байгуулан эмчилгээ
+                    үйлчлүүлэгчтэй холбох юм. Иймд та дараах нөхцөлийг хангасан байх хэрэгтэй.
+                </p>
+                <ul>
+                    <li style="margin-left: 20px">1. Мэргэшлийнхээ чиглэлээр сургууль төгссөн байх</li>
+                    <li style="margin-left: 20px">2. Хоёроос дээш жилийн ажлын туршлагатай байх</li>
+                </ul>
+                <div class="text-center">
+                    <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{{ asset('recource/MDBFree/js/jquery-2.2.3.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('recource/MDBFree/js/tether.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('recource/MDBFree/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('recource/MDBFree/js/mdb.min.js') }}"></script>
+<script>
+    {% if s == 1 %}
+    $('#myModal').modal('show');
+    {% endif %}
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#def').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#happy_cmsbundle_nurse_imagefile").change(function () {
+        readURL(this);
+    });
+</script>
+</body>
+</html>
+
+

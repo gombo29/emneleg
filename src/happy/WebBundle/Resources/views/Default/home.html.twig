@@ -1,0 +1,171 @@
+{% extends '@happyWeb/Layout/base.html.twig' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('recource/css/swiper.min.css') }}">
+{% endblock %}
+{% block body %}
+
+    <!-- Banner Slider -->
+    <div id="carousel-example-1z" class="carousel slide carousel-fade top-slide" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+            {#{% for key, b in  banner %}#}
+            {#{% if b.bannerbairlal.id == 1 %}#}
+            <div class="carousel-item active">
+                <img src="{{ asset('recource/banner.jpg') }}" class="slide-img">
+            </div>
+            {#{% endif %}#}
+            {#{% endfor %}#}
+        </div>
+        <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">өмнөх</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">дараах</span>
+        </a>
+        <div class="container">
+            <div class="banner-menu">
+                <a href="{{ path('medicals') }}"><i class="fa fa-home"></i> Эмнэлгүүд</a>
+                <a href="{{ path('advice') }}"><i class="fa fa-plus-square"></i> Зөвлөгөө</a>
+                <a href="{{ path('web_nurse_index') }}"><i class="fa fa-stethoscope"></i> Сувилагч</a>
+                <a href="javascript:void(0);"><i class="fa fa-heartbeat"></i> Цахим эмч</a>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical Centers -->
+    <div class="medical-background">
+        <div class="container">
+            <div class="home-header">
+                <h4><i class="fa fa-home"></i> Онцлох эмнэлгүүд</h4>
+            </div>
+
+            <div class="swiper-container swiper1">
+                <div class="swiper-wrapper">
+                    {% for m in medical[0:3] %}
+                        <div class="swiper-slide">
+                            {% include  '@happyWeb/inc/inc-medical.html.twig' with { 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <!-- Swiper -->
+            <div class="swiper-container swiper2">
+                <div class="swiper-wrapper">
+                    {% for m in medical[3:20] %}
+                        <div class="swiper-slide">
+                            {% include  '@happyWeb/inc/inc-medical.html.twig' with {'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Medical Center Search --->
+
+    <div class="medical-search">
+        <div class="container">
+            <div style="float: left;width: 50%"></div>
+            <div style="float: left;width: 50%"></div>
+        </div>
+    </div>
+
+
+    <!-- Info graphics -->
+
+    <div class="medical-background">
+        <div class="container">
+            <img src="{{ asset('recource/img.jpg') }}" style="width: 100%;">
+        </div>
+    </div>
+
+
+    <!-- Comments -->
+
+    <div class="project-type-background" style="margin-bottom: 40px">
+        <div class="container">
+            <div class="home-header">
+                <h4><i class="fa fa-plus-square"></i> Шинэ зөвлөгөө</h4>
+            </div>
+            <div class="swiper-container swiper3">
+                <div class="swiper-wrapper">
+                    {% for e in advice[0:2] %}
+                        <div class="swiper-slide">
+                            {% include '@happyWeb/inc/inc-advice.html.twig' with{'createdDate': e.createdDate, 'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            <div class="swiper-container swiper4">
+                <div class="swiper-wrapper">
+                    {% for e in advice[2:4] %}
+                        <div class="swiper-slide">
+                            {% include '@happyWeb/inc/inc-advice.html.twig' with{'createdDate': e.createdDate, 'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+    </script>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ asset('recource/js/swiper.min.js') }}"></script>
+    <script>
+        medicalnum = 3;
+        if ($(window).width() > 1072) {
+            medicalnum = 3;
+        } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+            medicalnum = 2;
+        }
+        else if ($(window).width() <= 768) {
+            medicalnum = 1;
+        }
+
+        newsnum = 2;
+        if ($(window).width() > 1072) {
+            newsnum = 2;
+        } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+            newsnum = 2;
+        }
+        else if ($(window).width() <= 768) {
+            newsnum = 1;
+        }
+
+        var swiper1 = new Swiper('.swiper1', {
+            pagination: '.swiper-pagination1',
+            paginationClickable: true,
+            spaceBetween: 30,
+            slidesPerView: medicalnum
+        });
+        var swiper2 = new Swiper('.swiper2', {
+            pagination: '.swiper-pagination2',
+            paginationClickable: true,
+            spaceBetween: 30,
+            slidesPerView: medicalnum
+        });
+
+        var swiper3 = new Swiper('.swiper3', {
+            pagination: '.swiper-pagination2',
+            paginationClickable: true,
+            spaceBetween: 30,
+            slidesPerView: newsnum
+        });
+        var swiper4 = new Swiper('.swiper4', {
+            pagination: '.swiper-pagination2',
+            paginationClickable: true,
+            spaceBetween: 30,
+            slidesPerView: newsnum
+        });
+    </script>
+{% endblock %}

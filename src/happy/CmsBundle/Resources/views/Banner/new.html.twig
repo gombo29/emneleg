@@ -1,0 +1,15 @@
+{% extends 'happyCmsBundle::base.html.twig' %}
+{% block pageheader %}Banner нэмэх хэсэг{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-success" type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <ul style="float: right;list-style: none">
+        <li>
+            <a href="{{ path('cms_banner_index') }}">Буцах</a>
+        </li>
+    </ul>
+{% endblock %}

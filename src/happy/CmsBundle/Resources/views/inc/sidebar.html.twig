@@ -1,0 +1,107 @@
+{% import _self as sidebar %}
+{% macro sidebarmenuli(menu, level) %}
+    {% import _self as sidebar %}
+    {% set nth = ['first','second','third','fourth'] %}
+    {% for m in menu %}
+        {% set isallow = false %}
+        {% if m.roles is defined %}
+            {% for r in m.roles %}
+                {% if is_granted(r) %}
+                    {% set isallow = true %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% set isallow = true %}
+        {% endif %}
+        {% if isallow %}
+            <li>
+                <a class="{% if m.href is defined and m.href in app.request.uri %}active{% endif %}"
+                   href="{% if m.href is defined %}{{ m.href }}{% else %}#{% endif %}">{% if m.icon is defined %}<i
+                        class="{{ m.icon }}"></i> {% endif %}{{ m.title }}{% if m.menu is defined %}<span
+                            class="fa arrow"></span>{% endif %}</a>
+                {% if m.menu is defined %}
+                    <ul class="nav nav-{{ nth[level+1] }}-level">
+                        {{ sidebar.sidebarmenuli(m.menu, level+1) }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+{% set sidebarmenu = [
+        {
+            icon: 'fa fa-home',
+            title: 'Эмнэлгүүд',
+            href: path('cms_medical_index')
+        }
+        ,
+        {
+            icon: 'fa fa-plus-square',
+            title: 'Зөвлөгөө',
+            href: path('cms_content_index')
+        }
+        ,
+        {
+            icon: 'fa fa-stethoscope',
+            title: 'Сувилагч',
+            href:  path('cms_nurse_index')
+        }
+        ,
+
+        {
+        icon: 'fa fa-heartbeat',
+            title: 'Цахим эмч',
+            href: '#'
+        }
+        ,
+        {
+            icon: 'fa fa-user',
+            title: 'Гишүүд',
+            href: '#'
+        }
+        ,
+        {
+            icon: 'fa fa-image',
+            title: 'Баннер',
+            href: path('cms_banner_index')
+        }
+] %}
+
+{#{#}
+{#href:  path('bot_cms_user', {'menu' : 3}),#}
+{#title: 'Хэрэглэгчид',#}
+{#},#}
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            {#<li class="sidebar-search">#}
+            {#<div class="input-group custom-search-form">#}
+            {#<input type="text" class="form-control" placeholder="Search...">#}
+            {#<span class="input-group-btn">#}
+            {#<button class="btn btn-default" type="button">#}
+            {#<i class="fa fa-search"></i>#}
+            {#</button>#}
+            {#</span>#}
+            {#</div>#}
+            {#<!-- /input-group -->#}
+            {#</li>#}
+            {{ sidebar.sidebarmenuli(sidebarmenu) }}
+        </ul>
+    </div>
+</div>
+{#
+
+/etc/ssl/certs/happy/STAR_happyveritas_mn/STAR_happyveritas_mn.crt
+/etc/ssl/certs/happy/happy.key
+
+/opt/happy/web
+
+ RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteCond "%{HTTP_HOST}" "!^www\." [NC]
+    RewriteCond "%{HTTP_HOST}" "!^$"
+
+
+
+
+#}

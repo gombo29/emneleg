@@ -1,0 +1,22 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Эмнэлгийн эмч засах хэсэг{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    {{ form_start(edit_form) }}
+    {% if img %}
+        <div class="form-group">
+            <img src="/{{ localstatfolder }}{{ img }}" width="100">
+        </div>
+    {% endif %}
+    {{ form_widget(edit_form) }}
+    <input class="btn btn-success" type="submit" value="Засах"/>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default"
+       href="{{ path('cms_medical_doctor', {'id': medicalid}) }}">Эмчийн
+        жагсаалт буцах</a>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default" href="{{ path('cms_medical_index') }}">Эмнэлэг
+        жагсаалт буцах</a>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default"
+       href="{{ path('cms_medical_show', {'id' : medicalid}) }}">Эмнэлэг дэлгэрэнгүй буцах</a>
+    {{ form_end(edit_form) }}
+{% endblock %}

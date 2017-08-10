@@ -1,0 +1,228 @@
+{% extends 'happyCmsBundle::base.html.twig' %}
+{% block pageheader %}Эмнэлэг дэлгэрэнгүй{% endblock %}
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+
+    <table class="table table-hover table-striped">
+        <tbody>
+        <tr>
+            <th>Байршил</th>
+            <td>
+                <div style="width:100%; height: 300px;margin-bottom: 15px" id="map-canvas">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th>Зураг</th>
+            <td>
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 250px;">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+
+                        {% for k,ph in medicalPhoto %}
+                            <li data-target="#myCarousel" data-slide-to="{{ k }}"
+                                {% if loop.first %}class="active"{% endif %}></li>
+                        {% endfor %}
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        {% for ph in medicalPhoto %}
+                            <div class="item {% if loop.first %}active{% endif %}">
+                                <img src="/{{ localstatfolder }}{{ ph.path }}" alt="Los Angeles" style="width:250px;">
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Өмнөх</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Дараах</span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Эмч нар</th>
+            <td>
+                {% for d in medicalDoctor %}
+                    <ul class="list-group">
+                        <li class="list-group-item"> <img src="/{{ localstatfolder }}{{ d.photo }}" width="50"> Нэр: <a href="{{ path('cms_medical_doctor_update', {'id': d.id,'medid': medical.id}) }}">{{ d.name }}</a> Цагын хуваарь: {{ d.timeTable }}</li>
+                    </ul>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Эмнэлгийн үйл ажиллагааны чиглэл</th>
+            <td>{% for m in medicalMedType %}
+                    <p>{{ m.name }}</p>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Эмнэлгийн нэр</th>
+            <td>{{ medical.name }}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлгийн тайлбар</th>
+            <td>{{ medical.headline }}</td>
+        </tr>
+        <tr>
+            <th>Эмнэлгийн хаяг</th>
+            <td>{{ medical.address }}</td>
+        </tr>
+        <tr>
+            <th>Эмнэлгийн утас</th>
+            <td>
+                {% set phone = medical.phone|split(';') %}
+                {% for p in phone %}
+                    {{ p }}<br>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Эмнэлгийн Email</th>
+            <td><a href="mailto:{{ medical.email }}" target="_blank">{{ medical.email }}</a></td>
+        </tr>
+        <tr>
+            <th>Эмнэлгийн Facebook хаяг</th>
+            <td><a href="{{ medical.fbAddress }}" target="_blank">{{ medical.fbAddress }}</a></td>
+        </tr>
+        <tr>
+            <th>Эмнэлгийн вебсайт</th>
+            <td><a href="{{ medical.website }}" target="_blank">{{ medical.website }}</a></td>
+        </tr>
+        <tr>
+            <th>Эмнэлгийн ойролцоо буудлын нэр</th>
+            <td>{{ medical.busStation }}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэг гадаа зогсоолтой эсэх</th>
+            <td>{% if medical.isParking == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлгийн зогсоолын үнэ</th>
+            <td>{{ medical.parkingPrice }}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэг төлбөрийн картаар үйлчилдэг эсэх</th>
+            <td>{% if medical.isParking == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэг Wifi-тай эсэх</th>
+            <td>{% if medical.isWifi == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэг хэвтэн эмчлүүлэх тасагтай эсэх</th>
+            <td>{% if medical.isTasag == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлгийн хэвтэн эмчлүүлэх тасгийн мэдээлэл</th>
+            <td>
+                {% for t in tasagInfo %}
+                    {% if t.oroo_une != null %}
+                        <p> Өрөөний нэр: {{ t.oroo_ner }}</p>
+                        <p> Өрөөний тоо: {{ t.oroo_too }}</p>
+                        <p> Өрөөний үнэ: {{ t.oroo_une }}</p>
+                        <p> Өрөөний онцлог: {% for o in t.oroo_ontslog %}{{ o }}, {% endfor %}</p>
+                        <hr>
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэг өдөрт хэдэн удаа хоол өгдөг вэ?</th>
+            <td>{{ medical.hoolTotal }}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэг хагас сайнд хоол өгдөг эсэх</th>
+            <td>{% if medical.isSaturdayHool == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэг бүтэн сайнд хоол өгдөг эсэх</th>
+            <td>{% if medical.isTasag == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэгт хэвтэн эмчлүүлэхэд даатгалын хөнгөлөлт эдлэх эсэх</th>
+            <td>{% if medical.isDaatgal == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th>Эмнэлэг үзлэг оношилгоо хийдэг эсэх</th>
+            <td>{% if medical.isLaboratory == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        <tr>
+            <th>Шинжилгээ авдаг бол ямар төрлийн шинжилгээ авдаг вэ?</th>
+            <td>{% for l in medicalLabType %}
+
+                    <p>{{ l.name }} - {{ l.price }}</p>
+
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Цагийн хуваарь</th>
+            <td>
+                {% set timeTable = medical.timeTable|split(';') %}
+                {% for p in timeTable %}
+                    {{ p }}<br>
+                {% endfor %}
+            </td>
+        </tr>
+
+        <tr>
+            <th>Эмчийн үзлэг хийдэг эсэх</th>
+            <td>{% if medical.isDoctor == 1 %}тийм{% else %}үгүй{% endif %}</td>
+        </tr>
+
+        </tbody>
+    </table>
+    <ul style="list-style: none;">
+        <li style="float: left">
+            <a class="btn btn-success" href="{{ path('cms_medical_update', { 'id': medical.id }) }}">Засах</a>
+        </li>
+    </ul>
+    <a href="{{ path('cms_medical_index') }}" style="margin-bottom: 20px" class="btn btn-default">Буцах</a>
+{% endblock %}
+{% block js %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEyeyQLgmJ_Gv7X-Vs5FcfqoWZ3Nz2cM8"></script>
+    <script>
+
+        var myLatlng = new google.maps.LatLng( {% set phone = medical.longLat|split(';') %}
+                {% for p in phone %}
+                {{ p }}{% if loop.last %}{% else %},{% endif %}
+                {% endfor %});
+        var mapOptions = {
+            zoom: 15,
+            center: myLatlng
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            title: "Hi!"
+        });
+
+        marker.setMap(map);
+
+
+    </script>
+{% endblock %}

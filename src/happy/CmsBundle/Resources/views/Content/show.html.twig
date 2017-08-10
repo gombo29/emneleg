@@ -1,0 +1,42 @@
+{% extends 'happyCmsBundle::base.html.twig' %}
+{% block pageheader %}Мэдээний дэлгэрэнгүй{% endblock %}
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+
+    <table class="table table-hover table-striped">
+        <tbody>
+
+        <tr>
+            <td>Нэр</td>
+            <td>{{ content.name }}</td>
+        </tr>
+
+        <tr>
+            <td>Зураг</td>
+            <td>/{{ localstatfolder }}{{ content.img }}</td>
+        </tr>
+        <tr>
+            <td>Тайлбар</td>
+            <td>{{ content.describe|raw }}</td>
+        </tr>
+        <tr>
+            <th>Created date</th>
+            <td>{% if content.createdDate %}{{ content.createdDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Updated date</th>
+            <td>{% if content.updatedDate %}{{ content.updatedDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+    <ul style="list-style: none;float: left">
+        <li style="float: left">
+            <a class="btn btn-success"
+               href="{{ path('cms_content_update', { 'id': content.id}) }}">Засах</a>
+        </li>
+        <li style="float: left;margin-left: 10px">
+            <a class="btn btn-default"
+               href="{{ path('cms_content_index') }}">Буцах</a>
+        </li>
+    </ul>
+{% endblock %}

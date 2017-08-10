@@ -1,0 +1,88 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Эмнэлэг зураг{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    <ul style="list-style: none;padding: 0;">
+        <li>
+            <a class="btn btn-success" href="{{ path('cms_medical_image_new', {'id': medical.id}) }}">Шинээр
+                үүсгэх</a>
+        </li>
+    </ul>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>№</td>
+            <td>Зураг</td>
+            <td>Тайлбар</td>
+            <td>Зам</td>
+            <td>Хэмжээ</td>
+            <td></td>
+        </tr>
+        </thead>
+        <tbody id="sortable">
+        {% for key,p in photos %}
+            {% set key = key+ 1 %}
+            <tr id="{{ p.id }}">
+                <td>{{ key }}</td>
+                <td>
+                    <img src="/{{ localstatfolder }}{{ p.path }}" style="width:100px;">
+                </td>
+                <td>
+                    <textarea class="form-control" name="text" id="text{{ p.id }}">{{ p.tailbar }}</textarea>
+                    <div style="margin-top: 10px">
+                        <a class="btn btn-success" onclick="updateDescribe({{ p.id }},{{ medical.id }})">хадгалах</a>
+                    </div>
+                </td>
+                <td>{{ p.path }}</td>
+                <td>~</td>
+                <td><a onclick="if(!confirm('Итгэлтэй байна уу!'))return false;" title="Устгах"
+                       href="{{ path('cms_medical_delete_image',{'id': p.id}) }}" class="btn btn-danger"><i
+                                class="glyphicon glyphicon-trash"></i></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default" href="{{ path('cms_medical_index') }}">Эмнэлэг
+        жагсаалт буцах</a>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default"
+       href="{{ path('cms_medical_show', {'id' : medical.id}) }}">Эмнэлэг дэлгэрэнгүй буцах</a>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('recource/js/jquery-ui.min.js') }}"></script>
+    <script>
+        $("#sortable").sortable({
+            stop: sortajax
+        }).disableSelection();
+
+        function sortajax(event, ui) {
+            var ids = $.map($(this).find("tr"), function (el) {
+                return el.id;
+            });
+            $.ajax({
+                url: '{{ path('cms_medical_change_order') }}',
+                type: 'POST',
+                data: {
+                    ids: ids
+                }
+            }).done(function () {
+            });
+        }
+
+
+        function updateDescribe(imageid, medid) {
+            $text = $('#text' + imageid).val();
+
+            $.ajax({
+                url: '{{ path('cms_medical_desc_image') }}',
+                type: "POST",
+                data: {imageid: imageid, medid: medid, text: $text},
+                dataType: "json",
+                success: function (data) {
+                    location.reload();
+                }
+            });
+        }
+
+    </script>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends '@happyWeb/Layout/base.html.twig' %}
+{% block style %}
+    <link rel="stylesheet" href="{{ asset('recource/css/swiper.min.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="project-type-background" style="margin-top: 10px">
+        <div class="container">
+            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12" style="float: left;margin-bottom: 25px;padding: 0;">
+
+                <div class="advice-detail-banner">
+                    <div class="swiper-container swiper3">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="{{ asset('recource/banner2.jpg') }}" style="width:100%;">
+                            </div>
+
+                            <div class="swiper-slide">
+                                <img src="{{ asset('recource/banner1.jpg') }}" style="width:100%;">
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="advice-ontsloh">
+                    <div class="advice-ontsloh-text">Онцлох зөвлөгөө
+                    </div>
+                </div>
+                {% for key ,e in advice %}
+                    {% include '@happyWeb/inc/inc-advice.html.twig' with{'createdDate': e.createdDate,'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
+                {% endfor %}
+
+                {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'advice'} %}
+            </div>
+
+            <div class="col-lg-4 col-md-4 hidden-sm-down advice-nav-right-main">
+                <div class="advice-left-nav-scrooll-banner">
+                    <div class="swiper-container swiper4">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="http://gstat.mn/banner_gogo/banner/2017/08/07/news-new-suuld-nemegdsen-deer/videourl/1502093274/gogobanner.gif"
+                                     style="width:100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="advice-detail-right-nav">
+                    <a href="javascript:void(0);" class="advice-detail-right-nav-header active"
+                       style="width: 20%;">ШИНЭ</a>
+                    <a href="javascript:void(0);" class="advice-detail-right-nav-header" style="width: 30%;">ИХ
+                        УНШСАН</a>
+                    <a href="javascript:void(0);" class="advice-detail-right-nav-header" style="width: 50%;">ИХ
+                        СЭТГЭГДЭЛТЭЙ</a>
+                </div>
+
+                <div class="advice-left-nav-scrooll">
+                    {% for key ,e in advice %}
+                        {% include '@happyWeb/inc/inc-advice.html.twig' with{'small' : true, 'createdDate': e.createdDate,'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
+                    {% endfor %}
+                </div>
+
+                <div class="advice-left-nav-scrooll-banner" style="margin-top: 10px">
+                    <div class="swiper-container swiper5">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="https://stat.mobicom.mn/resources/imagebrowser/580x580-2016-05-17-214819-1756049677.jpeg"
+                                     style="width:100%;">
+                            </div>
+
+                            <div class="swiper-slide">
+                                <img src="https://stat.mobicom.mn/resources/menu/15.jpg"
+                                     style="width:100%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ asset('recource/js/swiper.min.js') }}"></script>
+    <script>
+        if (window.location.search != '') {
+            $.each($('.pagination a'), function (key, val) {
+                $(this).attr('href', $(this).attr('href') + window.location.search);
+            });
+        }
+
+        var swiper3 = new Swiper('.swiper3', {
+            pagination: '.swiper-pagination2',
+            paginationClickable: true,
+            spaceBetween: 30,
+            slidesPerView: 1,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: false
+        });
+
+        var swiper4 = new Swiper('.swiper4', {
+            pagination: '.swiper-pagination2',
+            paginationClickable: true,
+            spaceBetween: 30,
+            slidesPerView: 1,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: false
+        });
+
+        var swiper5 = new Swiper('.swiper5', {
+            pagination: '.swiper-pagination2',
+            paginationClickable: true,
+            spaceBetween: 30,
+            slidesPerView: 1,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: false
+        });
+    </script>
+{% endblock %}

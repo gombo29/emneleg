@@ -1,0 +1,174 @@
+{% extends 'happyWebBundle:Layout:base.html.twig' %}
+{% block body %}
+    <br>
+    <div class="container">
+        <div class="card card-block">
+            <div class="tabs-wrapper">
+                <div class="container">
+                    <ul class="nav classic-tabs tabs-grey" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link nav-other waves-light {% if t != 4 %}active {% endif %}"
+                               data-toggle="tab" href="#panel70"
+                               role="tab">
+                                Миний тохиргоо</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link waves-light nav-other " data-toggle="tab" href="#panel71"
+                               role="tab">
+                                {% if app.user.isInvestor == true %}
+                                    Миний хөрөнгө оруулсан төслүүд
+                                {% else %}
+                                    Миний төслүүд
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% if app.user.isInvestor == true %}
+                            <li class="nav-item">
+                                <a class="nav-link nav-other waves-light" data-toggle="tab" href="#panel74" role="tab">
+                                    Миний сонирхсон төслүүд</a>
+                            </li>
+                        {% endif %}
+
+                        {% if app.user.isInvestor == false %}
+                            <li class="nav-item">
+                                <a class="nav-link nav-other waves-light" data-toggle="tab" href="#panel72" role="tab">Миний
+                                    хөрөнгө оруулагч</a>
+                            </li>
+                        {% endif %}
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-other waves-light {% if t == 4 %} active{% endif %}"
+                               data-toggle="tab" href="#panel73" role="tab">
+                                Мэдэгдэл</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-other waves-light" href="{{ path('fos_user_security_logout') }}">
+                                <i class="fa fa-sign-out"></i> Гарах</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="tab-content">
+
+                <div class="tab-pane fade in {% if t != 4 %} show active{% endif %} " id="panel70" role="tabpanel">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 div-margin">
+                        {{ form_start(userForm) }}
+                        {{ form_row(userForm.isInvestor) }}
+                        <div class="profile-img-block">
+                            <p>
+                                <img id="profileimg"
+                                     src="{% if user.img %}/{{ localstatfolder }}{{ user.img }}{% else %}{{ asset('recource/user.png') }}{% endif %}"
+                                     width="100">
+                            </p>
+                            {{ form_widget(userForm.imagefile) }}
+                        </div>
+                        {{ form_row(userForm.username) }}
+                        {{ form_row(userForm.email) }}
+                        {{ form_row(userForm.fName) }}
+                        {{ form_row(userForm.lName) }}
+                        {{ form_row(userForm.phoneNumber) }}
+                        <input class="btn btn-primary" type="submit" value="Хадгалах"/>
+                        {{ form_end(userForm   ) }}
+                    </div>
+                </div>
+
+                <div class="tab-pane fade in" id="panel71" role="tabpanel">
+                    {% if app.user.isInvestor == false %}
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 div-margin">
+                            <div class="card card-block">
+                                <a href="{{ path('project_new') }}" style="display: block">
+                                    <img src="{{ asset('recource/add.jpg') }}"
+                                         style="width: 100%;height: 100%;">
+                                </a>
+                            </div>
+
+                        </div>
+                    {% endif %}
+
+                    {% for key, e in project %}
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" style="float: left;margin-bottom: 25px;">
+                            {% include  '@happyWeb/inc/inc-project.html.twig' with {'userid': e.user.id, 'special': e.isSpecial, 'likecount': e.likeCount, 'id': e.id, 'img' : e.profileImg , 'percent': e.huvi , 'title': e.name , 'headline': e.short_summary, 'reserve_price': e.finishPrice, 'now_price': e.totalPrice} %}
+
+                            {% if app.user.isInvestor == false %}
+                                <a href="{{ path('project_update', {'id': e.id, 't': 1} ) }}">
+                                    <i class="fa fa-edit profile-project-edit"></i></a>
+
+                                <a href="{{ path('project_delete', {'id': e.id}) }}"
+                                   onclick="if(!confirm('Итгэлтэй байна уу!'))return false;">
+                                    <i class="fa fa-trash profile-project-delete"></i></a>
+
+                                <i class="profile-project-status {% if e.isHide == 1 %}profile-project-status-danger{% else %}profile-project-status-success{% endif %}">
+
+                                    {% if e.isHide == 1 %}
+                                        Шалгаж байна{% else %}Идэвхитэй{% endif %}</i>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+
+                {% if app.user.isInvestor == false %}
+                    <div class="tab-pane fade in" id="panel72" role="tabpanel">
+                        {% set uid = 0 %}
+                        {% for i in investor %}
+                            {% if i.user.id != uid %}
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 div-margin">
+                                    {% include  '@happyWeb/inc/inc-profile.html.twig' with {'location': '', 'headline': '', 'major':'', 'img' : i.user.img, 'fullname': i.user.username} %}
+                                </div>
+                                {% set uid = i.user.id %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if app.user.isInvestor == true %}
+                    <div class="tab-pane fade in" id="panel74" role="tabpanel">
+
+                        {% for key, e in projectInt %}
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12"
+                                 style="float: left;margin-bottom: 25px;">
+                                {% include  '@happyWeb/inc/inc-project.html.twig' with {'userid': e.user.id, 'special': e.isSpecial, 'likecount': e.likeCount, 'id': e.id, 'img' : e.profileImg , 'percent': e.huvi , 'title': e.name , 'headline': e.short_summary, 'reserve_price': e.finishPrice, 'now_price': e.totalPrice} %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="tab-pane fade in {% if t == 4 %} show active{% endif %} " id="panel73" role="tabpanel">
+                    {% for key, n in noti %}
+                        <h6 style="font-weight: bold">{{ n.header }} <a
+                                    href="{{ path('noti_delete', {'id': n.id}) }}"><i class="fa fa-trash"></i></a></h6>
+                        <p style="text-align: justify">{{ n.describe }}</p>
+                        <hr>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <br>
+
+{% endblock %}
+{% block js %}
+
+    <script>
+        $("#happy_banner_user_imagefile").change(function () {
+            readURL(this);
+        });
+
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#profileimg').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+{% endblock %}
+

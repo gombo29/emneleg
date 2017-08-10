@@ -1,0 +1,78 @@
+{% extends 'happyCmsBundle::base.html.twig' %}
+
+
+{% block pageheader %}Banner жагсаалт{% endblock %}
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    <style>
+        ul li {
+            display: inline-block;
+        }
+    </style>
+    <ul style="list-style: none;padding: 0;">
+        <li>
+            <a class="btn btn-success" href="{{ path('cms_banner_new') }}">Шинээр
+                үүсгэх</a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" id="searchlink">Хайлт &DownArrowUpArrow;</a>
+        </li>
+    </ul>
+
+    <fieldset style="border:1px solid #ddd;{%if search%}display:block{%else%}display:none;{% endif %}" id="searchpad">
+        {% include '@happyCms/inc/search.html.twig' with {'route' : 'cms_banner_index'} %}
+    </fieldset>
+
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Зураг</th>
+            <th>Байрлал</th>
+            <th>Нэр</th>
+            <th>Нийтлэх огноо</th>
+            <th>Хаах огноо</th>
+            <th>Үүсгэсэн огноо</th>
+            <th>Өөрчилсөн огноо</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for con in banner %}
+            <tr>
+                <td>{{ con.id }}</td>
+                <td><img src="/{{ statfolder }}{{ con.img }}" width="100"></td>
+                <td>{% if con.bannerbairlal  %}{{ con.bannerbairlal.name }} {% else %}{% endif %}</td>
+                <td>{{ con.name }}</td>
+                <td {% if con.publishDate|date('Y-m-d H:i:s') > "now"|date("Y-m-d H:i:s" ) %} style="background-color: #a8c6e4" {% else %} style="background-color: #ffbcb7"{% endif %}>{{ con.publishDate|date('Y-m-d H:i:s') }}</td>
+                <td {% if con.endDate|date('Y-m-d H:i:s') > "now"|date("Y-m-d H:i:s" ) %} style="background-color: #a8c6e4" {% else %}style="background-color: #ffbcb7"{% endif %}>{{ con.endDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ con.createdDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ con.updatedDate|date('Y-m-d H:i:s') }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a class="btn btn-default"
+                            href="{{ path('cms_banner_show', { 'id': con.id,'currentRoute' : currentRoute }) }}">дэлгэрэнгүй</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-success"
+                               href="{{ path('cms_banner_update', { 'id': con.id,'currentRoute' : currentRoute }) }}">засах</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'happyCmsBundle:inc:page.html.twig' with {'route' : 'cms_banner_index'} %}
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#searchlink').click(function () {
+                $('#searchpad').toggle();
+            });
+        });
+    </script>
+{% endblock %}

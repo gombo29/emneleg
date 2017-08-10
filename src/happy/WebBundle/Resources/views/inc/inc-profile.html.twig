@@ -1,0 +1,13 @@
+<div class="card comment-block">
+    <div class="comment-header">
+        <img class="img-fluid"
+             src="{% if img %}{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/user.png') }}{% endif %}">
+    </div>
+
+    <div class="card-block comment-body">
+        <h6 class="card-title">{{ location }}</h6>
+        <p class="card-text">{{ headline }}</p>
+        <h5>{{ fullname }}</h5>
+        <h6>{{ major }}</h6>
+    </div>
+</div>

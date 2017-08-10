@@ -1,0 +1,16 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Banner засах хэсэг{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    {{ form_start(edit_form) }}
+    {% if img %}
+        <div class="form-group">
+            <img src="/{{ statfolder }}{{ img }}" width="100">
+        </div>
+    {% endif %}
+    {{ form_widget(edit_form) }}
+    <input class="btn btn-success" type="submit" value="Засах"/>
+    {{ form_end(edit_form) }}
+    <a style="float: left;margin-bottom: 10px" href="{{ path('cms_banner_show', {'id' : id, 'currentRoute':currentRoute}) }}">Буцах</a>
+{% endblock %}

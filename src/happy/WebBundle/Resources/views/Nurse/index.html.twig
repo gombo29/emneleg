@@ -1,0 +1,134 @@
+{% extends '@happyWeb/Layout/base.html.twig' %}
+{% block style %}
+    <style>
+        .col-lg-2 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="project-type-background">
+        <div class="medical-search">
+            <div class="container">
+                <div style="float: left;width: 50%"></div>
+                <div style="float: left;width: 50%"></div>
+            </div>
+        </div>
+        <div class="container" style="text-align: center;">
+            {% set i = 1 %}
+            {% for key,m in nurse %}
+                {% set a = key + 1 %}
+                <a href="javascript:void(0);"
+                   class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"
+                   onclick="active({{ m.id }}, {{ i }}, '{% if m.photo != null %}/{{ localstatfolder }}{{ m.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.name }}','{{ m.star }}','{{ m.turshlaga }}','{{ m.mergeshil }}' ,'{{ m.timeTable }}')"
+                   id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>
+                    {% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': m.star, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
+                </a>
+                {% if a%5 == 0 %}
+
+                    <div class="nurse-block-detail" id="detail{{ i }}" style="display: none;">
+                        <a href="javascript:void(0);" onclick="closeHide({{ i }});"><i
+                                    style="position: absolute; right: 50px;top: 10px;" class="fa fa-close"></i></a>
+                        <div class="nurse-block-detail-img">
+                            <img src="" id="detailimg{{ i }}">
+                        </div>
+                        <div class="nurse-block-detail-text">
+
+                            <h4 id="detailname{{ i }}" style="font-size: 16px"></h4>
+                            <div id="detailstar{{ i }}"></div>
+
+                            <div id="detailturshlaga{{ i }}" style="text-align: justify"></div>
+                            <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
+                            <div id="detailtime{{ i }}" style="text-align: justify"></div>
+
+                            <a class="btn btn-warning" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага өгөх</a>
+                        </div>
+
+                    </div>
+                    {% set i = i + 1 %}
+                {% endif %}
+                {% if loop.last %}
+                    {% if loop.length%5 !=0 %}
+                        <div class="nurse-block-detail" id="detail{{ i }}" style="display: none;">
+                            <a href="javascript:void(0);" onclick="closeHide({{ i }});"><i
+                                        style="position: absolute; right: 50px;top: 10px;" class="fa fa-close"></i></a>
+                            <div class="nurse-block-detail-img">
+                                <img src="" id="detailimg{{ i }}">
+                            </div>
+                            <div class="nurse-block-detail-text">
+
+                                <h4 id="detailname{{ i }}" style="font-size: 16px"></h4>
+                                <div id="detailstar{{ i }}"></div>
+
+                                <div id="detailturshlaga{{ i }}" style="text-align: justify"></div>
+                                <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
+                                <div id="detailtime{{ i }}" style="text-align: justify"></div>
+
+                                <a class="btn btn-warning" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага
+                                    өгөх</a>
+                            </div>
+
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'web_nurse_index'} %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+
+        function closeHide(cc) {
+            $('#detail' + cc).hide('blind');
+        }
+
+        function active(id, key, img, name, star, turshlaga, mergeshil, time) {
+            $nurse = $('#nurse' + id);
+            $nurse.siblings().removeClass("active");
+            $nurse.addClass('active', 500);
+            for (i = 1; i <= 5; i++) {
+                if (i == key) {
+
+                    $('#detail' + i).hide().show('blind');
+
+                    $('#detailimg' + i).attr('src', img);
+                    $('#detailname' + i).text(name);
+
+                    if (star == 0) {
+                        starHtml = '<i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
+                    }
+                    else if (star > 0 && star < 10) {
+                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
+                    }
+
+                    else if (star > 11 && star < 20) {
+                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
+                    }
+
+                    else if (star > 21 && star < 30) {
+                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
+                    }
+
+                    else if (star > 31 && star < 40) {
+                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
+                    }
+
+                    else {
+                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i>';
+                    }
+                    $('#detailstar' + i).html(starHtml);
+                    $('#detailturshlaga' + i).html('<b>Ажлын туршлага:</b>' + '<p>' + turshlaga + '</p>');
+                    $('#detailmergeshil' + i).html('<b>Мэргэшсэн чиглэл:</b>' + '<p>' + mergeshil + '</p>');
+                    $('#detailtime' + i).html('<b>Боломжит цагийн хуваарь:</b>' + '<p>' + time + '</p>');
+
+                }
+                else {
+                    $('#detail' + i).hide('blind');
+                }
+            }
+        }
+    </script>
+{% endblock %}

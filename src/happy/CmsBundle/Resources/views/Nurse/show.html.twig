@@ -1,0 +1,69 @@
+{% extends 'happyCmsBundle::base.html.twig' %}
+{% block pageheader %}Мэдээний дэлгэрэнгүй{% endblock %}
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+
+    <table class="table table-hover table-striped">
+        <tbody>
+
+        <tr>
+            <td>Нэр</td>
+            <td>{{ nurse.name }}</td>
+        </tr>
+
+        <tr>
+            <td>Утасны дугаар</td>
+            <td>{{ nurse.phone }}</td>
+        </tr>
+
+        <tr>
+            <td>Зураг</td>
+            <td><img src="{% if nurse.photo %}/{{ localstatfolder }}{{ nurse.photo }}{% else %}{{ asset('recource/nurse.png') }}{% endif %}" width="100"/></td>
+        </tr>
+
+        <tr>
+            <td>Боловсролын товч намтар</td>
+            <td><p>{{ nurse.namtar }}</p></td>
+        </tr>
+
+        <tr>
+            <td>Ажлын туршлага</td>
+            <td><p>{{ nurse.turshlaga }}</p></td>
+        </tr>
+
+        <tr>
+            <td>Төгссөн сургууль</td>
+            <td><p>{{ nurse.surguuli }}</p></td>
+        </tr>
+
+        <tr>
+            <td>Мэргэшсэн чиглэл</td>
+            <td><p>{{ nurse.mergeshil }}</p></td>
+        </tr>
+
+        <tr>
+            <td>Боломжит цагийн хуваарь</td>
+            <td><p>{{ nurse.timeTable }}</p></td>
+        </tr>
+
+        <tr>
+            <th>Created date</th>
+            <td>{% if nurse.createdDate %}{{ nurse.createdDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Updated date</th>
+            <td>{% if nurse.updatedDate %}{{ nurse.updatedDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+    <ul style="list-style: none;float: left">
+        <li style="float: left">
+            <a class="btn btn-success"
+               href="{{ path('cms_nurse_update', { 'id': nurse.id}) }}">Засах</a>
+        </li>
+        <li style="float: left;margin-left: 10px">
+            <a class="btn btn-default"
+               href="{{ path('cms_nurse_index') }}">Сувилагчийн жагсаалт буцах</a>
+        </li>
+    </ul>
+{% endblock %}

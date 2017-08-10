@@ -1,0 +1,21 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Мэдээ засах хэсэг{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+
+    {% if nurse.photo %}
+        <img src="/{{ localstatfolder }}{{ nurse.photo }}" width="100">
+    {% endif %}
+
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <input class="btn btn-success" type="submit" value="Засах" style="margin-top: 20px;margin-bottom: 30px"/>
+    <a class="btn btn-default" href="{{ path('cms_nurse_index') }}" style="margin-top: 20px;margin-bottom: 30px">Сувилагч жагсаалт
+        буцах</a>
+    <a class="btn btn-default" href="{{ path('cms_nurse_show', {'id':nurse.id }) }}" style="margin-top: 20px;margin-bottom: 30px">Сувилагч
+        дэлгэрэнгүй буцах</a>
+
+    {{ form_end(edit_form) }}
+
+{% endblock %}

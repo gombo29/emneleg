@@ -1,0 +1,28 @@
+<div class="hospital-box">
+
+    <a href="{{ path('medical_detail', {'id': id}) }}" class="hospital-box-img"
+       style="background-image: url('{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}');">
+    </a>
+
+    <div class="hospital-box-txt" style="width: 57%;padding-left: 10px;">
+        <h6 style="font-size: 14px;">{{ name }}</h6>
+        <p style="height: 94px;overflow: hidden;margin-bottom: 0;">
+            {{ headline|slice(0, 100) }}...
+        </p>
+        {% if isWifi == true %}
+            <i class="fa fa-wifi" title="Wifi интернэттэй"></i>
+        {% endif %}
+
+        {% if isCard == true %}
+            <i class="fa fa-cc-visa" title="Кредит картаар үйлчилнэ"></i>
+        {% endif %}
+
+        {% if isCar == true %}
+            <i class="fa fa-car" title="Гаднаа зогсоолтой"></i>
+        {% endif %}
+
+        <p class="hospital-box-phone">Утас: {% set ph = phone|split(';') %}
+            {% for p in ph %}{% if loop.first %} {{ p }}{% endif %}{% endfor %}</p>
+        <a class="hospital-box-more" href="{{ path('medical_detail', {'id': id}) }}">Дэлгэрэнгүй</a>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+# This file is auto-generated during the composer install
+parameters:
+#    database_driver: pdo_mysql
+#    database_host: 127.0.0.1
+#    database_port: 8889
+#    database_name: mcf4u
+#    database_user: root
+#    database_password: toor
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: 3306
+    database_name: mcfucom_mn
+    database_user: mcfucom_mn
+    database_password: MonGolia1990
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: mn
+    secret: c580ae4894b83c3fd5ba548b8688a3c0174f89f4
+    dir_image_upload: img
+
+
+

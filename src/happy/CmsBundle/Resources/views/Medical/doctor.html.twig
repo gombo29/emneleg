@@ -1,0 +1,51 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Эмнэлгийн эмч нар{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    <ul style="list-style: none;padding: 0;">
+        <li>
+            <a class="btn btn-success" href="{{ path('cms_medical_doctor_new', {'id' : medical.id}) }}">Шинээр
+                үүсгэх</a>
+        </li>
+    </ul>
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>№</th>
+            <th>Зураг</th>
+            <th>Эмчийн нэр</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key,p in doctors %}
+            {% set key = key+ 1 %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{% if p.photo %}<img src="/{{ localstatfolder }}/{{ p.photo }}"
+                                         width="100">{% else %}Зураг байхгүй{% endif %}</td>
+                <td>
+                    {{ p.name }}
+                </td>
+                <td><a onclick="if(!confirm('Итгэлтэй байна уу!'))return false;" title="Устгах"
+                       href="{{ path('cms_medical_doctor_delete' ,{'id': p.id, 'medid': medical.id}) }}"
+                       class="btn btn-danger"><i
+                                class="glyphicon glyphicon-trash"></i></a>
+
+
+                    <a title="Засах"
+                       href="{{ path('cms_medical_doctor_update' , {'id': p.id, 'medid': medical.id}) }}"
+                       class="btn btn-success"><i
+                                class="glyphicon glyphicon-edit"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default" href="{{ path('cms_medical_index') }}">Эмнэлэг
+        жагсаалт буцах</a>
+    <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default"
+       href="{{ path('cms_medical_show', {'id' : medical.id}) }}">Эмнэлэг дэлгэрэнгүй буцах</a>
+{% endblock %}
+
