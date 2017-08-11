@@ -28,10 +28,6 @@ class DefaultController extends Controller
      */
     public function homeAction()
     {
-
-        var_dump('gombo');
-        exit();
-
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
 
