@@ -278,7 +278,11 @@
                 {% endfor %});
         var mapOptions = {
             zoom: 17,
-            center: myLatlng
+            center: myLatlng,
+            disableDoubleClickZoom: true,
+            zoomControl: true,
+            scaleControl: true,
+            scrollwheel: false,
         };
         var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
