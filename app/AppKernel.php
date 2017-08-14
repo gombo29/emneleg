@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new happy\CmsBundle\happyCmsBundle(),
             new happy\SecurityBundle\happySecurityBundle(),
             new happy\WebBundle\happyWebBundle(),
+            new \happy\ApiBundle\happyApiBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

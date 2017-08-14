@@ -3,6 +3,11 @@ happy_web:
     type:     annotation
     prefix:   /
 
+happy_api:
+    resource: "@happyApiBundle/Controller/"
+    type:     annotation
+    prefix:   /api
+
 happy_security:
     resource: "@happySecurityBundle/Controller/"
     type:     annotation
