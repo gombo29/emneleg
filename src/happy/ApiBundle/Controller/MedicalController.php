@@ -25,7 +25,7 @@ class MedicalController extends Controller
     /**
      *  Lists all project entities.
      *
-     * @Route("/list/{page}", name="api_medical_index", requirements={"page" = "\d+"}, defaults={"page" = 1})
+     * @Route("/list/{page}", name="api_medical_list", requirements={"page" = "\d+"}, defaults={"page" = 1})
      * @Method("GET")
      *
      */
