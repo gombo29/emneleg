@@ -1,0 +1,22 @@
+{% extends 'happyCmsBundle::base.html.twig' %}
+
+
+{% block pageheader %}Мэдэгдэл илгээх хэсэг {% endblock %}
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    <form action="{{ path('cms_device_new') }}" method="post">
+        <label> Application type:</label>
+        <select name="typepush" class="form-control">
+            <option value="emneleg.mn">Emneleg.mn</option>
+            <option value="suvilagch">Сувилагч</option>
+            <option value="emch">Цахим эмч</option>
+        </select>
+        <label> Илгээх агуулга:</label>
+        <textarea rows="4" cols="50" name="text" placeholder="Энд илгээх агуулга бичнэ үү..."
+                  class="form-control"></textarea>
+        <br>
+        <input type="submit" value="Илгээх" class="btn btn-success">
+        <a href="{{ path('cms_device_index') }}" class="btn btn-default">Буцах</a>
+    </form>
+
+{% endblock %}
