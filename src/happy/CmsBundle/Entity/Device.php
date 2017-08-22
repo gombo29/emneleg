@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * Banner
+ * DEvice
  *
  * @ORM\Table(name="Device")
  * @ORM\Entity
@@ -35,7 +35,7 @@ class Device
     /**
      * @var string
      *
-     * @ORM\Column(name="device_token", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="device_token", type="string", length=255, nullable=true, unique=false)
      */
     private $deviceToken;
 
@@ -56,6 +56,13 @@ class Device
     /**
      * @var string
      *
+     * @ORM\Column(name="app_type", type="string", length=255, nullable=true)
+     */
+    private $appType;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="osVersion", type="string", length=255, nullable=true)
      */
     private $osVersion;
@@ -65,12 +72,6 @@ class Device
      * @ORM\Column(name="is_ios", type="boolean",nullable=true)
      */
     private $isIOS;
-
-    /**
-     * @var boolean
-     * @ORM\Column(name="is_agent", type="boolean",nullable=true)
-     */
-    private $isAgent;
 
     /**
      * @var string
@@ -285,30 +286,6 @@ class Device
     }
 
     /**
-     * Set isAgent
-     *
-     * @param boolean $isAgent
-     *
-     * @return Device
-     */
-    public function setIsAgent($isAgent)
-    {
-        $this->isAgent = $isAgent;
-
-        return $this;
-    }
-
-    /**
-     * Get isAgent
-     *
-     * @return boolean
-     */
-    public function getIsAgent()
-    {
-        return $this->isAgent;
-    }
-
-    /**
      * Set status
      *
      * @param string $status
@@ -450,5 +427,29 @@ class Device
     public function getUpdatedDate()
     {
         return $this->updatedDate;
+    }
+
+    /**
+     * Set appType
+     *
+     * @param string $appType
+     *
+     * @return Device
+     */
+    public function setAppType($appType)
+    {
+        $this->appType = $appType;
+
+        return $this;
+    }
+
+    /**
+     * Get appType
+     *
+     * @return string
+     */
+    public function getAppType()
+    {
+        return $this->appType;
     }
 }
