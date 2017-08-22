@@ -21,6 +21,7 @@ security:
                 csrf_provider: security.csrf.token_manager
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
+                default_target_path: /gombo
 
             logout: true
             anonymous:    true
