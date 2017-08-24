@@ -82,11 +82,10 @@ class DeviceController extends Controller
             $pushManager = new PushManager(PushManager::ENVIRONMENT_DEV);
 
 
-            if ($appType == 'emneleg.mn') { //customer
+            if ($appType == 'emneleg') { //customer
                 $apnsAdapter = new ApnsAdapter(array(
                     'certificate' => $path = $this->get('kernel')->getRootDir() . '/../web/myancash_customer_dev.pem'
                 ));
-
 
                 $gcmAdapter = new GcmAdapter(array(
                     'apiKey' => 'AIzaSyBWqdBqFudZJQyP1ktwExhP7imkDv1ZgCw'

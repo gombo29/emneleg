@@ -7,7 +7,7 @@
     <form action="{{ path('cms_device_new') }}" method="post">
         <label> Application type:</label>
         <select name="typepush" class="form-control">
-            <option value="emneleg.mn">Emneleg.mn</option>
+            <option value="emneleg">Emneleg.mn</option>
             <option value="suvilagch">Сувилагч</option>
             <option value="emch">Цахим эмч</option>
         </select>
@@ -18,5 +18,4 @@
         <input type="submit" value="Илгээх" class="btn btn-success">
         <a href="{{ path('cms_device_index') }}" class="btn btn-default">Буцах</a>
     </form>
-
 {% endblock %}
