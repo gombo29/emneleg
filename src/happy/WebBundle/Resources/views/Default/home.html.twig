@@ -2,6 +2,13 @@
 {% block style %}
     <link rel="stylesheet" href="{{ asset('recource/css/swiper.min.css') }}">
 {% endblock %}
+{% block ogtag %}
+    <meta property="og:url" content="http://emneleg.mn/home"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="Эмнэлэг.мн"/>
+    <meta property="og:description" content="Бид та бүхэнд монгол улсад үйл ажиллагаа явуулж буй эмнэлгүүдийн хаяг байршил болон төлбөрийн мэдээллийг хүргэх болно. Мөн дуудлагын сувилагчийн үйлчилгээ болон эрүүл мэндийн зөвлөгөөг манай сайтаас авч байна. Биднийг сонгон үйлчлүүлсэн та бүхэнд баярлалаа."/>
+    <meta property="og:image" content="http://emneleg.mn{{ asset('recource/share.png') }}"/>
+{% endblock %}
 {% block body %}
 
     <!-- Banner Slider -->
