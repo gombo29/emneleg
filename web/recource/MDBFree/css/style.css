@@ -1332,6 +1332,12 @@ label, output {
 
 @media (max-width: 768px) {
 
+
+    .med-search-checker
+    {
+        width: 100%;
+    }
+
     .med-search-type {
         border-left: none;
     }
