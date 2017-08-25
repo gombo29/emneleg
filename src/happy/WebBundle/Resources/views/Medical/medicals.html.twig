@@ -11,7 +11,7 @@
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="float: left;padding: 0">
                 {% for m in medical %}
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: left;margin-bottom: 25px;">
-                        {% include  '@happyWeb/inc/inc-medical.html.twig' with {'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
+                        {% include  '@happyWeb/inc/inc-medical.html.twig' with {'detailpage': 1, 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
                     </div>
                 {% endfor %}
                 {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals'} %}

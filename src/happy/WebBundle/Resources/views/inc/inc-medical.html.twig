@@ -1,13 +1,13 @@
 <div class="hospital-box">
 
     <a href="{{ path('medical_detail', {'id': id}) }}" class="hospital-box-img"
-       style="background-image: url('{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}');">
+       style="{% if detailpage is defined%}height: 150px;{% else %}height: 185px;{% endif %}background-image: url('{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}');">
     </a>
 
     <div class="hospital-box-txt" style="width: 57%;padding-left: 10px;">
-        <h6 style="font-size: 14px;">{{ name }}</h6>
-        <p style="height: 94px;overflow: hidden;margin-bottom: 0;">
-            {{ headline|slice(0, 100) }}...
+        <h6 style="font-size: 18px;">{{ name }}</h6>
+        <p style="{% if detailpage is defined%}height: 60px;{% else %}height: 94px;{% endif %}overflow: hidden;margin-bottom: 0;">
+            {% if detailpage is defined%}  {{ headline|slice(0, 60) }}{% else %}  {{ headline|slice(0, 160) }}{% endif %}...
         </p>
         {% if isWifi == true %}
             <i class="fa fa-wifi" title="Wifi интернэттэй"></i>

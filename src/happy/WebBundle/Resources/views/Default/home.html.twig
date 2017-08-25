@@ -48,9 +48,11 @@
                 <h4><i class="fa fa-home"></i> Онцлох эмнэлгүүд</h4>
             </div>
 
+
+
             <div class="swiper-container swiper1">
                 <div class="swiper-wrapper">
-                    {% for m in medical[0:3] %}
+                    {% for m in medical[0:5] %}
                         <div class="swiper-slide">
                             {% include  '@happyWeb/inc/inc-medical.html.twig' with { 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
                         </div>
@@ -62,7 +64,7 @@
             <!-- Swiper -->
             <div class="swiper-container swiper2">
                 <div class="swiper-wrapper">
-                    {% for m in medical[3:20] %}
+                    {% for m in medical[6:10] %}
                         <div class="swiper-slide">
                             {% include  '@happyWeb/inc/inc-medical.html.twig' with {'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
                         </div>
@@ -129,9 +131,9 @@
 {% block js %}
     <script src="{{ asset('recource/js/swiper.min.js') }}"></script>
     <script>
-        medicalnum = 3;
+        medicalnum = 2;
         if ($(window).width() > 1072) {
-            medicalnum = 3;
+            medicalnum = 2;
         } else if ($(window).width() <= 1072 && $(window).width() > 768) {
             medicalnum = 2;
         }
@@ -154,12 +156,16 @@
             paginationClickable: true,
             spaceBetween: 30,
             slidesPerView: medicalnum
+//            autoplay: 2500,
+//            autoplayDisableOnInteraction: false
         });
         var swiper2 = new Swiper('.swiper2', {
             pagination: '.swiper-pagination2',
             paginationClickable: true,
             spaceBetween: 30,
             slidesPerView: medicalnum
+//            autoplay: 2500,
+//            autoplayDisableOnInteraction: false
         });
 
         var swiper3 = new Swiper('.swiper3', {
