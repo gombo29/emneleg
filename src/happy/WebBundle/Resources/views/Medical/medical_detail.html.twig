@@ -32,15 +32,28 @@
                 width: 100%;
             }
         }
+
+        .nav-tabs .nav-link {
+            color: #ffffff;
+        }
+
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+            color: #ffffff;
+            background-color: #ff7020;
+            border-color: #ff7020 #ff7020 #ff7020 #ff7020;
+        }
+
+        .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+            color: #ffffff;
+            border-color: #ff7020 #ff7020 #ff7020 #ff7020;
+            background-color: #ff7020;
+        }
     </style>
 {% endblock %}
 {% block body %}
     <div class="project-type-background">
         <div class="medical-search">
-            <div class="container">
-                <div style="float: left;width: 50%"></div>
-                <div style="float: left;width: 50%"></div>
-            </div>
+            {% include  '@happyWeb/inc/inc-medical-search.html.twig' %}
         </div>
         <div class="container">
             <div class="col-lg-12 col-md-12 col-sm-12" style="height: 30px">
