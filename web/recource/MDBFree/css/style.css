@@ -423,8 +423,7 @@ a:hover {
 
 .hospital-box-img {
     width: 39%;
-    border: 1px solid #ccc;
-    height: 120px;
+    border: 1px solid #e2e2e2;
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
@@ -442,7 +441,7 @@ a:hover {
 }
 
 .hospital-box-txt p {
-    font-size: 12px;
+    font-size: 14px;
     text-align: justify;
 }
 
