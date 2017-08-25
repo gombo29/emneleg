@@ -53,14 +53,14 @@ input, optgroup, select, textarea {
 
 [type="checkbox"][class*="filled-in"] + label::after {
     border-radius: 2px;
-    height: 20px;
-    width: 20px;
+    height: 17px;
+    width: 17px;
 }
 
 [type="checkbox"][class*="filled-in"] + label::after, [type="checkbox"][class*="filled-in"] + label::before {
     content: '';
     left: 0;
-    top: 5px;
+    top: 4px;
     position: absolute;
     -webkit-transition: border .25s, background-color .25s, width .2s .1s, height .2s .1s, top .2s .1s, left .2s .1s;
     transition: border .25s, background-color .25s, width .2s .1s, height .2s .1s, top .2s .1s, left .2s .1s;
@@ -74,8 +74,8 @@ label, output {
 }
 
 [type="checkbox"][class*="filled-in"]:checked + label::before {
-    top: 5px;
-    left: 1px;
+    top: 2px;
+    left: -1px;
     width: 8px;
     height: 13px;
     border-color: transparent #fff #fff transparent;
@@ -83,6 +83,7 @@ label, output {
 
 [type="checkbox"][class*="filled-in"] + label::before {
     -webkit-transform: rotateZ(37deg);
+    -ms-transform: rotateZ(37deg);
     -ms-transform: rotateZ(37deg);
     transform: rotateZ(37deg);
     -webkit-transform-origin: 100% 100%;
@@ -114,7 +115,7 @@ label, output {
     display: inline-block;
     height: 20px;
     line-height: 25px;
-    font-size: 1rem;
+    font-size: 14px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -532,19 +533,21 @@ label, output {
 }
 
 .hospital-box-img {
-    width: 35%;
+    height: 185px;
     border: 1px solid #e2e2e2;
     background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
     display: inline-block;
     background-color: #219494;
+    width: 35%;
+    padding-left: 10px;
 
 }
 
 .hospital-box-txt {
     float: right;
-    width: 70%;
+    width: 60%;
     padding-left: 10px;
 }
 
@@ -1319,9 +1322,9 @@ label, output {
 
 .med-search-checker {
     float: left;
-    margin-right: 20px;
+    margin-right: 5px;
     margin-bottom: 5px;
-    width: 315px;
+    width: 225px;
 }
 
 .med-search-text {
@@ -1332,7 +1335,12 @@ label, output {
 
 @media (max-width: 768px) {
 
-
+    .hospital-box-img
+    {
+        background-position: center center;
+        width: 100%;
+        height:200px;
+    }
     .med-search-checker
     {
         width: 100%;

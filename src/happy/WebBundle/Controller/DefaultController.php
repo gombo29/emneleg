@@ -52,7 +52,7 @@ class DefaultController extends Controller
 
         /**@var LaboratoryType[] $labType */
         $labType = $qb
-            ->orderBy('n.id', 'desc')
+            ->orderBy('n.id', 'asc')
             ->getQuery()
             ->getArrayResult();
 
