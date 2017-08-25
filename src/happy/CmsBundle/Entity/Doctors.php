@@ -49,7 +49,7 @@ class Doctors
     /**
      * @var string
      *
-     * @ORM\Column(name="turshlaga", type="text",  nullable=false)
+     * @ORM\Column(name="turshlaga", type="text",  nullable=true)
      */
     private $turshlaga;
 
