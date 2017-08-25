@@ -2,6 +2,8 @@
 
 namespace happy\WebBundle\Controller;
 
+use happy\CmsBundle\Entity\LaboratoryType;
+use happy\CmsBundle\Entity\MedicalMedType;
 use happy\CmsBundle\Entity\Medicals;
 use happy\CmsBundle\Entity\MedicalType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,12 +21,12 @@ use Symfony\Component\HttpFoundation\Request;
 class MedicalController extends Controller
 {
     /**
-     * @Route("/{page}", name="medicals", requirements={"page" = "\d+"}, defaults={"page" = 1} )
+     * @Route("/{page}/{type}", name="medicals", requirements={"page" = "\d+", "type" = "\d+"}, defaults={"page" = 1, "type" = 1} )
      * @Method({"GET", "POST"})
      * Төслүүд
      *
      */
-    public function medicalsAction(Request $request, $page)
+    public function medicalsAction(Request $request, $page, $type)
     {
 
         $pagesize = 20;
@@ -45,19 +47,8 @@ class MedicalController extends Controller
                 $qb->andWhere('n.name like :name')
                     ->setParameter('name', '%' . $searchEntity->getName() . '%');
             }
-
-            if ($searchForm->get('ehlehDate')->getData()) {
-                $qb
-                    ->andWhere('n.createdDate > :ehlehDate')
-                    ->setParameter('ehlehDate', $searchEntity->getEhlehDate());
-            }
-
-            if ($searchForm->get('duusahDate')->getData()) {
-                $qb
-                    ->andWhere('n.createdDate < :duusahDate')
-                    ->setParameter('duusahDate', $searchEntity->getDuusahDate());
-            }
         }
+
         $countQueryBuilder = clone $qb;
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
         /**@var Medicals[] $medical */
@@ -69,11 +60,21 @@ class MedicalController extends Controller
             ->getQuery()
             ->getArrayResult();
 
-        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+        $qb = $em->getRepository('happyCmsBundle:LaboratoryType')->createQueryBuilder('n');
+        /**@var LaboratoryType[] $labType */
+        $labType = $qb
+            ->orderBy('n.id', 'asc')
+            ->getQuery()
+            ->getArrayResult();
 
-        /**@var MedicalType[] $medicalType */
-        $medicalType = $qb
-            ->orderBy('n.id', 'desc')
+        $medType = null;
+
+
+        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+        /**@var MedicalType[] $medType */
+        $medType = $qb
+            ->select('n.id, n.name')
+            ->orderBy('n.id', 'asc')
             ->getQuery()
             ->getArrayResult();
 
@@ -83,8 +84,10 @@ class MedicalController extends Controller
                 'count' => $count,
                 'page' => $page,
                 'search' => $search,
-                'medicalType' => $medicalType,
+                'labType' => $labType,
                 'medical' => $medical,
+                'viewType' => $type,
+                'medType' => $medType,
             )
         );
     }
@@ -125,11 +128,11 @@ class MedicalController extends Controller
             ->getQuery()
             ->getArrayResult();
 
-        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+        $qb = $em->getRepository('happyCmsBundle:LaboratoryType')->createQueryBuilder('n');
 
-        /**@var MedicalType[] $medicalType */
-        $medicalType = $qb
-            ->orderBy('n.id', 'desc')
+        /**@var LaboratoryType[] $labType */
+        $labType = $qb
+            ->orderBy('n.id', 'asc')
             ->getQuery()
             ->getArrayResult();
 
@@ -142,7 +145,7 @@ class MedicalController extends Controller
                 'medicalLabType' => $medicalLabType,
                 'medicalDoctor' => $medicalDoctor,
                 'tasagInfo' => $tasagInfo,
-                'medicalType' => $medicalType,
+                'labType' => $labType,
             )
         );
     }

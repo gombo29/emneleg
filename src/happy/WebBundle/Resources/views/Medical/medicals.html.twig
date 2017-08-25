@@ -21,45 +21,96 @@
 {% block body %}
     <div class="project-type-background">
         <div class="medical-search">
-            {% include  '@happyWeb/inc/inc-medical-search.html.twig' %}
+            {% include  '@happyWeb/inc/inc-medical-search.html.twig' with {'current': 1, 'type': viewType } %}
         </div>
-        <div class="container">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="float: left;padding: 0">
-                {% for m in medical %}
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: left;margin-bottom: 25px;">
-                        {% include  '@happyWeb/inc/inc-medical.html.twig' with {'detailpage': 1, 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
+        <div class="tab-content">
+            <!-- List -->
+            <div class="tab-pane fade {% if viewType == 1 %} in show active{% endif %}" id="list"
+                 role="tabpanel">
+                <div class="container">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
+                        {% for m in medical %}
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: left;margin-bottom: 25px;">
+                                {% include  '@happyWeb/inc/inc-medical.html.twig' with {'detailpage': 1, 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
+                            </div>
+                        {% endfor %}
+                        {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals'} %}
                     </div>
-                {% endfor %}
-                {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals'} %}
+                </div>
+            </div>
+
+            <!-- Type -->
+            <div class="tab-pane fade  {% if viewType == 2 %}in show active{% endif %}" id="type"
+                 role="tabpanel">
+
+                <!-- Nav tabs -->
+                <div class="tabs-wrapper">
+                    <ul class="nav classic-tabs tabs-orange" role="tablist">
+                        {% for i in medType %}
+                            <li class="nav-item" style="width: 125px;">
+                                <a class="nav-link waves-light {% if loop.first %}active{% endif %}" data-toggle="tab"
+                                   href="#panelmed{{ i.id }}" role="tab"
+                                   style="text-align: center;font-size: 15px;"><i
+                                            class="fa fa-user fa-2x" aria-hidden="true"></i><br> {{ i.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- Tab panels -->
+                <div class="tab-content card">
+                    <div class="container">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
+                            {% for i in medType %}
+                                <div class="tab-pane fade{% if loop.first %} in show active {% endif %}"
+                                     id="panelmed{{ i.id }}" role="tabpanel">
+                                    <p style="margin-top: 50px;margin-bottom: 50px;text-align: center">
+                                        {{ i.name }}
+                                    </p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- MAP -->
+            <div class="tab-pane fade  {% if viewType == 3 %}in show active{% endif %}" id="map"
+                 role="tabpanel">
+                <div class="container">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
+                        <p> map</p>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 {% endblock %}
 
-{% block js %}
-    <script>
-        $(document).ready(function () {
-            $value = $(".selectBox option:selected").text();
-            if ($value != '') {
-                defaulttext = $value;
-            } else {
-                defaulttext = 'Сонгоно уу...';
+    {% block js %}
+        <script>
+            $(document).ready(function () {
+                $value = $(".selectBox option:selected").text();
+                if ($value != '') {
+                    defaulttext = $value;
+                } else {
+                    defaulttext = 'Сонгоно уу...';
+                }
+
+                $('.selectDefault').text(defaulttext);
+
+                $('.selectBox').on('change', function () {
+                    var selectedText = $(this).find(":selected").text();
+                    $('.selectDefault').text(selectedText);
+                });
+            });
+
+            if (window.location.search != '') {
+                $.each($('.pagination a'), function (key, val) {
+                    $(this).attr('href', $(this).attr('href') + window.location.search);
+                });
             }
 
-            $('.selectDefault').text(defaulttext);
-
-            $('.selectBox').on('change', function () {
-                var selectedText = $(this).find(":selected").text();
-                $('.selectDefault').text(selectedText);
-            });
-        });
-
-        if (window.location.search != '') {
-            $.each($('.pagination a'), function (key, val) {
-                $(this).attr('href', $(this).attr('href') + window.location.search);
-            });
-        }
-
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}

@@ -3,14 +3,12 @@
 namespace happy\WebBundle\Controller;
 
 use happy\CmsBundle\Entity\Content;
+use happy\CmsBundle\Entity\LaboratoryType;
 use happy\CmsBundle\Entity\Medicals;
 use happy\CmsBundle\Entity\MedicalType;
-use happy\WebBundle\Form\AdviceSearchType;
-use happy\WebBundle\Util\EmailBox;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\CssSelector\Parser\Reader;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -50,10 +48,10 @@ class DefaultController extends Controller
             ->getArrayResult();
 
 
-        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+        $qb = $em->getRepository('happyCmsBundle:LaboratoryType')->createQueryBuilder('n');
 
-        /**@var MedicalType[] $medicalType */
-        $medicalType = $qb
+        /**@var LaboratoryType[] $labType */
+        $labType = $qb
             ->orderBy('n.id', 'desc')
             ->getQuery()
             ->getArrayResult();
@@ -61,25 +59,9 @@ class DefaultController extends Controller
         return $this->render('@happyWeb/Default/home.html.twig', array(
             'id' => 1,
             'medical' => $medical,
-            'medicalType' => $medicalType,
-            'advice' => $advice
+            'labType' => $labType,
+            'advice' => $advice,
+
         ));
     }
-
-    /**
-     * @Route("/email", name="email")
-     * @Method({"GET", "POST"})
-     * Төслүүд
-     *
-     */
-    public function emailsAction(Request $request)
-    {
-        $email = new EmailBox($this->container);
-        $email->sendEmail('Hi', 'gombo29@gmail.com', 'hi');
-
-        var_dump('success');
-        exit();
-    }
-
-
 }
