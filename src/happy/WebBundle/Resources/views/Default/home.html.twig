@@ -111,20 +111,9 @@
             <div class="home-header">
                 <h4><i class="fa fa-plus-square"></i> Шинэ зөвлөгөө</h4>
             </div>
-            <div class="swiper-container swiper3">
-                <div class="swiper-wrapper">
-                    {% for e in advice[0:2] %}
-                        <div class="swiper-slide">
-                            {% include '@happyWeb/inc/inc-advice.html.twig' with{'createdDate': e.createdDate, 'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
-                        </div>
-                    {% endfor %}
-
-                </div>
-            </div>
-
             <div class="swiper-container swiper4">
                 <div class="swiper-wrapper">
-                    {% for e in advice[2:4] %}
+                    {% for e in advice %}
                         <div class="swiper-slide">
                             {% include '@happyWeb/inc/inc-advice.html.twig' with{'createdDate': e.createdDate, 'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
                         </div>
@@ -153,9 +142,9 @@
             medicalnum = 1;
         }
 
-        newsnum = 2;
+        newsnum = 4;
         if ($(window).width() > 1072) {
-            newsnum = 2;
+            newsnum = 4;
         } else if ($(window).width() <= 1072 && $(window).width() > 768) {
             newsnum = 2;
         }
@@ -180,17 +169,13 @@
             autoplayDisableOnInteraction: false
         });
 
-        var swiper3 = new Swiper('.swiper3', {
-            pagination: '.swiper-pagination2',
-            paginationClickable: true,
-            spaceBetween: 30,
-            slidesPerView: newsnum
-        });
         var swiper4 = new Swiper('.swiper4', {
             pagination: '.swiper-pagination2',
             paginationClickable: true,
             spaceBetween: 30,
-            slidesPerView: newsnum
+            slidesPerView: newsnum,
+            autoplay: 2500,
+            autoplayDisableOnInteraction: false
         });
     </script>
 {% endblock %}

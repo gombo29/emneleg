@@ -1,11 +1,11 @@
 <div class="advice-box">
 
-    <a href="{{ path('advice_detail', {'id': id}) }}" class="advice-box-img"
-       style="{% if small is defined %}height: 50px;{% endif %}background-image: url('{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}');">
+    <a href="{{ path('advice_detail', {'id': id}) }}" class="advice-box-img">
+        <img src="{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}" width="100%">
     </a>
 
     <div class="advice-box-txt">
-        <h6 style="font-size: 14px;{% if small is defined %}margin-bottom: 0;{% endif %}">{{ title }}</h6>
+        <h6>{{ title }}</h6>
         {% if small is not defined %}
             <p>{% if headline|length > 100 %}{{ headline|slice(0, 100) ~ '...' }}{% else %}{{ headline }}{% endif %}
             </p>

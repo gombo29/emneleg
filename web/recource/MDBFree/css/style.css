@@ -593,12 +593,8 @@ label, output {
 }
 
 .advice-box-img {
-    width: 25%;
-    background-position: top left;
-    height: 110px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    display: inline-block;
+    width: 100%;
+    display: block;
 }
 
 .advice-left-nav-scrooll {
@@ -615,10 +611,8 @@ label, output {
 }
 
 .advice-box-txt {
-    display: inline-block;
-    vertical-align: top;
-    width: 70%;
-    padding-left: 10px;
+    display: block;
+    width: 100%;margin-top: 10px;
 }
 
 .advice-nav-right-main {
@@ -629,11 +623,12 @@ label, output {
 }
 
 .advice-box-txt h6 {
-    font-weight: bold
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .advice-box-txt p {
-    font-size: 12px;
+    font-size: 14px;
     text-align: justify;
     height: 40px;
     overflow: hidden;
@@ -642,7 +637,7 @@ label, output {
 
 .advice-box-more {
     color: #31bdb6;
-    font-size: 12px;
+    font-size: 14px;
     float: right
 }
 
@@ -651,7 +646,7 @@ label, output {
 }
 
 .advice-thumb-count {
-    font-size: 12px;
+    font-size: 14px;
     margin-left: 3px;
     font-style: normal;
 }
