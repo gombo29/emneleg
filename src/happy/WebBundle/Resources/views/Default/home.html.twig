@@ -1,26 +1,41 @@
 {% extends '@happyWeb/Layout/base.html.twig' %}
 {% block style %}
     <link rel="stylesheet" href="{{ asset('recource/css/swiper.min.css') }}">
+    <style>
+        .nav-tabs .nav-link {
+            color: #ffffff;
+        }
+
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+            color: #ffffff;
+            background-color: #ff7020;
+            border-color: #ff7020 #ff7020 #ff7020 #ff7020;
+        }
+
+        .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+            color: #ffffff;
+            border-color: #ff7020 #ff7020 #ff7020 #ff7020;
+            background-color: #ff7020;
+        }
+    </style>
 {% endblock %}
 {% block ogtag %}
     <meta property="og:url" content="http://emneleg.mn/home"/>
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="Эмнэлэг.мн"/>
-    <meta property="og:description" content="Бид та бүхэнд монгол улсад үйл ажиллагаа явуулж буй эмнэлгүүдийн хаяг байршил болон төлбөрийн мэдээллийг хүргэх болно. Мөн дуудлагын сувилагчийн үйлчилгээ болон эрүүл мэндийн зөвлөгөөг манай сайтаас авч байна. Биднийг сонгон үйлчлүүлсэн та бүхэнд баярлалаа."/>
+    <meta property="og:description"
+          content="Бид та бүхэнд монгол улсад үйл ажиллагаа явуулж буй эмнэлгүүдийн хаяг байршил болон төлбөрийн мэдээллийг хүргэх болно. Мөн дуудлагын сувилагчийн үйлчилгээ болон эрүүл мэндийн зөвлөгөөг манай сайтаас авч байна. Биднийг сонгон үйлчлүүлсэн та бүхэнд баярлалаа."/>
     <meta property="og:image" content="http://emneleg.mn{{ asset('recource/share.png') }}"/>
 {% endblock %}
 {% block body %}
 
     <!-- Banner Slider -->
+
     <div id="carousel-example-1z" class="carousel slide carousel-fade top-slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
-            {#{% for key, b in  banner %}#}
-            {#{% if b.bannerbairlal.id == 1 %}#}
             <div class="carousel-item active">
                 <img src="{{ asset('recource/banner.jpg') }}" class="slide-img">
             </div>
-            {#{% endif %}#}
-            {#{% endfor %}#}
         </div>
         <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -42,13 +57,12 @@
     </div>
 
     <!-- Medical Centers -->
+
     <div class="medical-background">
         <div class="container">
             <div class="home-header">
                 <h4><i class="fa fa-home"></i> Онцлох эмнэлгүүд</h4>
             </div>
-
-
 
             <div class="swiper-container swiper1">
                 <div class="swiper-wrapper">
@@ -61,7 +75,6 @@
                 </div>
             </div>
 
-            <!-- Swiper -->
             <div class="swiper-container swiper2">
                 <div class="swiper-wrapper">
                     {% for m in medical[6:10] %}
@@ -74,17 +87,15 @@
         </div>
     </div>
 
-    <!-- Medical Center Search --->
+
+    <!-- Medical Search -->
 
     <div class="medical-search">
-        <div class="container">
-            <div style="float: left;width: 50%"></div>
-            <div style="float: left;width: 50%"></div>
-        </div>
+            {% include  '@happyWeb/inc/inc-medical-search.html.twig' %}
     </div>
 
 
-    <!-- Info graphics -->
+    <!-- Nurse  -->
 
     <div class="medical-background">
         <div class="container">
@@ -93,7 +104,7 @@
     </div>
 
 
-    <!-- Comments -->
+    <!-- Advice -->
 
     <div class="project-type-background" style="margin-bottom: 40px">
         <div class="container">
@@ -123,6 +134,7 @@
             </div>
         </div>
     </div>
+
     <script>
 
     </script>

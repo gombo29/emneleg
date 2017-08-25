@@ -4,6 +4,7 @@ namespace happy\WebBundle\Controller;
 
 use happy\CmsBundle\Entity\Content;
 use happy\CmsBundle\Entity\Medicals;
+use happy\CmsBundle\Entity\MedicalType;
 use happy\WebBundle\Form\AdviceSearchType;
 use happy\WebBundle\Util\EmailBox;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,9 +49,19 @@ class DefaultController extends Controller
             ->getQuery()
             ->getArrayResult();
 
+
+        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+
+        /**@var MedicalType[] $medicalType */
+        $medicalType = $qb
+            ->orderBy('n.id', 'desc')
+            ->getQuery()
+            ->getArrayResult();
+
         return $this->render('@happyWeb/Default/home.html.twig', array(
             'id' => 1,
             'medical' => $medical,
+            'medicalType' => $medicalType,
             'advice' => $advice
         ));
     }

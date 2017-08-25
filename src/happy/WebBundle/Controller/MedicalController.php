@@ -3,6 +3,7 @@
 namespace happy\WebBundle\Controller;
 
 use happy\CmsBundle\Entity\Medicals;
+use happy\CmsBundle\Entity\MedicalType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -68,12 +69,21 @@ class MedicalController extends Controller
             ->getQuery()
             ->getArrayResult();
 
+        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+
+        /**@var MedicalType[] $medicalType */
+        $medicalType = $qb
+            ->orderBy('n.id', 'desc')
+            ->getQuery()
+            ->getArrayResult();
+
         return $this->render('@happyWeb/Medical/medicals.html.twig',
             array(
                 'pagecount' => ($count % $pagesize) > 0 ? intval($count / $pagesize) + 1 : intval($count / $pagesize),
                 'count' => $count,
                 'page' => $page,
                 'search' => $search,
+                'medicalType' => $medicalType,
                 'medical' => $medical,
             )
         );
