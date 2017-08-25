@@ -997,6 +997,8 @@ label, output {
     border-color: #31bdb6;
 }
 
+
+
 /* =============== footer ============== */
 .footer {
     background-color: #333333;
@@ -1225,6 +1227,46 @@ label, output {
 }
 
 /* ============ Medical DEtail =============== */
+
+#map-canvas {
+    height: 800px;
+}
+
+#map-canvas .gm-style .gm-style-iw {
+    width: 280px !important;
+}
+
+#map-canvas .papular-reviews .image img {
+    width: 100%;
+    height: auto;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#map-canvas .papular-post-slider .papular-reviews {
+    margin: 0;
+    box-shadow: none;
+}
+
+#map-canvas .gm-style-iw div {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#map-canvas .gm-style-iw div div {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#map-canvas .gm-style-iw {
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+#map-canvas .papular-post-slider .papular-reviews .content {
+    padding: 10px 0;
+}
+
 
 .med-detail-line {
     border-right: 1px solid #ccc;
