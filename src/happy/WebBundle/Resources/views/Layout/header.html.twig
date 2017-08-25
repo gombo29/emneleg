@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse" id="navbarNav3">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="" style="background-color: #31bdb6;color: #ffffff"><i class="fa fa-stethoscope"></i> Сувилагч дуудах</a>
+                    <a class="nav-link" href="{{ path('web_nurse_index') }}" style="background-color: #31bdb6;color: #ffffff"><i class="fa fa-stethoscope"></i> Сувилагч дуудах</a>
                 </li>
                 {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">

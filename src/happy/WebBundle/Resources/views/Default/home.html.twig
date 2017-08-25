@@ -17,6 +17,17 @@
             border-color: #ff7020 #ff7020 #ff7020 #ff7020;
             background-color: #ff7020;
         }
+
+        .nav-justified .nav-item {
+            border: 2px solid #ffffff;
+            margin-left: 5px;
+        }
+
+        .nav-justified .nav-item:hover {
+            color: #ffffff;
+            background-color: #ff7020;
+        }
+
     </style>
 {% endblock %}
 {% block ogtag %}
@@ -91,18 +102,28 @@
     <!-- Medical Search -->
 
     <div class="medical-search">
-            {% include  '@happyWeb/inc/inc-medical-search.html.twig' %}
+        {% include  '@happyWeb/inc/inc-medical-search.html.twig' %}
     </div>
 
 
     <!-- Nurse  -->
 
-    <div class="medical-background">
+    <div class="medical-background" >
         <div class="container">
-            <img src="{{ asset('recource/img.jpg') }}" style="width: 100%;">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
+                <div class="home-header">
+                    <h4><i class="fa fa-stethoscope"></i> Сувилагч</h4>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
+
+                <img src="{{ asset('recource/banner1.jpg') }}" style="margin-bottom: 20px;width: 100%">
+                <img src="{{ asset('recource/banner2.jpg') }}" style="margin-bottom: 20px;width: 100%">
+
+
+            </div>
         </div>
     </div>
-
 
     <!-- Advice -->
 
@@ -118,15 +139,10 @@
                             {% include '@happyWeb/inc/inc-advice.html.twig' with{'createdDate': e.createdDate, 'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
                         </div>
                     {% endfor %}
-
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-
-    </script>
 {% endblock %}
 
 {% block js %}
