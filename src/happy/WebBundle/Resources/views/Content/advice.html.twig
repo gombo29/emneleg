@@ -10,7 +10,7 @@
                 <div class="advice-detail-banner">
                     <div class="swiper-container swiper3">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
+                            <div class="swiper-slide">s
                                 <img src="{{ asset('recource/banner2.jpg') }}" style="width:100%;">
                             </div>
 
@@ -28,7 +28,9 @@
                     </div>
                 </div>
                 {% for key ,e in advice %}
+                    {#<div class="col-lg-4 col-md-4 hidden-sm-down advice-nav-right-main">#}
                     {% include '@happyWeb/inc/inc-advice.html.twig' with{'createdDate': e.createdDate,'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
+
                 {% endfor %}
 
                 {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'advice'} %}
