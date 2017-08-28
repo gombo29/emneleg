@@ -202,6 +202,8 @@ class MedicalController extends Controller
                     $em->persist($medicalMedType);
                 }
             }
+
+
             $medical->uploadImage($this->container);
             $em->persist($medical);
             $em->flush();
@@ -209,6 +211,7 @@ class MedicalController extends Controller
                 ->getSession()
                 ->getFlashBag()
                 ->add('success', 'Мэдээ амжилттай үүлслээ!');
+
             return $this->redirectToRoute('cms_medical_index');
         }
         return array(
@@ -552,14 +555,11 @@ class MedicalController extends Controller
      */
     public function uploadimgAction(Request $request, Medicals $medical)
     {
-
-
         $em = $this->getDoctrine()->getManager();
         $images = $request->files->get('files');
         $photo = new MedicalPhoto();
         $photo->setMedical($medical);
         $photo->imagefile = $images[0];
-
 
         $photo->uploadImage($this->container, false);
 
@@ -575,7 +575,7 @@ class MedicalController extends Controller
                     'deleteType' => 'DELETE',
                     'url' => 'https://gogo.mn',
                     'deleteUrl' => $this->generateUrl('cms_medical_delete_image', array('id' => $photo->getId())),
-                    'thumbnailUrl' => '/' . $this->container->getParameter('imgstatlocal') . $photo->getPath(),
+                    'thumbnailUrl' => '/' . $this->container->getParameter('localstatfolder') . $photo->getPath(),
                     'descr' => 'Энд зургийн тайлбар оруулна уу!'
                 ))
         );

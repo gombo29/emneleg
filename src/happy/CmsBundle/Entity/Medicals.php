@@ -255,15 +255,15 @@ class Medicals
     public function onPrePersist()
     {
         $this->setCreatedDate(new \DateTime("now"));
-        $this->setIsRemove(0);
-        $this->setLikeCount(0);
-        $this->setIsParking(0);
-        $this->setIsCard(0);
-        $this->setIsTasag(0);
-        $this->setIsSaturdayHool(0);
-        $this->setIsSundayHool(0);
-        $this->setIsLaboratory(0);
-        $this->setIsOntsloh(0);
+//        $this->setIsRemove(0);
+//        $this->setLikeCount(0);
+//        $this->setIsParking(0);
+//        $this->setIsCard(0);
+//        $this->setIsTasag(0);
+//        $this->setIsSaturdayHool(0);
+//        $this->setIsSundayHool(0);
+//        $this->setIsLaboratory(0);
+//        $this->setIsOntsloh(0);
     }
 
     /**
