@@ -75,8 +75,7 @@ class MedicalPhoto
      *
      * @Assert\Image(
      *
-     *     maxSize="10M",
-     *     mimeTypesMessage = "Зурган файл биш байна!"
+     *     maxSize="10M"
      * )
      *
      */
