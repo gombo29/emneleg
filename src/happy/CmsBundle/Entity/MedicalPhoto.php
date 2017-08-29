@@ -73,9 +73,7 @@ class MedicalPhoto
 
     /**
      *
-     * @Assert\Image(
-     *        mimeTypesMessage = "Зурган файл биш байна!"
-     * )
+     * @Assert\Image()
      *
      */
     public $imagefile;

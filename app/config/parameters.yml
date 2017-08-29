@@ -1,15 +1,33 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
+    database_host: 203.34.37.100
     database_port: 3306
     database_name: medical
-    database_user: root
-    database_password: null
+    database_user: gombomongolia
+    database_password: 'Mongolia123!#'
     mailer_transport: smtp
-    mailer_host: mail.emneleg.mn/
-    mailer_user: support@emneleg.mn
+    mailer_host: mail.angelinvester.mn/
+    mailer_user: support@seed.mn
     mailer_password: 'Mongolia123!#'
     secret: bf7ad834e7257d8679e426f56a12d1785c4dbc94
-    statfolder: resources/
+    statfolder: 'http://cms.start.co/resources/'
     localstatfolder: resources/
     thumbsizes: 100
+
+#    database_host: 127.0.0.1
+#    database_port: 8889
+#    database_name: emneleg
+#    database_user: gombo
+#    database_password: mongolia
+#
+#
+#
+#    mailer_transport: smtp
+#    mailer_host: mail.angelinvester.mn/
+#    mailer_user: support@seed.mn
+#    mailer_password: Mongolia123!#
+#    secret: bf7ad834e7257d8679e426f56a12d1785c4dbc94
+##   resources: http://45.112.178.233/resources
+#    statfolder: http://cms.start.co/resources/
+#    localstatfolder: resources/
+#    thumbsizes: 100
