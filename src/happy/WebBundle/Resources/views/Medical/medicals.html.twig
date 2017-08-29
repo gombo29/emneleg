@@ -88,8 +88,10 @@
             <!-- MAP -->
             <div class="tab-pane fade  {% if viewType == 3 %}in show active{% endif %}" id="map"
                  role="tabpanel">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
-                    <div id="map-canvas"></div>
+                <div class="container">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
+                        <p> map</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,7 +99,6 @@
 {% endblock %}
 
     {% block js %}
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEyeyQLgmJ_Gv7X-Vs5FcfqoWZ3Nz2cM8"></script>
         <script>
             $(document).ready(function () {
                 $value = $(".selectBox option:selected").text();
@@ -120,68 +121,6 @@
                     $(this).attr('href', $(this).attr('href') + window.location.search);
                 });
             }
-
-
-            var locations = [
-                {% for m in medical %}
-                ['<div class="papular-post-slider"><div class="papular-reviews"><a href="#"><div class="image"> <img alt="{{ m.name }}" src="/{{ localstatfolder }}{{ m.photo }}" class="img-responsive"><div class="absolute-in-image"><div class="duration"><br><span> Утас: {% set ph = m.phone|split(';') %}{% for p in ph %}{% if loop.first %}{{ p }}{% endif %}{% endfor %}</span></div></div></div><div class="content"><span class="cat"><i class="flaticon-technology-23"></i></span><h4>{{ m.name }}</h4><span>Хаяг: {{ m.address }}</span> </div></div></div></a></div></div>',   {% set phone = m.longLat|split(';') %}
-                    {% for p in phone %}
-                    {{ p }}{% if loop.last %}{% else %},{% endif %}
-                    {% endfor %}, '{{ asset('recource/marker.png') }}'],
-                {% endfor %}
-
-
-            ];
-            var styles = [
-                {
-                    stylers: [
-                        {lightness: 5}
-                    ]
-                }
-            ];
-
-            var map = new google.maps.Map(document.getElementById('map-canvas'), {
-                scrollwheel: false,
-                styles: styles,
-                center: new google.maps.LatLng(40.771099,  -73.94)
-            });
-
-
-            var infowindow = new google.maps.InfoWindow();
-            var marker, i;
-            var markers = new Array();
-            for (i = 0; i < locations.length; i++) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map,
-                    icon: locations[i][3]
-                });
-                markers.push(marker);
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                        infowindow.setContent(locations[i][0]);
-                        infowindow.open(map, marker);
-                    }
-                })(marker, i));
-            }
-
-            function AutoCenter() {
-                var bounds = new google.maps.LatLngBounds();
-
-                $.each(markers, function (index, marker) {
-                    bounds.extend(marker.position);
-                });
-                map.fitBounds(bounds);
-                var listener = google.maps.event.addListener(map, "idle", function () {
-                    if (map.getZoom() > 6) map.setZoom(14);
-                    google.maps.event.removeListener(listener);
-                });
-            }
-
-            AutoCenter();
-
-
-
 
         </script>
     {% endblock %}
