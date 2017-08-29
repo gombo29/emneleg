@@ -1,16 +1,14 @@
-# This file is auto-generated during the composer install
 parameters:
     database_host: 127.0.0.1
-    database_port: test
-    database_name: test
-    database_user: test
-    database_password: test
-
+    database_port: 3306
+    database_name: medical
+    database_user: root
+    database_password: null
     mailer_transport: smtp
-    mailer_host: test
-    mailer_user: test
-    mailer_password: test
+    mailer_host: mail.emneleg.mn/
+    mailer_user: support@emneleg.mn
+    mailer_password: 'Mongolia123!#'
     secret: bf7ad834e7257d8679e426f56a12d1785c4dbc94
-    statfolder: test
-    localstatfolder: test
+    statfolder: resources/
+    localstatfolder: resources/
     thumbsizes: 100
