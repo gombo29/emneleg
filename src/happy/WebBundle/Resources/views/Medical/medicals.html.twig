@@ -113,75 +113,78 @@
                     var selectedText = $(this).find(":selected").text();
                     $('.selectDefault').text(selectedText);
                 });
-            });
 
-            if (window.location.search != '') {
-                $.each($('.pagination a'), function (key, val) {
-                    $(this).attr('href', $(this).attr('href') + window.location.search);
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    mapChange();
                 });
-            }
 
 
-            var locations = [
-                {% for m in medical %}
-                ['<div class="papular-post-slider"><div class="papular-reviews"><a href="#"><div class="image"> <img alt="{{ m.name }}" src="/{{ localstatfolder }}{{ m.photo }}" class="img-responsive"><div class="absolute-in-image"><div class="duration"><br><span> Утас: {% set ph = m.phone|split(';') %}{% for p in ph %}{% if loop.first %}{{ p }}{% endif %}{% endfor %}</span></div></div></div><div class="content"><span class="cat"><i class="flaticon-technology-23"></i></span><h4>{{ m.name }}</h4><span>Хаяг: {{ m.address }}</span> </div></div></div></a></div></div>',   {% set phone = m.longLat|split(';') %}
-                    {% for p in phone %}
-                    {{ p }}{% if loop.last %}{% else %},{% endif %}
-                    {% endfor %}, '{{ asset('recource/marker.png') }}'],
-                {% endfor %}
-
-
-            ];
-            var styles = [
-                {
-                    stylers: [
-                        {lightness: 5}
-                    ]
+                if (window.location.search != '') {
+                    $.each($('.pagination a'), function (key, val) {
+                        $(this).attr('href', $(this).attr('href') + window.location.search);
+                    });
                 }
-            ];
 
-            var map = new google.maps.Map(document.getElementById('map-canvas'), {
-                scrollwheel: false,
-                styles: styles,
-                center: new google.maps.LatLng(40.771099,  -73.94)
-            });
+                function mapChange() {
+
+                    var locations = [
+                        {% for m in medical %}
+                        ['<div class="papular-post-slider"><div class="papular-reviews"><a href="#"><div class="image"> <img alt="{{ m.name }}" src="/{{ localstatfolder }}{{ m.photo }}" class="img-responsive"><div class="absolute-in-image"><div class="duration"><br><span> Утас: {% set ph = m.phone|split(';') %}{% for p in ph %}{% if loop.first %}{{ p }}{% endif %}{% endfor %}</span></div></div></div><div class="content"><span class="cat"><i class="flaticon-technology-23"></i></span><h4>{{ m.name }}</h4><span>Хаяг: {{ m.address }}</span> </div></div></div></a></div></div>',   {% set phone = m.longLat|split(';') %}
+                            {% for p in phone %}
+                            {{ p }}{% if loop.last %}{% else %},{% endif %}
+                            {% endfor %}, '{{ asset('recource/marker.png') }}'],
+                        {% endfor %}
+                    ];
+                    var styles = [
+                        {
+                            stylers: [
+                                {lightness: 5}
+                            ]
+                        }
+                    ];
+
+                    var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                        scrollwheel: false,
+                        styles: styles,
+                        center: new google.maps.LatLng(40.771099, -73.94)
+                    });
 
 
-            var infowindow = new google.maps.InfoWindow();
-            var marker, i;
-            var markers = new Array();
-            for (i = 0; i < locations.length; i++) {
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-                    map: map,
-                    icon: locations[i][3]
-                });
-                markers.push(marker);
-                google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                    return function () {
-                        infowindow.setContent(locations[i][0]);
-                        infowindow.open(map, marker);
+                    var infowindow = new google.maps.InfoWindow();
+                    var marker, i;
+                    var markers = new Array();
+                    for (i = 0; i < locations.length; i++) {
+                        marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                            map: map,
+                            icon: locations[i][3]
+                        });
+                        markers.push(marker);
+                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                            return function () {
+                                infowindow.setContent(locations[i][0]);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, i));
                     }
-                })(marker, i));
-            }
 
-            function AutoCenter() {
-                var bounds = new google.maps.LatLngBounds();
+                    function AutoCenter() {
+                        var bounds = new google.maps.LatLngBounds();
 
-                $.each(markers, function (index, marker) {
-                    bounds.extend(marker.position);
-                });
-                map.fitBounds(bounds);
-                var listener = google.maps.event.addListener(map, "idle", function () {
-                    if (map.getZoom() > 6) map.setZoom(14);
-                    google.maps.event.removeListener(listener);
-                });
-            }
+                        $.each(markers, function (index, marker) {
+                            bounds.extend(marker.position);
+                        });
+                        map.fitBounds(bounds);
+                        var listener = google.maps.event.addListener(map, "idle", function () {
+                            if (map.getZoom() > 6) map.setZoom(14);
+                            google.maps.event.removeListener(listener);
+                        });
+                    }
 
-            AutoCenter();
-
-
-
+                    AutoCenter();
+                }
+                mapChange();
+            });
 
         </script>
     {% endblock %}
