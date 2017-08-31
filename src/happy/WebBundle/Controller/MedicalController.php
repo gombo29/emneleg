@@ -28,22 +28,55 @@ class MedicalController extends Controller
      */
     public function medicalsAction(Request $request, $page, $type)
     {
-        $pagesize = 20;
-        $count = 0;
-        $labTypeIds = $request->get('medtypes');
+        // type :  1 => list ; 2 => type ; 3 => map
+        if ($type == 2) {
+            $pagesize = 5;
+        } else {
+            $pagesize = 20;
+        }
 
+        $count = 0;
+        $labTypeIds = $request->get('labtypes');
+        $medTypeId = $request->get('medtypes');
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
 
+        $medicalMedIds = null;
+        if ($medTypeId) {
+            $qblab = $em->getRepository('happyCmsBundle:MedicalMedType')->createQueryBuilder('n');
+
+            $medicalMedIds = $qblab
+                ->select('m.id')
+                ->leftJoin('n.medical', 'm')
+                ->where($qblab->expr()->in('n.medicalType', ':p1'))
+                ->setParameter('p1', $medTypeId)
+                ->groupBy('m.id')
+                ->getQuery()
+                ->getArrayResult();
+
+            if ($medicalMedIds) {
+                $qb
+                    ->andWhere($qb->expr()->in('n.id', ':medIds'))
+                    ->setParameter(':medIds', $medicalMedIds);
+            }
+        }
 
         if ($labTypeIds) {
             $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
 
-            $medicalIds = $qblab
+            $qblab
                 ->select('m.id')
                 ->leftJoin('n.medical', 'm')
                 ->where($qblab->expr()->in('n.labType', ':p1'))
-                ->setParameter('p1', $labTypeIds)
+                ->setParameter('p1', $labTypeIds);
+
+            if ($medicalMedIds != null) {
+                $qblab
+                    ->andWhere($qblab->expr()->in('n.medical', ':p1'))
+                    ->setParameter('p1', $medicalMedIds);
+            }
+
+            $medicalIds = $qblab
                 ->groupBy('m.id')
                 ->having('COUNT(m.id) = :labcount')
                 ->setParameter('labcount', sizeof($labTypeIds))
@@ -59,7 +92,7 @@ class MedicalController extends Controller
         }
 
 
-        if ($type == 1) {
+        if ($type != 3) {
             $countQueryBuilder = clone $qb;
             $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
             $qb
@@ -102,6 +135,7 @@ class MedicalController extends Controller
                 'viewType' => $type,
                 'medType' => $medType,
                 'labTypeIds' => $labTypeIds,
+                'medTypeId' => $medTypeId
             )
         );
     }

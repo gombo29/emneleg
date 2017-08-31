@@ -22,7 +22,11 @@
         </ul>
     </div>
     <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 med-search-type">
+        {% if medTypeId is defined %}
+        <form action="{{ path('medicals', {'type': viewType, 'medtypes': medTypeId}) }}" method="get" id="medicalSearch">
+        {% else %}
         <form action="{{ path('medicals', {'type': viewType}) }}" method="get" id="medicalSearch">
+            {% endif %}
             {% for i in labType %}
                 {% set isChecked = false %}
                 {% if labTypeIds is defined %}
@@ -33,7 +37,7 @@
                     {% endfor %}
                 {% endif %}
                 <div class="form-group med-search-checker">
-                    <input type="checkbox" class="filled-in" name="medtypes[]" id="checkbox{{ i.id }}"
+                    <input type="checkbox" class="filled-in" name="labtypes[]" id="checkbox{{ i.id }}"
                            value="{{ i.id }}" {% if isChecked == true %} checked{% endif %}>
                     <label for="checkbox{{ i.id }}">{{ i.name }}</label>
                 </div>

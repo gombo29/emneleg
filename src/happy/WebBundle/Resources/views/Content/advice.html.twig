@@ -31,7 +31,7 @@
                     {% include '@happyWeb/inc/inc-advice.html.twig' with{'createdDate': e.createdDate,'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
                 {% endfor %}
 
-                {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'advice'} %}
+                {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'advice', 'type': 1} %}
             </div>
 
             <div class="col-lg-4 col-md-4 hidden-sm-down advice-nav-right-main">

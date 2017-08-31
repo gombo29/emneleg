@@ -4,7 +4,7 @@
         <ul class="pagination">
             {% if 1<page %}
                 <li class="page-item">
-                    <a class="page-link" href="{{ path(route,{'page':page-1}) }}" aria-label="Previous">
+                    <a class="page-link" href="{{ path(route,{'page':page-1 ,'type' : type}) }}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">өмнөх</span>
                     </a>
@@ -18,7 +18,7 @@
                 </li>
             {% endif %}
             <li class="page-item {% if 1==page %}active{% endif %}">
-                <a class="page-link" href="{{ path(route,{'page':1}) }}">1</a>
+                <a class="page-link" href="{{ path(route,{'page':1,'type' : type}) }}">1</a>
             </li>
             {% if page>1+range+1 %}
                 <li class="page-item disabled">
@@ -32,7 +32,7 @@
                             <a class="page-link" href="javascript:void(0)">{{ i }}</a>
                         </li>
                     {% elseif page-range<=i and i<=page+range %}
-                        <li class="page-item"><a class="page-link" href="{{ path(route,{'page':i}) }}">{{ i }}</a></li>
+                        <li class="page-item"><a class="page-link" href="{{ path(route,{'page':i,'type' : type}) }}">{{ i }}</a></li>
                     {% endif %}
                 {% endfor %}
             {% endif %}
@@ -40,12 +40,12 @@
                 <li class="page-item disabled"><a class="page-link" href="javascript:void(0)">...</a></li>
             {% endif %}
             <li class="page-item {% if pagecount==page %}active{% endif %}">
-                <a class="page-link" href="{{ path(route,{'page':pagecount}) }}">{{ pagecount }}</a>
+                <a class="page-link" href="{{ path(route,{'page':pagecount,'type' : type}) }}">{{ pagecount }}</a>
             </li>
             {% if pagecount>page %}
 
                 <li class="page-item">
-                    <a class="page-link" href="{{ path(route,{'page':page+1}) }}" aria-label="Next">
+                    <a class="page-link" href="{{ path(route,{'page':page+1,'type' : type}) }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">дараах</span>
                     </a>

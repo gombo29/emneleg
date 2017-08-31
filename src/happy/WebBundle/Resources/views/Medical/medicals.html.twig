@@ -37,14 +37,14 @@
             <!-- List -->
             <div class="tab-pane fade {% if viewType == 1 %} in show active{% endif %}" id="list"
                  role="tabpanel">
-                <div class="container">
+                <div class="container" style="margin-top: 30px">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
                         {% for m in medical %}
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="float: left;margin-bottom: 25px;">
                                 {% include  '@happyWeb/inc/inc-medical.html.twig' with {'detailpage': 1, 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
                             </div>
                         {% endfor %}
-                        {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals'} %}
+                        {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals','type': 1} %}
                     </div>
                 </div>
             </div>
@@ -53,36 +53,28 @@
             <div class="tab-pane fade  {% if viewType == 2 %}in show active{% endif %}" id="type"
                  role="tabpanel">
 
-                <!-- Nav tabs -->
-                <div class="tabs-wrapper">
-                    <ul class="nav classic-tabs tabs-orange" role="tablist">
-                        {% for i in medType %}
-                            <li class="nav-item" style="width: 125px;">
-                                <a class="nav-link waves-light {% if loop.first %}active{% endif %}" data-toggle="tab"
-                                   href="#panelmed{{ i.id }}" role="tab"
-                                   style="text-align: center;font-size: 15px;"><i
-                                            class="fa fa-user fa-2x" aria-hidden="true"></i><br> {{ i.name }}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <!-- Tab panels -->
-                <div class="tab-content card">
-                    <div class="container">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
+                <div class="container" style="margin-top: 30px;margin-bottom: 30px">
+                    <div class="col-lg-3" style="float: left">
+                        <div class="list-group">
                             {% for i in medType %}
-                                <div class="tab-pane fade{% if loop.first %} in show active {% endif %}"
-                                     id="panelmed{{ i.id }}" role="tabpanel">
-                                    <p style="margin-top: 50px;margin-bottom: 50px;text-align: center">
-                                        {{ i.name }}
-                                    </p>
-                                </div>
+                                <a href="{{ path('medicals', {'type': viewType, 'medtypes':  i.id }) }}"
+                                   class="list-group-item {% if medTypeId == i.id %}active{% endif %}">
+                                    <img src="{{ asset('recource/icons/ICON-14.png') }}" style="width: 20px;margin-right: 10px;">{{ i.name }}
+                                </a>
                             {% endfor %}
                         </div>
                     </div>
+
+                    <div class="col-lg-9" style="float: left">
+                        {% for m in medical %}
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="float: left;">
+                                {% include  '@happyWeb/inc/inc-medical.html.twig' with {'detailpage': 1, 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
+                            </div>
+                        {% endfor %}
+
+                        {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals', 'type': 2} %}
+                    </div>
                 </div>
-
-
             </div>
 
             <!-- MAP -->
