@@ -62,6 +62,7 @@ class DefaultController extends Controller
             'medical' => $medical,
             'labType' => $labType,
             'advice' => $advice,
+            'viewType' => 1
 
         ));
     }

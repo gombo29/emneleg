@@ -60,7 +60,6 @@ class Medicals
      */
     private $email;
 
-
     /**
      * @var string
      *

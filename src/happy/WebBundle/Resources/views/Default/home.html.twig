@@ -108,7 +108,7 @@
 
     <!-- Nurse  -->
 
-    <div class="medical-background" >
+    <div class="medical-background">
         <div class="container">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
                 <div class="home-header">
@@ -148,50 +148,56 @@
 {% block js %}
     <script src="{{ asset('recource/js/swiper.min.js') }}"></script>
     <script>
-        medicalnum = 2;
-        if ($(window).width() > 1072) {
+        $(document).ready(function () {
             medicalnum = 2;
-        } else if ($(window).width() <= 1072 && $(window).width() > 768) {
-            medicalnum = 2;
-        }
-        else if ($(window).width() <= 768) {
-            medicalnum = 1;
-        }
+            if ($(window).width() > 1072) {
+                medicalnum = 2;
+            } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+                medicalnum = 2;
+            }
+            else if ($(window).width() <= 768) {
+                medicalnum = 1;
+            }
 
-        newsnum = 4;
-        if ($(window).width() > 1072) {
             newsnum = 4;
-        } else if ($(window).width() <= 1072 && $(window).width() > 768) {
-            newsnum = 2;
-        }
-        else if ($(window).width() <= 768) {
-            newsnum = 1;
-        }
+            if ($(window).width() > 1072) {
+                newsnum = 4;
+            } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+                newsnum = 2;
+            }
+            else if ($(window).width() <= 768) {
+                newsnum = 1;
+            }
 
-        var swiper1 = new Swiper('.swiper1', {
-            pagination: '.swiper-pagination1',
-            paginationClickable: true,
-            spaceBetween: 30,
-            slidesPerView: medicalnum,
-            autoplay: 2500,
-            autoplayDisableOnInteraction: false
-        });
-        var swiper2 = new Swiper('.swiper2', {
-            pagination: '.swiper-pagination2',
-            paginationClickable: true,
-            spaceBetween: 30,
-            slidesPerView: medicalnum,
-            autoplay: 2500,
-            autoplayDisableOnInteraction: false
-        });
+            var swiper1 = new Swiper('.swiper1', {
+                pagination: '.swiper-pagination1',
+                paginationClickable: true,
+                spaceBetween: 30,
+                slidesPerView: medicalnum,
+                autoplay: 2500,
+                autoplayDisableOnInteraction: false
+            });
+            var swiper2 = new Swiper('.swiper2', {
+                pagination: '.swiper-pagination2',
+                paginationClickable: true,
+                spaceBetween: 30,
+                slidesPerView: medicalnum,
+                autoplay: 2500,
+                autoplayDisableOnInteraction: false
+            });
 
-        var swiper4 = new Swiper('.swiper4', {
-            pagination: '.swiper-pagination2',
-            paginationClickable: true,
-            spaceBetween: 30,
-            slidesPerView: newsnum,
-            autoplay: 2500,
-            autoplayDisableOnInteraction: false
+            var swiper4 = new Swiper('.swiper4', {
+                pagination: '.swiper-pagination2',
+                paginationClickable: true,
+                spaceBetween: 30,
+                slidesPerView: newsnum,
+                autoplay: 2500,
+                autoplayDisableOnInteraction: false
+            });
+
+            $('input[type="checkbox"]').change(function () {
+                $('#medicalSearch').submit();
+            });
         });
     </script>
 {% endblock %}

@@ -28,35 +28,49 @@ class MedicalController extends Controller
      */
     public function medicalsAction(Request $request, $page, $type)
     {
-
         $pagesize = 20;
-
-        $searchEntity = new Medicals();
-        $searchForm = $this->createForm('happy\CmsBundle\Form\SearchForm\MedicalSearchType', $searchEntity);
-        $search = false;
-        if ($request->get("submit") == 'submit') {
-            $searchForm->bind($request);
-            $search = true;
-        }
+        $count = 0;
+        $labTypeIds = $request->get('medtypes');
 
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
 
-        if ($search) {
-            if ($searchEntity->getName() && $searchEntity->getName() != '') {
-                $qb->andWhere('n.name like :name')
-                    ->setParameter('name', '%' . $searchEntity->getName() . '%');
+
+        if ($labTypeIds) {
+            $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
+
+            $medicalIds = $qblab
+                ->select('m.id')
+                ->leftJoin('n.medical', 'm')
+                ->where($qblab->expr()->in('n.labType', ':p1'))
+                ->setParameter('p1', $labTypeIds)
+                ->groupBy('m.id')
+                ->having('COUNT(m.id) = :labcount')
+                ->setParameter('labcount', sizeof($labTypeIds))
+                ->getQuery()
+                ->getArrayResult();
+
+            if ($medicalIds) {
+                $qb
+                    ->where($qb->expr()->in('n.id', ':medIds'))
+                    ->setParameter(':medIds', $medicalIds);
             }
+
         }
 
-        $countQueryBuilder = clone $qb;
-        $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
+
+        if ($type == 1) {
+            $countQueryBuilder = clone $qb;
+            $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
+            $qb
+                ->setFirstResult(($page - 1) * $pagesize)
+                ->setMaxResults($pagesize);
+        }
+
         /**@var Medicals[] $medical */
         $medical = $qb
-            ->orderBy('n.createdDate', 'desc')
-            ->addOrderBy('n.isOntsloh', 'desc')
-            ->setFirstResult(($page - 1) * $pagesize)
-            ->setMaxResults($pagesize)
+            ->orderBy('n.isOntsloh', 'desc')
+            ->addOrderBy('n.createdDate', 'desc')
             ->getQuery()
             ->getArrayResult();
 
@@ -83,11 +97,11 @@ class MedicalController extends Controller
                 'pagecount' => ($count % $pagesize) > 0 ? intval($count / $pagesize) + 1 : intval($count / $pagesize),
                 'count' => $count,
                 'page' => $page,
-                'search' => $search,
                 'labType' => $labType,
                 'medical' => $medical,
                 'viewType' => $type,
                 'medType' => $medType,
+                'labTypeIds' => $labTypeIds,
             )
         );
     }
@@ -101,8 +115,6 @@ class MedicalController extends Controller
      */
     public function medicalDetailAction(Medicals $medicals)
     {
-
-
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:MedicalPhoto')->createQueryBuilder('n');
         $medicalPhoto = $qb

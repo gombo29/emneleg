@@ -4,33 +4,40 @@
     <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 med-search-view-type">
         <h5 class="med-search-text">Эмнэлгийн хайлт</h5>
         <ul class="nav nav-tabs nav-justified" style="border-bottom:none">
-            <li class="nav-item">
+            <li class="nav-item med-menu">
                 <a class="nav-link {% if current is defined %} {% if type == 1 %}active {% endif %}{% endif %}"
-                   {% if current is defined %}data-toggle="tab" href="#list"
-                   role="tab"{% else %} href="{{ path('medicals', {'type' : 1}) }}"{% endif %} style="font-size: 14px;"><i
+                   href="{{ path('medicals', {'type' : 1}) }}" style="font-size: 14px;"><i
                             class="fa fa-list"></i> <br>Жагсаалт</a>
             </li>
-
-            <li class="nav-item">
+            <li class="nav-item med-menu">
                 <a class="nav-link {% if current is defined %} {% if type == 2 %}active {% endif %}{% endif %}"
-                   {% if current is defined %}data-toggle="tab" href="#type"
-                   role="tab"{% else %} href="{{ path('medicals', {'type' : 2}) }}"{% endif %} style="font-size: 14px;"><i
+                   href="{{ path('medicals', {'type' : 2}) }}" style="font-size: 14px;"><i
                             class="fa fa-th-large"></i> <br>Төрөл</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item med-menu">
                 <a class="nav-link {% if current is defined %} {% if type == 3 %}active {% endif %}{% endif %}"
-                   {% if current is defined %}data-toggle="tab" href="#map"
-                   role="tab"{% else %} href="{{ path('medicals', {'type' : 3}) }}"{% endif %} style="font-size: 14px;"><i
+                   href="{{ path('medicals', {'type' : 3}) }}" style="font-size: 14px;"><i
                             class="fa fa-map-marker"></i> <br>Map</a>
             </li>
         </ul>
     </div>
     <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 med-search-type">
-        {% for i in labType %}
-            <div class="form-group med-search-checker">
-                <input type="checkbox" class="filled-in" id="checkbox{{ i.id }}">
-                <label for="checkbox{{ i.id }}">{{ i.name }}</label>
-            </div>
-        {% endfor %}
+        <form action="{{ path('medicals', {'type': viewType}) }}" method="get" id="medicalSearch">
+            {% for i in labType %}
+                {% set isChecked = false %}
+                {% if labTypeIds is defined %}
+                    {% for j in labTypeIds %}
+                        {% if i.id == j %}
+                            {% set isChecked = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <div class="form-group med-search-checker">
+                    <input type="checkbox" class="filled-in" name="medtypes[]" id="checkbox{{ i.id }}"
+                           value="{{ i.id }}" {% if isChecked == true %} checked{% endif %}>
+                    <label for="checkbox{{ i.id }}">{{ i.name }}</label>
+                </div>
+            {% endfor %}
+        </form>
     </div>
 </div>
