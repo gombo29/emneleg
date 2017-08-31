@@ -158,6 +158,7 @@ class MedicalController extends Controller
                 'medicalDoctor' => $medicalDoctor,
                 'tasagInfo' => $tasagInfo,
                 'labType' => $labType,
+                'viewType' => 1,
             )
         );
     }
