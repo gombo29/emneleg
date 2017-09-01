@@ -113,6 +113,18 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
                 <div class="home-header">
                     <h4><i class="fa fa-stethoscope"></i> Сувилагч</h4>
+                    {% for m in nurse %}
+                        <div class="nurse-block-detail" style="height: 125px;">
+                            <div class="nurse-block-detail-img">
+                                <img src="/{{ localstatfolder }}{{ m.photo }}" >
+                            </div>
+                            <div class="nurse-block-detail-text">
+                                <h4 style="font-size: 16px">{{ m.name }}</h4>
+                                <a class="btn btn-warning" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага өгөх</a>
+                            </div>
+
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
