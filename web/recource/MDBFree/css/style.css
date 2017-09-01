@@ -581,15 +581,14 @@ label, output {
     width: 100%;
     height: 30px;
     margin-top: 10px;
-    background-color: #e9eaec;
 }
 
 .advice-ontsloh-text {
     width: 40%;
-    background-color: #31bdb6;
-    color: #ffffff;
+    color: #ff7020;
     padding: 3px 10px;
     font-size: 16px;
+    border-bottom: 2px solid #ff7020;
 }
 
 .advice-box-img {
@@ -612,7 +611,8 @@ label, output {
 
 .advice-box-txt {
     display: block;
-    width: 100%;margin-top: 10px;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .advice-nav-right-main {
@@ -661,13 +661,21 @@ label, output {
     float: left;
     text-align: center;
     font-size: 12px;
-    color: #ffffff;
-    background-color: #1d706d;
+    color: #31bdb6;
     padding: 5px 10px;
+    border-bottom: 1px solid #31bdb6;
 }
 
 .advice-detail-right-nav-header.active {
-    background-color: #31bdb6;
+    color: #ff7020;
+    font-weight: 600;
+    border-bottom: 3px solid #ff7020;
+}
+
+.advice-detail-right-nav-header:hover {
+    color: #ff7020;
+    font-weight: 600;
+    border-bottom: 3px solid #ff7020;
 }
 
 .news-box {
@@ -883,6 +891,7 @@ label, output {
 .projects-pagination {
     float: left;
     width: 100%;
+    margin-top: 30px;
 }
 
 .projects-header {
@@ -996,8 +1005,6 @@ label, output {
     background-color: #31bdb6;
     border-color: #31bdb6;
 }
-
-
 
 /* =============== footer ============== */
 .footer {
@@ -1267,7 +1274,6 @@ label, output {
     padding: 10px 0;
 }
 
-
 .med-detail-line {
     border-right: 1px solid #ccc;
     padding-right: 10px;
@@ -1309,13 +1315,12 @@ label, output {
     vertical-align: top
 }
 
-
-.medical-detail-list  a{
+.medical-detail-list a {
     font-size: 16px;
 
 }
 
-.medical-detail-list  p{
+.medical-detail-list p {
     font-size: 12px;
 
 }
@@ -1324,6 +1329,10 @@ label, output {
     font-size: 14px !important;
     color: #31bdb6;
     margin-left: 10px
+}
+
+.medical-detail-list ul li {
+    font-size: 12px;
 }
 
 .medical-detail-doctor {
@@ -1346,6 +1355,12 @@ label, output {
     width: 100%;
     height: auto;
     overflow: hidden;
+}
+
+.advice-horizental-box {
+    width: 28%;
+    display: inline-block;
+    vertical-align: top;
 }
 
 /* ============= medical search ============ */
@@ -1381,16 +1396,34 @@ label, output {
     font-size: 40px;
 }
 
+.advice-horizental-box-text {
+    display: inline-block;
+    width: 65%;
+    margin-left: 10px;
+}
+
+.advice-horizental-box-text h6 {
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
 
-    .hospital-box-img
-    {
+    .advice-horizental-box-text {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .advice-horizental-box {
+        display: none;
+    }
+
+    .hospital-box-img {
         background-position: center center;
         width: 100%;
-        height:200px;
+        height: 200px;
     }
-    .med-search-checker
-    {
+
+    .med-search-checker {
         width: 100%;
     }
 
@@ -1566,7 +1599,7 @@ label, output {
 }
 
 .nurse-img img {
-    width: 80%;
+    width: 100%;
     line-height: 1
 }
 

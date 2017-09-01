@@ -1,0 +1,17 @@
+<div class="advice-box">
+
+    <a href="{{ path('advice_detail', {'id': id}) }}" class="advice-horizental-box">
+        <img src="{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}" width="100%">
+    </a>
+
+    <div class="advice-horizental-box-text">
+        <h6>{{ title }}</h6>
+        {% if small is not defined %}
+            <p>{% if headline|length > 100 %}{{ headline|slice(0, 100) ~ '...' }}{% else %}{{ headline }}{% endif %}
+            </p>
+        {% endif %}
+        <i class="fa fa-thumbs-o-up advice-thumb"></i>
+        <i class="advice-thumb-count">{% if likecount %}{{ likecount }}{% else %}0{% endif %}</i>
+        <a class="advice-box-more" href="{{ path('advice_detail', {'id': id}) }}">Дэлгэрэнгүй</a>
+    </div>
+</div>

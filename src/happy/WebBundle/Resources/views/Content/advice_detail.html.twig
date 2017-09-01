@@ -21,11 +21,11 @@
                     <div class="swiper-container swiper3">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="{{ asset('recource/banner2.jpg') }}" style="width:100%;">
+                                <img src="https://stat.mobicom.mn/resources/imagebrowser/1920x290-2017-07-19-145905-1191286271.png" style="width:100%;">
                             </div>
 
                             <div class="swiper-slide">
-                                <img src="{{ asset('recource/banner1.jpg') }}" style="width:100%;">
+                                <img src="https://stat.mobicom.mn/resources/imagebrowser/1920x290-2017-08-31-161310-1805398309.png" style="width:100%;">
                             </div>
 
                         </div>
@@ -74,7 +74,7 @@ font-size: 40px;">{{ advice.name }}</h4>
 
                 <div class="advice-left-nav-scrooll">
                     {% for key ,e in advices %}
-                        {% include '@happyWeb/inc/inc-advice.html.twig' with{'small' : true, 'createdDate': e.createdDate,'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
+                        {% include '@happyWeb/inc/inc-advice-horizental.html.twig' with{'small' : true, 'createdDate': e.createdDate,'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
                     {% endfor %}
                 </div>
 
