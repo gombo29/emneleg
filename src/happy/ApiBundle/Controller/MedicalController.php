@@ -83,7 +83,7 @@ class MedicalController extends Controller
 
         return new JsonResponse(
             array(
-                "medical" => $medType,
+                "medicalType" => $medType,
             )
         );
     }
