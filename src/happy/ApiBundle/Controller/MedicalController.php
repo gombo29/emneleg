@@ -7,6 +7,7 @@ use happy\CmsBundle\Entity\MedicalLabType;
 use happy\CmsBundle\Entity\MedicalMedType;
 use happy\CmsBundle\Entity\MedicalPhoto;
 use happy\CmsBundle\Entity\Medicals;
+use happy\CmsBundle\Entity\MedicalType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -22,31 +23,118 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class MedicalController extends Controller
 {
+
+    /* ======= APP HOME ======= */
+
     /**
      *  Lists all project entities.
      *
-     * @Route("/list/{page}", name="api_medical_list", requirements={"page" = "\d+"}, defaults={"page" = 1})
+     * @Route("/special", name="api_medical_special")
      * @Method("GET")
      *
      */
-    public function indexAction(Request $request, $page)
+    public function specialAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
+
+        /**@var Medicals[] $medical */
+        $medical = $qb
+            ->select('n.id', 'n.name', 'n.phone', 'n.photo')
+            ->addOrderBy('n.isOntsloh', 'desc')
+            ->orderBy('n.createdDate', 'asc')
+            ->where('n.isOntsloh = 1')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getArrayResult();
+
+        foreach ($medical as $key => $m) {
+            $phones = explode(";", $m['phone']);
+            $medical[$key]['phone'] = $phones[0];
+        }
+
+        return new JsonResponse(
+            array(
+                "medical" => $medical,
+            )
+        );
+    }
+
+
+    /**
+     *  Lists all project entities.
+     *
+     * @Route("/medical-type", name="api_medical_type")
+     * @Method("GET")
+     *
+     */
+    public function medTypeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+        /**@var MedicalType[] $medType */
+        $medType = $qb
+            ->select('n.id, n.name', 'n.imgMobile as img')
+            ->orderBy('n.id', 'asc')
+            ->getQuery()
+            ->getArrayResult();
+
+
+        return new JsonResponse(
+            array(
+                "medical" => $medType,
+            )
+        );
+    }
+
+
+    /* ======= APP HOSPITAL LIST ======= */
+
+    /**
+     *  Lists all project entities.
+     *
+     * @Route("/list/{page}/{typeId}", name="api_medical_list", requirements={"page" = "\d+" , "typeId" = "\d+"}, defaults={"page" = 1})
+     * @Method("GET")
+     *
+     */
+    public function indexAction($page, $typeId)
     {
         $pagesize = 10;
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
+        $qbMedType = $em->getRepository('happyCmsBundle:MedicalMedType')->createQueryBuilder('n');
+        $medicalMedIds = $qbMedType
+            ->select('m.id')
+            ->leftJoin('n.medical', 'm')
+            ->where($qbMedType->expr()->in('n.medicalType', ':p1'))
+            ->setParameter('p1', $typeId)
+            ->groupBy('m.id')
+            ->getQuery()
+            ->getArrayResult();
+
+        if ($medicalMedIds) {
+            $qb
+                ->andWhere($qb->expr()->in('n.id', ':medIds'))
+                ->setParameter(':medIds', $medicalMedIds);
+        }
 
         $countQueryBuilder = clone $qb;
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
         /**@var Medicals[] $medical */
         $medical = $qb
-            ->select('n.id', 'n.name', 'n.headline', 'n.phone', 'n.photo', 'n.isParking', 'n.isCard', 'n.isWifi', 'n.isTasag')
-            ->orderBy('n.createdDate', 'desc')
-            ->addOrderBy('n.isOntsloh', 'desc')
+            ->select('n.id', 'n.name', 'n.headline', 'n.phone', 'n.photo', 'n.isParking', 'n.isCard', 'n.isWifi')
+            ->orderBy('n.isOntsloh', 'desc')
+            ->addOrderBy('n.createdDate', 'desc')
             ->setFirstResult(($page - 1) * $pagesize)
             ->setMaxResults($pagesize)
             ->getQuery()
             ->getArrayResult();
 
+        foreach ($medical as $key => $m) {
+            $phones = explode(";", $m['phone']);
+            $medical[$key]['phone'] = $phones[0];
+        }
 
         return new JsonResponse(
             array(
@@ -58,6 +146,7 @@ class MedicalController extends Controller
         );
     }
 
+
     /**
      * Remove Medical entity.
      *
@@ -67,11 +156,10 @@ class MedicalController extends Controller
      */
     public function medicalDetailAction(Medicals $medical)
     {
-        $arr = array();
-
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:MedicalPhoto')->createQueryBuilder('n');
         $medicalPhoto = $qb
+            ->select('n.path')
             ->where('n.medical = :medid')
             ->setParameter('medid', $medical)
             ->orderBy('n.sortId', 'asc')
@@ -80,22 +168,35 @@ class MedicalController extends Controller
 
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
         $generalinfo = $qb
+            ->select('n.name', 'n.headline', 'n.address', 'n.phone', 'n.email', 'n.fbAddress',
+                'n.website', 'n.busStation', 'n.isParking','n.likeCount',
+                'n.parkingPrice', 'n.isCard', 'n.isWifi', 'n.hoolTotal', 'n.isSaturdayHool',
+                'n.isSundayHool', 'n.isDaatgal', 'n.isLaboratory',
+                'n.isOntsloh', 'n.isRemove' ,'n.photo', 'n.timeTable', 'n.isDoctor', 'n.longLat')
             ->where('n.id = :medid')
             ->setParameter('medid', $medical)
             ->getQuery()
-            ->getArrayResult();
+            ->getResult();
 
         $qb = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
         $medicalLabType = $qb
-            ->leftJoin('n.labType', 'mt')
-            ->addSelect("mt")
+            ->select('lt.id', 'lt.name', 'n.price')
+            ->leftJoin('n.labType', 'lt')
             ->where('n.medical = :medid')
             ->setParameter('medid', $medical)
             ->getQuery()
             ->getArrayResult();
 
+        foreach ($medicalLabType as $key => $m) {
+            if($m['price'] == 0)
+            {
+                $medicalLabType[$key]['price'] = 'Тодорхойгүй';
+            }
+        }
+
         $qb = $em->getRepository('happyCmsBundle:Doctors')->createQueryBuilder('n');
         $medicalDoctor = $qb
+            ->select('n.id', 'n.name', 'n.photo')
             ->where('n.medical = :medid')
             ->setParameter('medid', $medical)
             ->getQuery()

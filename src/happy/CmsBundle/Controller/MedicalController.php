@@ -7,6 +7,7 @@ use happy\CmsBundle\Entity\MedicalLabType;
 use happy\CmsBundle\Entity\MedicalMedType;
 use happy\CmsBundle\Entity\MedicalPhoto;
 use happy\CmsBundle\Entity\Medicals;
+use happy\CmsBundle\Entity\MedicalType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -766,5 +767,111 @@ class MedicalController extends Controller
         return $this->redirectToRoute('cms_medical_doctor', array('id' => $id));
     }
 
+
+    /* ==================== Medical Type ===================== */
+
+    /**
+     *  Lists all content entities.
+     *
+     * @Route("/medical-type/{page}", name="cms_medical_type_index", requirements={"page" = "\d+"}, defaults={"page" = 1})
+     * @Method("GET")
+     * @Template()
+     *
+     */
+    public function medicalTypeAction(Request $request, $page)
+    {
+        $pagesize = 20;
+
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+
+
+        $countQueryBuilder = clone $qb;
+        $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
+
+        /**@var MedicalType[] $medType */
+        $medType = $qb
+            ->orderBy('n.createdDate', 'desc')
+            ->setFirstResult(($page - 1) * $pagesize)
+            ->setMaxResults($pagesize)
+            ->getQuery()
+            ->getArrayResult();
+
+        return $this->render('happyCmsBundle:Medical:medical-type.html.twig', array(
+            'pagecount' => ($count % $pagesize) > 0 ? intval($count / $pagesize) + 1 : intval($count / $pagesize),
+            'count' => $count,
+            'page' => $page,
+            'medType' => $medType,
+        ));
+    }
+
+
+    /**
+     * Creates a new medical type entity.
+     *
+     * @Route("/medical-type/new", name="cms_medical_type_new")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function medicaltypenewAction(Request $request)
+    {
+        $medType = new MedicalType();
+        $form = $this->createForm('happy\CmsBundle\Form\MedicalMedType', $medType);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $medType->uploadImage($this->container);
+            $medType->uploadImageActive($this->container);
+            $medType->uploadImageMobile($this->container);
+            $em->persist($medType);
+            $em->flush();
+            $request
+                ->getSession()
+                ->getFlashBag()
+                ->add('success', 'Эмнэлгийн төрөл амжилттай үүлслээ!');
+
+            return $this->redirectToRoute('cms_medical_type_index');
+        }
+
+        return array(
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Updates medical type entity.
+     *
+     * @Route("/medical-type/update/{id}", name="cms_medical_type_update" , requirements={"id" = "\d+"})
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function medicaltypeupdateAction(Request $request, MedicalType $medType)
+    {
+        $editForm = $this->createForm('happy\CmsBundle\Form\MedicalMedType', $medType);
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $medType->uploadImage($this->container);
+            $medType->uploadImageActive($this->container);
+            $medType->uploadImageMobile($this->container);
+            $em->flush();
+            $request
+                ->getSession()
+                ->getFlashBag()
+                ->add('success', 'Эмнэлгийн төрөл амжилттай засагдлаа!');
+
+            return $this->redirectToRoute('cms_medical_type_update', array('id' => $medType->getId()));
+        }
+
+        return array(
+            'img' => $medType->getImg(),
+            'imgActive' => $medType->getImgActive(),
+            'imgMobile' => $medType->getImgMobile(),
+            'edit_form' => $editForm->createView(),
+        );
+    }
 
 }
