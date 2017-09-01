@@ -10,5 +10,5 @@ parameters:
     mailer_password: 'Mongolia123!#'
     secret: bf7ad834e7257d8679e426f56a12d1785c4dbc94
     statfolder: resources/
-    localstatfolder: resources/
+    localstatfolder: /resources/
     thumbsizes: 100
