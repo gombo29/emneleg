@@ -8,6 +8,7 @@
 /bin/
 /.idea/
 app/cache/
+app/config/parameters.yml
 app/logs/
 app/sessions/
 src/happy/CmsBundle/Entity/Apasl.php~
@@ -64,3 +65,5 @@ web/resources/medical/img/phprIXtaa.png
 web/resources/medical/img/phpvkANXf.png
 web/stat/datetimepicker/tests/
 welcome/
+src/happy/CmsBundle/Entity/MedicalType.php~
+web/resources/medical_type/
