@@ -23,7 +23,7 @@
             {% set key = key+ 1 %}
             <tr>
                 <td>{{ key }}</td>
-                <td>{% if p.photo %}<img src="/{{ localstatfolder }}/{{ p.photo }}"
+                <td>{% if p.photo %}<img src="{{ localstatfolder }}/{{ p.photo }}"
                                          width="100">{% else %}Зураг байхгүй{% endif %}</td>
                 <td>
                     {{ p.name }}

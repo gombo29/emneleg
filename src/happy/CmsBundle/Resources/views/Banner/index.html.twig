@@ -41,7 +41,7 @@
         {% for con in banner %}
             <tr>
                 <td>{{ con.id }}</td>
-                <td><img src="/{{ statfolder }}{{ con.img }}" width="100"></td>
+                <td><img src="{{ statfolder }}{{ con.img }}" width="100"></td>
                 <td>{% if con.bannerbairlal  %}{{ con.bannerbairlal.name }} {% else %}{% endif %}</td>
                 <td>{{ con.name }}</td>
                 <td {% if con.publishDate|date('Y-m-d H:i:s') > "now"|date("Y-m-d H:i:s" ) %} style="background-color: #a8c6e4" {% else %} style="background-color: #ffbcb7"{% endif %}>{{ con.publishDate|date('Y-m-d H:i:s') }}</td>

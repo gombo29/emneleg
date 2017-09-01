@@ -4,17 +4,17 @@
 {% block body %}
     {% if img %}
         <p>Web зураг</p>
-        <img src="/{{ localstatfolder }}{{ img }}" width="50">
+        <img src="{{ localstatfolder }}{{ img }}" width="50">
     {% endif %}
 
     {% if imgActive %}
         <p>Active зураг</p>
-        <img src="/{{ localstatfolder }}{{ imgActive }}" width="50">
+        <img src="{{ localstatfolder }}{{ imgActive }}" width="50">
     {% endif %}
 
     {% if imgMobile %}
         <p>Mobile зураг</p>
-        <img src="/{{ localstatfolder }}{{ imgMobile }}" width="50">
+        <img src="{{ localstatfolder }}{{ imgMobile }}" width="50">
     {% endif %}
 
     {{ form_start(edit_form) }}

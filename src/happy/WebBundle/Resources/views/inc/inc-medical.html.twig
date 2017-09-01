@@ -2,7 +2,7 @@
 
     <a href="{{ path('medical_detail', {'id': id}) }}" class="hospital-box-img"
        {#style="{% if detailpage is defined%}height: 150px;{% else %}height: 185px;{% endif %}background-image: url('{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}');">#}
-       style="background-image: url('{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}');">
+       style="background-image: url('{% if img %}{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}');">
     </a>
 
     <div class="hospital-box-txt">

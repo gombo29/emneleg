@@ -1,7 +1,7 @@
 <div class="advice-box">
 
     <a href="{{ path('advice_detail', {'id': id}) }}" class="advice-box-img">
-        <img src="{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}" width="100%">
+        <img src="{% if img %}{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/images/blog1.jpg') }}{% endif %}" width="100%">
     </a>
 
     <div class="advice-box-txt">

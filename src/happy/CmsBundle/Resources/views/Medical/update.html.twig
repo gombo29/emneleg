@@ -33,7 +33,7 @@
     {{ form_row(form.headline) }}
     {% if medical.photo %}
         <br>
-        <img src="/{{ localstatfolder }}{{ medical.photo }}" width="100">
+        <img src="{{ localstatfolder }}{{ medical.photo }}" width="100">
     {% endif %}
     {{ form_row(form.imagefile) }}
     {{ form_row(form.address) }}

@@ -5,7 +5,7 @@
     {% include ':inc:flashmsg.html.twig' %}
 
     {% if nurse.photo %}
-        <img src="/{{ localstatfolder }}{{ nurse.photo }}" width="100">
+        <img src="{{ localstatfolder }}{{ nurse.photo }}" width="100">
     {% endif %}
 
     {{ form_start(edit_form) }}

@@ -35,7 +35,7 @@
             {% set k = k + 1 %}
             <tr>
                 <td>{{ k }}</td>
-                <td><img src="{% if con.photo %}/{{ localstatfolder }}{{ con.photo }}{% else %}{{ asset('recource/nurse.png') }}{% endif %}" width="100"></td>
+                <td><img src="{% if con.photo %}{{ localstatfolder }}{{ con.photo }}{% else %}{{ asset('recource/nurse.png') }}{% endif %}" width="100"></td>
                 <td>{{ con.name }}</td>
 
                 <td>

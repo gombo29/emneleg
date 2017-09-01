@@ -6,7 +6,7 @@
     {{ form_start(edit_form) }}
     {% if img %}
         <div class="form-group">
-            <img src="/{{ statfolder }}{{ img }}" width="100">
+            <img src="{{ statfolder }}{{ img }}" width="100">
         </div>
     {% endif %}
     {{ form_widget(edit_form) }}
