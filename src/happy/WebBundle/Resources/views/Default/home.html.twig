@@ -67,7 +67,7 @@
                 <a href="{{ path('medicals') }}"><i class="fa fa-home"></i> Эмнэлгүүд</a>
                 <a href="{{ path('advice') }}"><i class="fa fa-plus-square"></i> Зөвлөгөө</a>
                 <a href="{{ path('web_nurse_index') }}"><i class="fa fa-stethoscope"></i> Сувилагч</a>
-                <a href="javascript:void(0);"><i class="fa fa-heartbeat"></i> Цахим эмч</a>
+                <a href="{{ path('online_doctor') }}"><i class="fa fa-heartbeat"></i> Цахим эмч</a>
 
             </div>
         </div>
@@ -75,7 +75,7 @@
 
     <!-- Medical Centers -->
 
-    <div class="medical-background">
+    <div class="medical-background" style="padding: 0;padding-top: 30px">
         <div class="container">
             <div class="home-header">
                 <h4><i class="fa fa-home"></i> Онцлох эмнэлгүүд</h4>
@@ -114,24 +114,24 @@
 
     <!-- Nurse  -->
 
-    <div class="medical-background">
+    <div class="medical-background" style="padding: 0;padding-top: 30px">
         <div class="container">
-            <div class="home-header" style="margin-bottom: 20px">
+            <div class="home-header" style="margin-bottom: 30px">
                 <h4><i class="fa fa-stethoscope"></i> Сувилагч</h4>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left;padding-left: 0;">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding-left: 0;float: left">
                 <div class="home-header">
                     {% for m in nurse %}
                         <div class="nurse-block-detail" style="height: 148px;border: 1px solid #ccc;
 margin-top: 0;
 margin-bottom: 20px;">
                             <div class="nurse-block-detail-img">
-                                <img src="/{{ localstatfolder }}{{ m.photo }}">
+                                <img src="/{{ localstatfolder }}{{ m.photo }}" style="height: 100%;">
                             </div>
                             <div class="nurse-block-detail-text">
                                 <h4 style="font-size: 16px">{{ m.name }}</h4>
-                                <a class="btn btn-warning" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага
+                                <a class="btn btn-warning" style="margin-left: 0;" href="{{ path('web_nurse_index') }}"><i class="fa fa-phone"></i> Дуудлага
                                     өгөх</a>
                             </div>
 
@@ -139,7 +139,7 @@ margin-bottom: 20px;">
                     {% endfor %}
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="display: inline-block">
 
                 <img src="{{ asset('recource/banner1.jpg') }}" style="margin-bottom: 20px;width: 100%">
                 <img src="{{ asset('recource/banner2.jpg') }}" style="margin-bottom: 20px;width: 100%">
@@ -150,10 +150,10 @@ margin-bottom: 20px;">
     </div>
 
     <!-- Advice -->
-
-    <div class="project-type-background" style="margin-bottom: 40px">
+<br>
+    <div class="project-type-background" style="padding: 0;">
         <div class="container">
-            <div class="home-header">
+            <div class="home-header" style="text-align: center;margin-bottom: 30px">
                 <h4><i class="fa fa-plus-square"></i> Шинэ зөвлөгөө</h4>
             </div>
             <div class="swiper-container swiper4">
