@@ -32,8 +32,7 @@
                 width: 100%;
             }
 
-            .medical-search
-            {
+            .medical-search {
                 display: none;
             }
         }
@@ -82,62 +81,71 @@
                     <h6 class="med-detail-icon"><i class="fa fa-map-marker "></i> Хаяг:</h6>
                     <p class="med-detail-text">{{ medical.address }}</p>
                 </div>
+
+                <div style="margin-bottom: 20px">
+                    <h6 class="med-detail-icon"><a
+                                href="{{ medical.website }}" target="_blank"><i
+                                    class="fa fa-globe "></i> Вебсайт</a></h6>
+                </div>
+
+
+                <div style="margin-bottom: 20px">
+                    <h6 class="med-detail-icon">
+                        <a href="mailto:{{ medical.email }}"><i class="fa fa-envelope"></i> Майл хаяг</a>
+                    </h6>
+                </div>
+
+                <div style="margin-bottom: 20px">
+                    <h6 class="med-detail-icon"><a href="{{ medical.fbAddress }}" target="_blank"><i
+                                    class="fa fa-facebook"></i> Facebook</a>
+                    </h6>
+                </div>
+
                 <div>
                     <h6 class="med-detail-icon"><i class="fa fa-phone"></i> Утасны дугаар:</h6>
                     <p class="med-detail-text">{% set phone = medical.phone|split(';') %}
                         {% for p in phone %}
-                            {{ p }}<br>
+                            {{ p }}{% if loop.last != 1 %}<br>{% endif %}
                         {% endfor %}</p>
                 </div>
                 <a class="btn btn-warning"><i class="fa fa-calendar"></i> Цаг авах</a>
                 <div style="margin-top: 20px">
-                    <h6 class="med-detail-icon"><i class="fa fa-envelope "></i> Мэйл хаяг:</h6>
-                    <p class="med-detail-text"><a>{{ medical.email }}</a></p>
-                </div>
-
-                <div>
-                    <h6 class="med-detail-icon"><i class="fa fa-envelope "></i> Вебсайт хаяг:</h6>
-                    <p class="med-detail-text">{{ medical.website }}</p>
-                </div>
-
-                <div>
-                    <h6 class="med-detail-icon"><i class="fa fa-envelope "></i> Facebook хаяг:</h6>
-                    <p class="med-detail-text">{{ medical.fbAddress }}</p>
-                </div>
-
-                <div>
                     <h6 class="med-detail-icon"><i class="fa fa-car "></i> Автомашины зогсоол:</h6>
 
                     <p class="med-detail-text">{% if medical.isParking == true %}Гаднаа машины зогсоолтой /Төлбөр: {{ medical.parkingPrice }}₮/{% else %}Ойролцоо зогсоолгүй{% endif %}</p>
                 </div>
 
-                <div>
-                    <h6 class="med-detail-icon"><i class="fa fa-wifi "></i> Wifi-тай эсэх:</h6>
+                {% if medical.isWifi == true %}
+                    <div style="margin-bottom: 20px">
+                        <h6 class="med-detail-icon"><i class="fa fa-wifi "></i> Wifi-тай</h6>
+                    </div>
 
-                    <p class="med-detail-text">{% if medical.isWifi == true %}Интернэттэй{% else %}Интернэтгүй{% endif %}</p>
-                </div>
+                {% endif %}
 
-                <div>
-                    <h6 class="med-detail-icon"><i class="fa fa-cc-visa "></i> Картаар үйлчилдэг эсэх:</h6>
-
-                    <p class="med-detail-text">{% if medical.isCard == true %}Тйим{% else %}Үгүй{% endif %}</p>
-                </div>
+                {% if medical.isDaatgal == true %}
+                    <div style="margin-bottom: 20px">
+                        <h6 class="med-detail-icon"><i class="fa fa-life-saver"></i> Даатгалаар үйлчилдэг</h6>
+                    </div>
+                {% endif %}
 
                 <div>
                     <h6 class="med-detail-icon"><i class="fa fa-bus"></i> Автобусны буудал:</h6>
                     <p class="med-detail-text">{{ medical.busStation }}</p>
                 </div>
+                {% if medical.isTasag == true %}
+                    <div style="margin-bottom: 20px">
+                        <h6 class="med-detail-icon"><i class="fa fa-heartbeat"></i> Эмчилгээний тасагтай</h6>
+                    </div>
+                {% endif %}
 
-                <div>
-                    <h6 class="med-detail-icon"><i class="fa fa-heartbeat"></i> Эмчилгээний тасагтай эсэх:</h6>
-                    <p class="med-detail-text">{% if medical.isTasag == true %}Тйим{% else %}Үгүй{% endif %}</p>
-                </div>
+                {% if medical.isCard == true %}
+                    <div style="margin-bottom: 20px">
+                        <h6 class="med-detail-icon"><i class="fa fa-cc-visa "></i> Картаар үйлчилдэг</h6>
+                    </div>
+                {% endif %}
 
-                <div>
-                    <h6 class="med-detail-icon"><i class="fa fa-life-saver"></i> Даатгалаар үйлчилдэг эсэх:</h6>
-                    <p class="med-detail-text">{% if medical.isDaatgal == true %}Тйим{% else %}Үгүй{% endif %}</p>
-                </div>
             </div>
+
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs12 medical-detail-main">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
@@ -159,7 +167,7 @@
                     <h4 class="med-detail-icon">Эмнэлгийн товч танилцуулга</h4>
 
                     <p class="med-detail-text" id="moretext"
-                       style="margin-left: 0;height: 93px;overflow: hidden;">{{ medical.headline }}</p>
+                       style="margin-left: 0;height: 125px;overflow: hidden;">{{ medical.headline }}</p>
 
                     <a class="medical-detail-btn" href="javascript:void(0);" onclick="moreText()"
                        style="cursor: pointer"> Дэлгэрэнгүй</a>
@@ -297,7 +305,7 @@
             if (count % 2 != 0) {
                 $('#moretext').attr('style', 'height:auto;margin-left: 0');
             } else {
-                $('#moretext').attr('style', 'margin-left: 0;height: 93px;overflow: hidden;');
+                $('#moretext').attr('style', 'margin-left: 0;height: 125px;overflow: hidden;');
             }
         }
         var myLatlng = new google.maps.LatLng( {% set phone = medical.longLat|split(';') %}

@@ -1283,7 +1283,7 @@ label, output {
 }
 
 .med-detail-text {
-    font-size: 12px;
+    font-size: 14px;
     text-align: justify;
     margin-left: 20px;
 }
@@ -1303,15 +1303,25 @@ label, output {
 }
 
 .medical-detail-list {
-    font-size: 12px;
     display: inline-block;
     width: 30%;
     margin-left: 2%;
     vertical-align: top
 }
 
-.medical-detail-timetable {
+
+.medical-detail-list  a{
+    font-size: 16px;
+
+}
+
+.medical-detail-list  p{
     font-size: 12px;
+
+}
+
+.medical-detail-timetable {
+    font-size: 14px !important;
     color: #31bdb6;
     margin-left: 10px
 }
