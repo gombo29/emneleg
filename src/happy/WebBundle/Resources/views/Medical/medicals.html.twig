@@ -59,7 +59,7 @@
                             {% for i in medType %}
                                 <a href="{{ path('medicals', {'type': viewType, 'medtypes':  i.id }) }}"
                                    class="list-group-item {% if medTypeId == i.id %}active{% endif %}">
-                                    <img src="{{ asset('recource/icons/ICON-14.png') }}" style="width: 20px;margin-right: 10px;">{{ i.name }}
+                                    <img src="{{ localstatfolder }}{{ i.img }}" style="width: 20px;margin-right: 10px;">{{ i.name }}
                                 </a>
                             {% endfor %}
                         </div>

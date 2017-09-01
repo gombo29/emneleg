@@ -120,7 +120,7 @@ class MedicalController extends Controller
         $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
         /**@var MedicalType[] $medType */
         $medType = $qb
-            ->select('n.id, n.name')
+            ->select('n.id, n.name, n.img, n.imgActive')
             ->orderBy('n.id', 'asc')
             ->getQuery()
             ->getArrayResult();
