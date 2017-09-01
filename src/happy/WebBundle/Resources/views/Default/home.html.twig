@@ -28,6 +28,12 @@
             background-color: #ff7020;
         }
 
+        @media (max-width: 768px) {
+
+            .nurse-block-detail {
+                display: none;
+            }
+        }
     </style>
 {% endblock %}
 {% block ogtag %}
@@ -110,17 +116,23 @@
 
     <div class="medical-background">
         <div class="container">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
+            <div class="home-header" style="margin-bottom: 20px">
+                <h4><i class="fa fa-stethoscope"></i> Сувилагч</h4>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left;padding-left: 0;">
                 <div class="home-header">
-                    <h4><i class="fa fa-stethoscope"></i> Сувилагч</h4>
                     {% for m in nurse %}
-                        <div class="nurse-block-detail" style="height: 125px;">
+                        <div class="nurse-block-detail" style="height: 148px;border: 1px solid #ccc;
+margin-top: 0;
+margin-bottom: 20px;">
                             <div class="nurse-block-detail-img">
-                                <img src="/{{ localstatfolder }}{{ m.photo }}" >
+                                <img src="/{{ localstatfolder }}{{ m.photo }}">
                             </div>
                             <div class="nurse-block-detail-text">
                                 <h4 style="font-size: 16px">{{ m.name }}</h4>
-                                <a class="btn btn-warning" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага өгөх</a>
+                                <a class="btn btn-warning" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага
+                                    өгөх</a>
                             </div>
 
                         </div>
