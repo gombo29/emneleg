@@ -367,7 +367,7 @@ class Medicals
         $dir = 'medical/img';
         $filename = $this->getImageFile()->getFilename() . '.' . $this->getImageFile()->guessExtension();
         $this->getImageFile()->move(
-            $resources  . $dir, $filename
+            $resources . '/' . $dir, $filename
         );
         $path = $dir . "/" . $filename;
         $this->photo = $path;

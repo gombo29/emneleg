@@ -4,24 +4,24 @@
 {% block body %}
     {% if img %}
         <p>Web зураг</p>
-        <img src="{{ localstatfolder }}{{ img }}" width="50">
+        <img src="/{{ localstatfolder }}{{ img }}" width="100">
     {% endif %}
 
     {% if imgActive %}
         <p>Active зураг</p>
-        <img src="{{ localstatfolder }}{{ imgActive }}" width="50">
+        <img src="/{{ localstatfolder }}{{ imgActive }}" width="100">
     {% endif %}
 
     {% if imgMobile %}
         <p>Mobile зураг</p>
-        <img src="{{ localstatfolder }}{{ imgMobile }}" width="50">
+        <img src="/{{ localstatfolder }}{{ img }}" width="100">
     {% endif %}
 
     {{ form_start(edit_form) }}
     {{ form_widget(edit_form) }}
     <input class="btn btn-success" type="submit" value="Хадгалах"/>
     <a style="margin-bottom: 20px;margin-top: 20px;" class="btn btn-default"
-       href="{{ path('cms_medical_type_index') }}">Эмнэлгийн төрөл
+       href="{{ path('cms_medical_type_index') }}">Эмнэлгийн
         жагсаалт буцах</a>
 
     {{ form_end(edit_form) }}

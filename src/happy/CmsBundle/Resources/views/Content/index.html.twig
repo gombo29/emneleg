@@ -40,7 +40,7 @@
         {% for con in content %}
             <tr>
                 <td>{{ con.id }}</td>
-                <td><img src="{{ localstatfolder }}{{ con.img }}" width="100"/></td>
+                <td><img src="/{{ localstatfolder }}{{ con.img }}" width="100"/></td>
                 <td>{{ con.name }}</td>
                 <td>{% if   con.contentType %}{{ con.contentType.name }} {% else %}{% endif %}</td>
                 <td>{{ con.headline }}</td>

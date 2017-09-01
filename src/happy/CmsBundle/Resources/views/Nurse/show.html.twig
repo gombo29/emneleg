@@ -18,7 +18,7 @@
 
         <tr>
             <td>Зураг</td>
-            <td><img src="{% if nurse.photo %}{{ localstatfolder }}{{ nurse.photo }}{% else %}{{ asset('recource/nurse.png') }}{% endif %}" width="100"/></td>
+            <td><img src="{% if nurse.photo %}/{{ localstatfolder }}{{ nurse.photo }}{% else %}{{ asset('recource/nurse.png') }}{% endif %}" width="100"/></td>
         </tr>
 
         <tr>

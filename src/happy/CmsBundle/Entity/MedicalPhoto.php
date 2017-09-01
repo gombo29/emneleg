@@ -285,10 +285,15 @@ class MedicalPhoto
         $dir = 'medical/img';
         $filename = $this->getImageFile()->getFilename() . '.' . $this->getImageFile()->guessExtension();
         $this->getImageFile()->move(
-            $resources  . $dir, $filename
+            $resources . '/' . $dir, $filename
         );
         $path = $dir . "/" . $filename;
         $this->path = $path;
+
+//        $imageGod = $container->get('imagegod');
+//        $imageGod->resizeImageToMaxOnlyWidth($resources . $path, $resources . $path, 300);
+
+
         $this->imagefile = null;
     }
 

@@ -1,6 +1,6 @@
 <div class="nurse-block">
     <div class="nurse-img">
-        <img src="{% if img %}{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}">
+        <img src="{% if img %}/{{ localstatfolder }}{{ img }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}">
     </div>
     <div class="nurse-name">
         <h6>{{ name }}</h6>

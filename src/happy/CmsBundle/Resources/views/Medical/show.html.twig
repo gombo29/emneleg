@@ -29,7 +29,7 @@
                     <div class="carousel-inner">
                         {% for ph in medicalPhoto %}
                             <div class="item {% if loop.first %}active{% endif %}">
-                                <img src="{{ localstatfolder }}{{ ph.path }}" alt="Los Angeles" style="width:250px;">
+                                <img src="/{{ localstatfolder }}{{ ph.path }}" alt="Los Angeles" style="width:250px;">
                             </div>
                         {% endfor %}
                     </div>
@@ -52,7 +52,7 @@
             <td>
                 {% for d in medicalDoctor %}
                     <ul class="list-group">
-                        <li class="list-group-item"> <img src="{{ localstatfolder }}{{ d.photo }}" width="50"> Нэр: <a href="{{ path('cms_medical_doctor_update', {'id': d.id,'medid': medical.id}) }}">{{ d.name }}</a> Цагын хуваарь: {{ d.timeTable }}</li>
+                        <li class="list-group-item"> <img src="/{{ localstatfolder }}{{ d.photo }}" width="50"> Нэр: <a href="{{ path('cms_medical_doctor_update', {'id': d.id,'medid': medical.id}) }}">{{ d.name }}</a> Цагын хуваарь: {{ d.timeTable }}</li>
                     </ul>
                 {% endfor %}
             </td>

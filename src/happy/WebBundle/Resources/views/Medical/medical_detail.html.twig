@@ -77,7 +77,7 @@
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs12"
                  style="float: left;;overflow: hidden;">
                 <h4 style="text-align: center;"> {{ medical.name }}</h4>
-                <img src="{{ localstatfolder }}{{ medical.photo }}" style="width: 100%;border: 1px solid #ccc">
+                <img src="/{{ localstatfolder }}{{ medical.photo }}" style="width: 100%;border: 1px solid #ccc">
                 <div style="margin-top: 15px">
                     <h6 class="med-detail-icon"><i class="fa fa-map-marker "></i> Хаяг:</h6>
                     <p class="med-detail-text">{{ medical.address }}</p>
@@ -144,7 +144,7 @@
                         {% for m in medicalphoto %}
                             <div class="swiper-slide"
                                  style="text-align: center;background-color: #39adad;vertical-align: middle">
-                                <img src="{{ localstatfolder }}{{ m.path }}">
+                                <img src="/{{ localstatfolder }}{{ m.path }}">
                             </div>
                         {% endfor %}
                     </div>
@@ -261,7 +261,7 @@
                         {% for d in medicalDoctor %}
                             <a href="#" style="cursor: pointer;">
                                 <div class="medical-detail-list" style="margin-bottom: 10px;">
-                                    <img src="{{ localstatfolder }}/{{ d.photo }}" style="float: left;" width="50">
+                                    <img src="/{{ localstatfolder }}/{{ d.photo }}" style="float: left;" width="50">
                                     <p class="medical-detail-doctor">{{ d.name }}<br>
                                         <i style="font-style: normal;font-size: 12px;font-weight: 300;">{{ d.uzlegTorol }}</i>
                                     </p>
