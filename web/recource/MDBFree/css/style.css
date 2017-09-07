@@ -540,7 +540,7 @@ label, output {
     background-repeat: no-repeat;
     display: inline-block;
     background-color: #219494;
-    width: 35%;
+    width: 185px;
     padding-left: 10px;
 
 }
@@ -1663,7 +1663,7 @@ label, output {
 
 .nurse-block-detail-img {
     display: inline-block;
-    width: 20%;
+    width: 30%;
     height: 100%;
     overflow: hidden;
     text-align: left;
@@ -1680,7 +1680,7 @@ label, output {
     text-align: left;
     vertical-align: top;
     margin-top: 15px;
-    width: 75%;
+    width: 60%;
 }
 
 @media (max-width: 1024px) {
