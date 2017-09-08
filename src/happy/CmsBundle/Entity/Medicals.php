@@ -28,28 +28,43 @@ class Medicals
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     * @ORM\Column(name="name", type="string", length=100, nullable=true)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="headline", type="text", nullable=false)
+     * @ORM\Column(name="name_galig", type="string", length=100, nullable=true)
+     */
+    private $nameGalig;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="oldId", type="string", length=100, nullable=true)
+     */
+    private $oldid;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="headline", type="text", nullable=true)
      */
     private $headline;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="text",  nullable=false)
+     * @ORM\Column(name="address", type="text",  nullable=true)
      */
     private $address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string",length=100,  nullable=false)
+     * @ORM\Column(name="phone", type="string",length=100,  nullable=true)
      */
     private $phone;
 
@@ -202,6 +217,14 @@ class Medicals
      */
     private $isDoctor;
 
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_new", type="boolean",  nullable=true)
+     */
+    private $isNew;
+
     /**
      * @ORM\OneToMany(targetEntity="MedicalPhoto", mappedBy="medical")
      */
@@ -235,7 +258,7 @@ class Medicals
     /**
      * @var string
      *
-     * @ORM\Column(name="long_lat", type="string", length=100, nullable=false)
+     * @ORM\Column(name="long_lat", type="string", length=100, nullable=true)
      */
     private $longLat;
 
@@ -1038,5 +1061,77 @@ class Medicals
     public function getHeadline()
     {
         return $this->headline;
+    }
+
+    /**
+     * Set nameGalig
+     *
+     * @param string $nameGalig
+     *
+     * @return Medicals
+     */
+    public function setNameGalig($nameGalig)
+    {
+        $this->nameGalig = $nameGalig;
+
+        return $this;
+    }
+
+    /**
+     * Get nameGalig
+     *
+     * @return string
+     */
+    public function getNameGalig()
+    {
+        return $this->nameGalig;
+    }
+
+    /**
+     * Set oldid
+     *
+     * @param string $oldid
+     *
+     * @return Medicals
+     */
+    public function setOldid($oldid)
+    {
+        $this->oldid = $oldid;
+
+        return $this;
+    }
+
+    /**
+     * Get oldid
+     *
+     * @return string
+     */
+    public function getOldid()
+    {
+        return $this->oldid;
+    }
+
+    /**
+     * Set isNew
+     *
+     * @param boolean $isNew
+     *
+     * @return Medicals
+     */
+    public function setIsNew($isNew)
+    {
+        $this->isNew = $isNew;
+
+        return $this;
+    }
+
+    /**
+     * Get isNew
+     *
+     * @return boolean
+     */
+    public function getIsNew()
+    {
+        return $this->isNew;
     }
 }
