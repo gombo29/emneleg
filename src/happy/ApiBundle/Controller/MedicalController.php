@@ -44,7 +44,7 @@ class MedicalController extends Controller
             ->addOrderBy('n.isOntsloh', 'desc')
             ->orderBy('n.createdDate', 'asc')
             ->where('n.isOntsloh = 1')
-            ->setMaxResults(4)
+            ->setMaxResults(6)
             ->getQuery()
             ->getArrayResult();
 
@@ -88,6 +88,34 @@ class MedicalController extends Controller
         );
     }
 
+    /* ======= APP HOSPITAL FILTER ======= */
+
+    /**
+     *  Lists all project entities.
+     *
+     * @Route("/lab-type", name="api_lab_type")
+     * @Method("GET")
+     *
+     */
+    public function medLabTypeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->getRepository('happyCmsBundle:LaboratoryType')->createQueryBuilder('n');
+        /**@var MedicalType[] $medType */
+        $labType = $qb
+            ->select('n.id, n.name')
+            ->orderBy('n.id', 'asc')
+            ->getQuery()
+            ->getArrayResult();
+
+
+        return new JsonResponse(
+            array(
+                "labType" => $labType,
+            )
+        );
+    }
 
     /* ======= APP HOSPITAL LIST ======= */
 
@@ -98,12 +126,17 @@ class MedicalController extends Controller
      * @Method("GET")
      *
      */
-    public function indexAction($page, $typeId)
+    public function indexAction(Request $request, $page, $typeId)
     {
         $pagesize = 10;
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
         $qbMedType = $em->getRepository('happyCmsBundle:MedicalMedType')->createQueryBuilder('n');
+
+        $keyword = $request->get('name');
+        $labIds = $request->get('labIds');
+
+
         $medicalMedIds = $qbMedType
             ->select('m.id')
             ->leftJoin('n.medical', 'm')
@@ -114,9 +147,32 @@ class MedicalController extends Controller
             ->getArrayResult();
 
         if ($medicalMedIds) {
+
+            if ($labIds) {
+                $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
+                $medicalMedIds = $qblab
+                    ->select('m.id')
+                    ->leftJoin('n.medical', 'm')
+                    ->where($qblab->expr()->in('n.labType', ':p1'))
+                    ->setParameter('p1', $labIds)
+                    ->andWhere($qblab->expr()->in('n.medical', ':p2'))
+                    ->setParameter('p2', $medicalMedIds)
+                    ->groupBy('m.id')
+                    ->having('COUNT(m.id) = :labcount')
+                    ->setParameter('labcount', sizeof($labIds))
+                    ->getQuery()
+                    ->getArrayResult();
+            }
+
             $qb
                 ->andWhere($qb->expr()->in('n.id', ':medIds'))
                 ->setParameter(':medIds', $medicalMedIds);
+        }
+
+        if ($keyword) {
+            $qb
+                ->andWhere('n.name like :keyword')
+                ->setParameter(':keyword', '%' . $keyword . '%');
         }
 
         $countQueryBuilder = clone $qb;
@@ -130,6 +186,7 @@ class MedicalController extends Controller
             ->setMaxResults($pagesize)
             ->getQuery()
             ->getArrayResult();
+
 
         foreach ($medical as $key => $m) {
             $phones = explode(";", $m['phone']);
@@ -169,10 +226,10 @@ class MedicalController extends Controller
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
         $generalinfo = $qb
             ->select('n.name', 'n.headline', 'n.address', 'n.phone', 'n.email', 'n.fbAddress',
-                'n.website', 'n.busStation', 'n.isParking','n.likeCount',
+                'n.website', 'n.busStation', 'n.isParking', 'n.likeCount',
                 'n.parkingPrice', 'n.isCard', 'n.isWifi', 'n.hoolTotal', 'n.isSaturdayHool',
                 'n.isSundayHool', 'n.isDaatgal', 'n.isLaboratory',
-                'n.isOntsloh', 'n.isRemove' ,'n.photo', 'n.timeTable', 'n.isDoctor', 'n.longLat')
+                'n.isOntsloh', 'n.isRemove', 'n.photo', 'n.timeTable', 'n.isDoctor', 'n.longLat')
             ->where('n.id = :medid')
             ->setParameter('medid', $medical)
             ->getQuery()
@@ -188,8 +245,7 @@ class MedicalController extends Controller
             ->getArrayResult();
 
         foreach ($medicalLabType as $key => $m) {
-            if($m['price'] == 0)
-            {
+            if ($m['price'] == 0) {
                 $medicalLabType[$key]['price'] = 'Тодорхойгүй';
             }
         }

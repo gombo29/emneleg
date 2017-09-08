@@ -76,7 +76,11 @@
             <div class="col-lg-3 col-md-3 col-sm-12 col-xs12"
                  style="float: left;;overflow: hidden;">
                 <h4 style="text-align: center;"> {{ medical.name }}</h4>
+                {% if medical.photo %}
                 <img src="/{{ localstatfolder }}{{ medical.photo }}" style="width: 100%;border: 1px solid #ccc">
+                {% else %}
+                    <img src="{{ asset('recource/default.jpg') }}" style="width: 100%;border: 1px solid #ccc">
+                {% endif %}
                 <div style="margin-top: 15px">
                     <h6 class="med-detail-icon"><i class="fa fa-map-marker "></i> Хаяг:</h6>
                     <p class="med-detail-text">{{ medical.address }}</p>
