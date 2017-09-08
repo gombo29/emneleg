@@ -144,8 +144,6 @@
                 locations = [['<div><p>Үр дүн илэрсэнгүй!</p></div>', 47.918428, 106.917738, '{{ asset('recource/marker.png') }}']];
                 {% endif %}
 
-
-                console.log(locations);
                 var styles = [
                     {
                         stylers: [
@@ -178,7 +176,6 @@
                     })(marker, i));
                 }
 
-
                 function AutoCenter() {
                     var bounds = new google.maps.LatLngBounds();
 
@@ -187,7 +184,7 @@
                     });
                     map.fitBounds(bounds);
                     var listener = google.maps.event.addListener(map, "idle", function () {
-                        if (map.getZoom() > 6) map.setZoom(14);
+                        if (map.getZoom() > 6) map.setZoom(16);
                         google.maps.event.removeListener(listener);
                     });
                 }
