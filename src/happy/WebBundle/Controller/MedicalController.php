@@ -103,7 +103,7 @@ class MedicalController extends Controller
         /**@var Medicals[] $medical */
         $medical = $qb
             ->orderBy('n.isOntsloh', 'desc')
-            ->addOrderBy('n.createdDate', 'desc')
+            ->addOrderBy('n.createdDate', 'asc')
             ->getQuery()
             ->getArrayResult();
 
