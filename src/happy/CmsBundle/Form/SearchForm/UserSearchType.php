@@ -17,30 +17,15 @@ class UserSearchType extends AbstractType
     {
         $builder
 
-            ->add('email', 'text', array(
-                    'label' => 'Email',
+            ->add('username', 'text', array(
+                    'label' => 'Нэвтрэх нэр',
                     'required' => false,
                     'attr' => array(
                         'class' => 'form-control'
                     )
                 )
             )
-
-            ->add('ehlehDate', 'datetime', array(
-                'required' => false,
-                'label' => 'Эхлэл /Үүсгэсэн огнооноос хайна/',
-                'format' => 'yyyy-MM-dd HH:mm',
-                'widget' => 'single_text',
-                'attr' => [ 'datetime' => 'picker', 'class' => 'form-control'],
-            ))
-
-            ->add('duusahDate', 'datetime', array(
-                'required' => false,
-                'label' => 'Төгсгөл /Үүсгэсэн огнооноос хайна/',
-                'format' => 'yyyy-MM-dd HH:mm',
-                'widget' => 'single_text',
-                'attr' => [ 'datetime' => 'picker', 'class' => 'form-control'],
-            ));
+            ;
     }
 
     /**

@@ -8,6 +8,7 @@ use happy\CmsBundle\Entity\MedicalMedType;
 use happy\CmsBundle\Entity\MedicalPhoto;
 use happy\CmsBundle\Entity\Medicals;
 use happy\CmsBundle\Entity\MedicalType;
+use happy\CmsBundle\Entity\UserLogs;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -208,10 +209,21 @@ class MedicalController extends Controller
             $medical->uploadImage($this->container);
             $em->persist($medical);
             $em->flush();
+
+            $log = new UserLogs();
+            $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+            $log->setIpaddress($request->getClientIp());
+            $log->setValue($medical->getName());
+            $log->setAction('Эмнэлэг үүсгэв.');
+            $log->setMedId($medical->getId());
+            $log->setCreatedDate(new \DateTime('now'));
+            $em->persist($log);
+            $em->flush();
+
             $request
                 ->getSession()
                 ->getFlashBag()
-                ->add('success', 'Мэдээ амжилттай үүлслээ!');
+                ->add('success', 'Эмнэлэг амжилттай үүлслээ!');
 
             return $this->redirectToRoute('cms_medical_index');
         }
@@ -461,6 +473,17 @@ class MedicalController extends Controller
             $json = json_encode($arrTasag);
             $medical->setTasagInfo($json);
             $medical->uploadImage($this->container);
+
+
+            $log = new UserLogs();
+            $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+            $log->setIpaddress($request->getClientIp());
+            $log->setMedId($medical->getId());
+            $log->setValue($medical->getName());
+            $log->setAction('Эмнэлэг засав.');
+            $log->setCreatedDate(new \DateTime('now'));
+            $em->persist($log);
+
             $em->flush();
             $request
                 ->getSession()
@@ -493,6 +516,16 @@ class MedicalController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $log = new UserLogs();
+            $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+            $log->setIpaddress($request->getClientIp());
+            $log->setValue($medical->getName());
+            $log->setAction('Эмнэлэг тохиргоо өөрчлөв.');
+            $log->setMedId($medical->getId());
+            $log->setCreatedDate(new \DateTime('now'));
+            $em->persist($log);
+
 
             $em->flush();
             $request
@@ -565,6 +598,16 @@ class MedicalController extends Controller
         $photo->uploadImage($this->container, false);
 
         $em->persist($photo);
+
+        $log = new UserLogs();
+        $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+        $log->setIpaddress($request->getClientIp());
+        $log->setValue($medical->getName());
+        $log->setAction('Эмнэлэг зураг үүсгэв.');
+        $log->setMedId($medical->getId());
+        $log->setCreatedDate(new \DateTime('now'));
+        $em->persist($log);
+
         $em->flush();
 
         $entities = array(
@@ -592,10 +635,20 @@ class MedicalController extends Controller
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function deleteimgAction(MedicalPhoto $medicalPhoto)
+    public function deleteimgAction(Request $request,MedicalPhoto $medicalPhoto)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($medicalPhoto);
+
+        $log = new UserLogs();
+        $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+        $log->setIpaddress($request->getClientIp());
+        $log->setValue($medicalPhoto->getMedical()->getName());
+        $log->setAction('Эмнэлэг зураг утсгав.');
+        $log->setMedId($medicalPhoto->getMedical()->getId());
+        $log->setCreatedDate(new \DateTime('now'));
+        $em->persist($log);
+
         $em->flush();
 
         return $this->redirectToRoute('cms_medical_image', array('id' => $medicalPhoto->getMedical()->getId()));
@@ -619,6 +672,16 @@ class MedicalController extends Controller
         $image = $em->getRepository('happyCmsBundle:MedicalPhoto')->find($imageid);
         $image->setTailbar($text);
         $em->persist($image);
+
+        $log = new UserLogs();
+        $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+        $log->setIpaddress($request->getClientIp());
+        $log->setValue($image->getMedical()->getName());
+        $log->setAction('Эмнэлэг зурагт тайлбар үүсгэв.');
+        $log->setMedId($image->getMedical()->getId());
+        $log->setCreatedDate(new \DateTime('now'));
+        $em->persist($log);
+
         $em->flush();
 
         return new JsonResponse(array(
@@ -704,6 +767,16 @@ class MedicalController extends Controller
             $doctor->setIsDoctor(true);
             $doctor->setMedical($em->getReference('happyCmsBundle:Medicals', $id));
             $em->persist($doctor);
+
+            $log = new UserLogs();
+            $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+            $log->setIpaddress($request->getClientIp());
+            $log->setValue($doctor->getMedical()->getName());
+            $log->setAction('Эмнэлэг эмч үүсгэв.');
+            $log->setMedId($doctor->getMedical()->getId());
+            $log->setCreatedDate(new \DateTime('now'));
+            $em->persist($log);
+
             $em->flush();
             $request
                 ->getSession()
@@ -735,6 +808,16 @@ class MedicalController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $doctor->uploadImage($this->container);
+
+            $log = new UserLogs();
+            $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+            $log->setIpaddress($request->getClientIp());
+            $log->setValue($doctor->getMedical()->getName());
+            $log->setAction('Эмнэлэг эмч засав.');
+            $log->setMedId($doctor->getMedical()->getId());
+            $log->setCreatedDate(new \DateTime('now'));
+            $em->persist($log);
+
             $em->flush();
             $request
                 ->getSession()
@@ -763,6 +846,16 @@ class MedicalController extends Controller
         $id = $request->get('medid');
         $em = $this->getDoctrine()->getManager();
         $em->remove($doctor);
+
+        $log = new UserLogs();
+        $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+        $log->setIpaddress($request->getClientIp());
+        $log->setValue($doctor->getMedical()->getName());
+        $log->setAction('Эмнэлэг эмч устгав.');
+        $log->setMedId($doctor->getMedical()->getId());
+        $log->setCreatedDate(new \DateTime('now'));
+        $em->persist($log);
+
         $em->flush();
         return $this->redirectToRoute('cms_medical_doctor', array('id' => $id));
     }
@@ -826,6 +919,16 @@ class MedicalController extends Controller
             $medType->uploadImageActive($this->container);
             $medType->uploadImageMobile($this->container);
             $em->persist($medType);
+
+            $log = new UserLogs();
+            $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+            $log->setIpaddress($request->getClientIp());
+            $log->setValue($medType->getName());
+            $log->setAction('Эмнэлэг төрөл нэмэв.');
+            $log->setMedId($medType->getId());
+            $log->setCreatedDate(new \DateTime('now'));
+            $em->persist($log);
+
             $em->flush();
             $request
                 ->getSession()
@@ -857,6 +960,16 @@ class MedicalController extends Controller
             $medType->uploadImage($this->container);
             $medType->uploadImageActive($this->container);
             $medType->uploadImageMobile($this->container);
+
+            $log = new UserLogs();
+            $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+            $log->setIpaddress($request->getClientIp());
+            $log->setValue($medType->getName());
+            $log->setAction('Эмнэлэг төрөл засав.');
+            $log->setMedId($medType->getId());
+            $log->setCreatedDate(new \DateTime('now'));
+            $em->persist($log);
+
             $em->flush();
             $request
                 ->getSession()

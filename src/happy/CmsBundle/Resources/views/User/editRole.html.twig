@@ -1,0 +1,7 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Админ хандах эрх өөрчлөх{% endblock %}
+{% block body %}
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    {{ form_end(edit_form) }}
+{% endblock %}

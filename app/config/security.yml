@@ -36,4 +36,17 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: ROLE_CMS_USER }
         - { path: ^/resetting, role: ROLE_CMS_USER }
-        - { path: ^/gombo, role: ROLE_CMS_USER }
+        - { path: ^/gombo, role: ROLE_CMS_ADMIN }
+
+        - { path: ^/gombo/content, role: ROLE_CONTENT_ADMIN }
+
+        - { path: ^/gombo/banner, role: ROLE_BANNER_ADMIN }
+
+        - { path: ^/gombo/device, role: ROLE_DEVICE_ADMIN }
+
+        - { path: ^/gombo/medical, role: ROLE_MEDICAL_ADMIN }
+
+        - { path: ^/gombo/nurse, role: ROLE_NURSE_ADMIN }
+
+        - { path: ^/gombo/user, role: ROLE_SUPER_ADMIN }
+

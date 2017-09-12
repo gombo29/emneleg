@@ -11,6 +11,10 @@
     </style>
     <ul style="list-style: none;padding: 0;">
         <li>
+            <a class="btn btn-success" href="{{ path('cms_user_new') }}">Шинэ хэрэглэгч нэмэх</a>
+        </li>
+
+        <li>
             <a href="javascript:void(0)" id="searchlink">Хайлт &DownArrowUpArrow;</a>
         </li>
     </ul>
@@ -23,14 +27,9 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>Зураг</th>
             <th>Хэрэглэгчийн нэр</th>
-            <th>Овог нэр</th>
-            <th>Бүртгэл төрөл</th>
             <th>Email</th>
-            <th>Утасны дугаар</th>
             <th>Сүүлд нэвтэрсэн огноо</th>
-            <th>Үүсгэсэн огноо</th>
             <th></th>
 
         </tr>
@@ -39,24 +38,14 @@
         {% for con in user %}
             <tr>
                 <td>{{ con.id }}</td>
-                <td><img src="/{{ statfolder }}{{ con.img }}" width="100"></td>
-                <td>{{ con.username }}</td>
-                <td>{{ con.fName }} {{ con.lName }}</td>
-                <td>{% if con.isInvestor == 1 %} Investor {% else %} Enterprenuer {% endif %}</td>
+                <td><a href="{{ path('cms_user_show', {'id': con.id}) }}">{{ con.username }}</a></td>
                 <td>{{ con.email }}</td>
-                <td>{{ con.phoneNumber }}</td>
                 <td>{{ con.lastLogin|date('Y-m-d H:i:s') }}</td>
-                <td>{{ con.createdDate|date('Y-m-d H:i:s') }}</td>
                 <td>
                     {% if con.enabled == 1 %}
-                        <a class="btn btn-success"
-                           href=""><i
-                                    class="glyphicon glyphicon-ok"></i></a>
-
+                        <i style="color: green">Нээлттэй</i>
                     {% else %}
-                        <a class="btn btn-danger"
-                           href=""><i
-                                    class="glyphicon glyphicon-remove"></i></a>
+                        <i style="color: red">Хаалттай</i>
                     {% endif %}
                 </td>
             </tr>

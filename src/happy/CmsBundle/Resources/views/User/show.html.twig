@@ -1,0 +1,69 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Admin profile{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+
+    <table class="table table-hover table-striped">
+        <tbody>
+        <tr>
+            <td>ID:</td>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <td>Нэвтрэх нэр:</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>Цахим шуудан:</td>
+            <td>{{ user.email }}</td>
+        </tr>
+            <tr>
+                <td>Нууц үг:</td>
+                <td>
+                    <a href="{{ path('cms_user_edit_password', {id: user.id}) }}"
+                       class="btn btn-default">Өөрчлөх</a>
+                </td>
+            </tr>
+        <tr>
+            <td>Хандах эрх:</td>
+            <td>
+                {% if user.enabled  == 1 %}
+                    <i style="color: green">Нээлттэй</i>
+                {% else %}
+                    <i style="color: red">Хаалттай</i>
+                {% endif %}
+
+                    <a href="{{ path('cms_user_edit_enable', {id: user.id, currentRoute : currentRoute}) }}"
+                       class="btn btn-default">Өөрчлөх</a>
+
+            </td>
+        </tr>
+        <tr>
+            <td>Эрх:</td>
+            <td>
+                {#{% if is_granted('ROLE_CMS_ADMIN_CHANGEROLE') %}#}
+                    <a href="{{ path('cms_user_edit_role', {id: user.id, currentRoute : currentRoute}) }}"
+                       class="btn btn-default">Өөрчлөх</a>
+                {#{% endif %}#}
+                {% for r in roles %}
+                    <ul>
+                        <li>{{ r.disname }}</li>
+                    </ul>
+                {% endfor %}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+        <ul style="list-style: none;float: left">
+            <li>
+                {#{{ form_start(form, {'action': path('cms_user_delete', { id : user.id , currentRoute : currentRoute}), 'method': 'DELETE'}) }}#}
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input class="btn btn-danger" onclick="if(!confirm('Итгэлтэй байна уу?'))return false;" type="submit"
+                       value="Устгах"/>
+                {{ form_end(form) }}
+            </li>
+        </ul>
+{% endblock %}
