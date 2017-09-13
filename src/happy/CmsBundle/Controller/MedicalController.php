@@ -45,8 +45,12 @@ class MedicalController extends Controller
             $search = true;
         }
 
-        $isDone = 1;
         $isDone = $request->get('isDone');
+
+        if ($isDone == null) {
+            $isDone = 1;
+
+        }
 
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
