@@ -12,6 +12,14 @@
             {#<a class="btn btn-success" href="{{ path('cms_medical_new') }}">Шинээр#}
                 {#үүсгэх</a>#}
         {#</li>#}
+
+        <li>
+        <a class="btn btn-{% if isDone == 1 %}success{% else %}default{% endif %}" href="{{ path('cms_medical_index' , {'isDone' : 1}) }}">Дууссан</a>
+        </li>
+
+        <li>
+        <a class="btn btn-{% if isDone == 0 %}success{% else %}default{% endif %}" href="{{ path('cms_medical_index' , {'isDone' : 0}) }}">Дуусаагүй</a>
+        </li>
         <li>
             <a href="javascript:void(0)" id="searchlink">Хайлт &DownArrowUpArrow;</a>
         </li>

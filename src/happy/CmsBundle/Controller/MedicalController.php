@@ -45,6 +45,9 @@ class MedicalController extends Controller
             $search = true;
         }
 
+        $isDone = 1;
+        $isDone = $request->get('isDone');
+
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
 
@@ -66,6 +69,13 @@ class MedicalController extends Controller
                     ->setParameter('duusahDate', $searchEntity->getDuusahDate());
             }
         }
+
+
+        $qb
+            ->andWhere('n.isDone = :isDone')
+            ->setParameter('isDone', $isDone);
+
+
         $countQueryBuilder = clone $qb;
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
         /**@var Medicals[] $medical */
@@ -84,6 +94,7 @@ class MedicalController extends Controller
             'page' => $page,
             'search' => $search,
             'medical' => $medical,
+            'isDone' => $isDone,
             'searchform' => $searchForm->createView(),
         ));
     }
@@ -635,7 +646,7 @@ class MedicalController extends Controller
      * @Method({"GET", "POST"})
      * @Template()
      */
-    public function deleteimgAction(Request $request,MedicalPhoto $medicalPhoto)
+    public function deleteimgAction(Request $request, MedicalPhoto $medicalPhoto)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($medicalPhoto);

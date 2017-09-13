@@ -98,6 +98,19 @@ class Medicals
 
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="who", type="string",length=50,  nullable=true)
+     */
+    private $who;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_done", type="boolean",  nullable=true)
+     */
+    private $isDone;
+    /**
      * @var boolean
      *
      * @ORM\Column(name="is_parking", type="boolean",  nullable=true)
@@ -1133,5 +1146,53 @@ class Medicals
     public function getIsNew()
     {
         return $this->isNew;
+    }
+
+    /**
+     * Set isDone
+     *
+     * @param boolean $isDone
+     *
+     * @return Medicals
+     */
+    public function setIsDone($isDone)
+    {
+        $this->isDone = $isDone;
+
+        return $this;
+    }
+
+    /**
+     * Get isDone
+     *
+     * @return boolean
+     */
+    public function getIsDone()
+    {
+        return $this->isDone;
+    }
+
+    /**
+     * Set who
+     *
+     * @param string $who
+     *
+     * @return Medicals
+     */
+    public function setWho($who)
+    {
+        $this->who = $who;
+
+        return $this;
+    }
+
+    /**
+     * Get who
+     *
+     * @return string
+     */
+    public function getWho()
+    {
+        return $this->who;
     }
 }
