@@ -179,7 +179,7 @@ class MedicalController extends Controller
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
         /**@var Medicals[] $medical */
         $medical = $qb
-            ->select('n.id', 'n.name', 'n.headline', 'n.phone', 'n.photo', 'n.isParking', 'n.isCard', 'n.isWifi')
+            ->select('n.id', 'n.name', 'n.headline', 'n.phone', 'n.photo', 'n.isParking', 'n.isCard', 'n.isWifi', 'n.longLat')
             ->orderBy('n.isOntsloh', 'desc')
             ->addOrderBy('n.createdDate', 'desc')
             ->setFirstResult(($page - 1) * $pagesize)
