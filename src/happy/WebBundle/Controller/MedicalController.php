@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MedicalController extends Controller
 {
     /**
-     * @Route("/{page}/{type}", name="medicals", requirements={"page" = "\d+", "type" = "\d+"}, defaults={"page" = 1, "type" = 1} )
+     * @Route ("/{page}/{type}", name="medicals", requirements={"page" = "\d+", "type" = "\d+"}, defaults={"page" = 1, "type" = 1} )
      * @Method({"GET", "POST"})
      * Төслүүд
      *
@@ -38,6 +38,7 @@ class MedicalController extends Controller
         $count = 0;
         $labTypeIds = $request->get('labtypes');
         $medTypeId = $request->get('medtypes');
+        $medName = $request->get('q');
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
 
@@ -91,6 +92,11 @@ class MedicalController extends Controller
 
         }
 
+        if ($medName) {
+            $qb
+                ->andWhere('n.name like :medName')
+                ->setParameter(':medName', '%' . $medName . '%');
+        }
 
         if ($type != 3) {
             $countQueryBuilder = clone $qb;
