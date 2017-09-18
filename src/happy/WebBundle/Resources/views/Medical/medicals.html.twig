@@ -59,7 +59,8 @@
                             {% for i in medType %}
                                 <a href="{{ path('medicals', {'type': viewType, 'medtypes':  i.id }) }}"
                                    class="list-group-item {% if medTypeId == i.id %}active{% endif %}">
-                                    <img src="/{{ localstatfolder }}{{ i.img }}" style="width: 20px;margin-right: 10px;">{{ i.name }}
+                                    <img src="/{{ localstatfolder }}{{ i.img }}"
+                                         style="width: 20px;margin-right: 10px;">{{ i.name }}
                                 </a>
                             {% endfor %}
                         </div>
@@ -128,7 +129,7 @@
 
                 locations = [
                     {% for m in medical %}
-                    ['<div class="papular-post-slider"><div class="papular-reviews"><a href="#"><div class="image"> <img alt="{{ m.name }}" src="/{{ localstatfolder }}{{ m.photo }}" class="img-responsive"><div class="absolute-in-image"><div class="duration"><br><span> Утас: {% set ph = m.phone|split(';') %}{% for p in ph %}{% if loop.first %}{{ p }}{% endif %}{% endfor %}</span></div></div></div><div class="content"><span class="cat"><i class="flaticon-technology-23"></i></span><h4>{{ m.name }}</h4><span>Хаяг: {{ m.address }}</span> </div></div></div></a></div></div>',
+                    ['<div class="papular-post-slider"><div class="papular-reviews"><a href="#"><div class="image"> <img alt="{{ m.name }}" src="/{{ localstatfolder }}{{ m.photo }}" class="img-responsive"><div class="absolute-in-image"><div class="duration"><br><span> Утас: {% set ph = m.phone|split(';') %}{% for p in ph %}{% if loop.first %}{{ p }}{% endif %}{% endfor %}</span></div></div></div><div class="content"><span class="cat"><i class="flaticon-technology-23"></i></span><a href="{{ path('medical_detail', {'id' : m.id}) }}"><h4>{{ m.name }}</h4></a><span>Хаяг: {{ m.address }}</span> </div></div></div></a></div></div>',
                         {% set p = m.longLat|replace({';':','}) %}
                         {{ p }}
 
