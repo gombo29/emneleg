@@ -45,13 +45,6 @@ class MedicalController extends Controller
             $search = true;
         }
 
-        $isDone = $request->get('isDone');
-
-        if ($isDone == null) {
-            $isDone = 1;
-
-        }
-
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
 
@@ -59,6 +52,16 @@ class MedicalController extends Controller
             if ($searchEntity->getName() && $searchEntity->getName() != '') {
                 $qb->andWhere('n.name like :name')
                     ->setParameter('name', '%' . $searchEntity->getName() . '%');
+            }
+
+            if ($searchForm->get('isDone')->getData() !== null) {
+                if ($searchEntity->getIsDone() == '1') {
+                    $qb->andWhere('n.isDone = :isDone')
+                        ->setParameter('isDone', true);
+                } else if ($searchEntity->getIsDone() == '0') {
+                    $qb->andWhere('n.isDone = :isDone')
+                        ->setParameter('isDone', false);
+                }
             }
 
             if ($searchForm->get('ehlehDate')->getData()) {
@@ -73,12 +76,6 @@ class MedicalController extends Controller
                     ->setParameter('duusahDate', $searchEntity->getDuusahDate());
             }
         }
-
-
-        $qb
-            ->andWhere('n.isDone = :isDone')
-            ->setParameter('isDone', $isDone);
-
 
         $countQueryBuilder = clone $qb;
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
@@ -98,7 +95,6 @@ class MedicalController extends Controller
             'page' => $page,
             'search' => $search,
             'medical' => $medical,
-            'isDone' => $isDone,
             'searchform' => $searchForm->createView(),
         ));
     }

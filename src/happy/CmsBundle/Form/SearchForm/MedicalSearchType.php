@@ -26,6 +26,21 @@ class MedicalSearchType extends AbstractType
                 )
             )
 
+            ->add('isDone', 'choice',
+                array(
+                    'label' => 'Дууссан эсэх',
+                    'choices' => array(
+                        '1' => 'Тийм',
+                        '0' => 'Үгүй'
+                    ),
+                    'expanded' => true,
+                    'required' => false,
+                    'attr' => array(
+                        "class" => "form-control",
+                    )
+                )
+            )
+
             ->add('ehlehDate', 'datetime', array(
                 'required' => false,
                 'label' => 'Эхлэл /Үүсгэсэн огнооноос хайна/',
