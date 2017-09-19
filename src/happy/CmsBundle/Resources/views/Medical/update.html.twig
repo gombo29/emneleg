@@ -60,49 +60,193 @@
             </tr>
             </thead>
             <tbody>
+            {% if tasagInfo != null %}
+                {% for key,t in tasagInfo %}
+                    {% set key = key + 1 %}
+                    {% set zuragt = false %}
+                    {% set dotor_00 = false %}
+                    {% set niitiin_00 = false %}
+                    {% set dotor_shurshuur = false %}
+                    {% set niitiin_shurshuur = false %}
+                    {% set wifi = false %}
+                    <tr>
+                        <td>{% if loop.last %} 6-с дээш хүний өрөө{% else %}{{ key }} хүний өрөө{% endif %}</td>
+                        <td>
+                            <input name="{{ key }}oroo" type="text" class="form-control" value="{{ t.oroo_too }}">
+                        </td>
+                        <td>
+                            <input name="{{ key }}une" type="text" class="form-control" value="{{ t.oroo_une }}">
+                        </td>
+                        <td>
 
-            {% for key,t in tasagInfo %}
-                {% set key = key + 1 %}
-                {% set zuragt = false %}
-                {% set dotor_00 = false %}
-                {% set niitiin_00 = false %}
-                {% set dotor_shurshuur = false %}
-                {% set niitiin_shurshuur = false %}
-                {% set wifi = false %}
+                            {% for o in t.oroo_ontslog %}
+                                {% if o == 'Зурагттай' %}{% set zuragt = true %}{% endif %}
+                                {% if o == '00 өрөөн дотроо байдаг' %}{% set dotor_00 = true %}{% endif %}
+                                {% if o == '00 нийтийнх' %}{% set dotor_00 = true %}{% endif %}
+                                {% if o == 'Өрөөн дотроо шүршүүртэй' %}{% set dotor_shurshuur = true %}{% endif %}
+                                {% if o == 'Нийтийн шүршүүртэй' %}{% set niitiin_shurshuur = true %}{% endif %}
+                                {% if o == 'Wifi интернэттэй' %} {% set wifi = true %}{% endif %}
+                            {% endfor %}
+
+                            <input type="checkbox" name="{{ key }}orooOntslog[]" value="Зурагттай"
+                                   {% if zuragt == true %}checked{% endif %}> Зурагттай<br>
+                            <input type="checkbox" name="{{ key }}orooOntslog[]" value="00 өрөөн дотроо байдаг"
+                                   {% if dotor_00 == true %}checked{% endif %}> 00 өрөөн дотроо байдаг<br>
+                            <input type="checkbox" name="{{ key }}orooOntslog[]" value="00 нийтийнх"
+                                   {% if niitiin_00 == true %}checked{% endif %}> 00 нийтийнх<br>
+                            <input type="checkbox" name="{{ key }}orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"
+                                   {% if dotor_shurshuur == true %}checked{% endif %}> Өрөөн дотроо шүршүүртэй<br>
+                            <input type="checkbox" name="{{ key }}orooOntslog[]" value="Нийтийн шүршүүртэй"
+                                   {% if niitiin_shurshuur == true %}checked{% endif %}> Нийтийн шүршүүртэй<br>
+                            <input type="checkbox" name="{{ key }}orooOntslog[]" value="Wifi интернэттэй"
+                                   {% if wifi == true %}checked{% endif %}> Wifi интернэттэй<br>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td>{% if loop.last %} 6-с дээш хүний өрөө{% else %}{{ key }} хүний өрөө{% endif %}</td>
+                    <td>1 хүний өрөө</td>
                     <td>
-                        <input name="{{ key }}oroo" type="text" class="form-control" value="{{ t.oroo_too }}">
+                        <input name="1oroo" type="text" class="form-control">
                     </td>
                     <td>
-                        <input name="{{ key }}une" type="text" class="form-control" value="{{ t.oroo_une }}">
+                        <input name="1une" type="text" class="form-control">
                     </td>
                     <td>
+                        <input type="checkbox" name="1orooOntslog[]" value="Зурагттай"> Зурагттай<br>
+                        <input type="checkbox" name="1orooOntslog[]" value="00 өрөөн дотроо байдаг"> 00 өрөөн дотроо
+                        байдаг<br>
+                        <input type="checkbox" name="1orooOntslog[]" value="00 нийтийнх"> 00 нийтийнх<br>
+                        <input type="checkbox" name="1orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"> Өрөөн дотроо
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="1orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"> Нийтийн
 
-                        {% for o in t.oroo_ontslog %}
-                            {% if o == 'Зурагттай' %}{% set zuragt = true %}{% endif %}
-                            {% if o == '00 өрөөн дотроо байдаг' %}{% set dotor_00 = true %}{% endif %}
-                            {% if o == '00 нийтийнх' %}{% set dotor_00 = true %}{% endif %}
-                            {% if o == 'Өрөөн дотроо шүршүүртэй' %}{% set dotor_shurshuur = true %}{% endif %}
-                            {% if o == 'Нийтийн шүршүүртэй' %}{% set niitiin_shurshuur = true %}{% endif %}
-                            {% if o == 'Wifi интернэттэй' %} {% set wifi = true %}{% endif %}
-                        {% endfor %}
-
-                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="Зурагттай"
-                               {% if zuragt == true %}checked{% endif %}> Зурагттай<br>
-                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="00 өрөөн дотроо байдаг"
-                               {% if dotor_00 == true %}checked{% endif %}> 00 өрөөн дотроо байдаг<br>
-                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="00 нийтийнх"
-                               {% if niitiin_00 == true %}checked{% endif %}> 00 нийтийнх<br>
-                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"
-                               {% if dotor_shurshuur == true %}checked{% endif %}> Өрөөн дотроо шүршүүртэй<br>
-                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="Нийтийн шүршүүртэй"
-                               {% if niitiin_shurshuur == true %}checked{% endif %}> Нийтийн шүршүүртэй<br>
-                        <input type="checkbox" name="{{ key }}orooOntslog[]" value="Wifi интернэттэй"
-                               {% if wifi == true %}checked{% endif %}> Wifi интернэттэй<br>
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="1orooOntslog[]" value="Wifi интернэттэй"> Wifi интернэттэй<br>
                     </td>
                 </tr>
-            {% endfor %}
+                <tr>
+                    <td>2 хүний өрөө</td>
+                    <td>
+                        <input name="2oroo" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="2une" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="2orooOntslog[]" value="Зурагттай"> Зурагттай<br>
+                        <input type="checkbox" name="2orooOntslog[]" value="00 өрөөн дотроо байдаг">00 өрөөн дотроо байдаг
+                        <br>
+                        <input type="checkbox" name="2orooOntslog[]" value="00 нийтийнх"> 00 нийтийнх<br>
+                        <input type="checkbox" name="2orooOntslog[]" value=" Өрөөн дотроо шүршүүртэй"> Өрөөн дотроо
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="2orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"> Нийтийн
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="2orooOntslog[]" value=" Wifi интернэттэй"> Wifi интернэттэй<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3 хүний өрөө</td>
+                    <td>
+                        <input name="3oroo" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="3une" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="3orooOntslog[]" value="Зурагттай"> Зурагттай<br>
+                        <input type="checkbox" name="3orooOntslog[]" value="00 өрөөн дотроо байдаг">00 өрөөн дотроо байдаг
+                        <br>
+                        <input type="checkbox" name="3orooOntslog[]" value="00 нийтийнх"> 00 нийтийнх<br>
+                        <input type="checkbox" name="3orooOntslog[]" value=" Өрөөн дотроо шүршүүртэй"> Өрөөн дотроо
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="3orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"> Нийтийн
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="3orooOntslog[]" value=" Wifi интернэттэй"> Wifi интернэттэй<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4 хүний өрөө</td>
+                    <td>
+                        <input name="4oroo" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="4une" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="4orooOntslog[]" value="Зурагттай"> Зурагттай<br>
+                        <input type="checkbox" name="4orooOntslog[]" value="00 өрөөн дотроо байдаг">00 өрөөн дотроо байдаг
+                        <br>
+                        <input type="checkbox" name="4orooOntslog[]" value="00 нийтийнх"> 00 нийтийнх<br>
+                        <input type="checkbox" name="4orooOntslog[]" value=" Өрөөн дотроо шүршүүртэй"> Өрөөн дотроо
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="4orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"> Нийтийн
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="4orooOntslog[]" value=" Wifi интернэттэй"> Wifi интернэттэй<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5 хүний өрөө</td>
+                    <td>
+                        <input name="5oroo" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="5une" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="5orooOntslog[]" value="Зурагттай"> Зурагттай<br>
+                        <input type="checkbox" name="5orooOntslog[]" value="00 өрөөн дотроо байдаг">00 өрөөн дотроо байдаг
+                        <br>
+                        <input type="checkbox" name="5orooOntslog[]" value="00 нийтийнх"> 00 нийтийнх<br>
+                        <input type="checkbox" name="5orooOntslog[]" value=" Өрөөн дотроо шүршүүртэй"> Өрөөн дотроо
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="5orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"> Нийтийн
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="5orooOntslog[]" value=" Wifi интернэттэй"> Wifi интернэттэй<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6 хүний өрөө</td>
+                    <td>
+                        <input name="6oroo" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="6une" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="6orooOntslog[]" value="Зурагттай"> Зурагттай<br>
+                        <input type="checkbox" name="6orooOntslog[]" value="00 өрөөн дотроо байдаг">00 өрөөн дотроо байдаг
+                        <br>
+                        <input type="checkbox" name="6orooOntslog[]" value="00 нийтийнх"> 00 нийтийнх<br>
+                        <input type="checkbox" name="6orooOntslog[]" value=" Өрөөн дотроо шүршүүртэй"> Өрөөн дотроо
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="6orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"> Нийтийн
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="6orooOntslog[]" value=" Wifi интернэттэй"> Wifi интернэттэй<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6-с дээш хүний өрөө</td>
+                    <td>
+                        <input name="7oroo" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="7une" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input type="checkbox" name="7orooOntslog[]" value="Зурагттай"> Зурагттай<br>
+                        <input type="checkbox" name="7orooOntslog[]" value="00 өрөөн дотроо байдаг">00 өрөөн дотроо байдаг
+                        <br>
+                        <input type="checkbox" name="7orooOntslog[]" value="00 нийтийнх"> 00 нийтийнх<br>
+                        <input type="checkbox" name="7orooOntslog[]" value=" Өрөөн дотроо шүршүүртэй"> Өрөөн дотроо
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="7orooOntslog[]" value="Өрөөн дотроо шүршүүртэй"> Өрөөн Нийтийн
+                        шүршүүртэй<br>
+                        <input type="checkbox" name="7orooOntslog[]" value=" Wifi интернэттэй"> Wifi интернэттэй<br>
+                    </td>
+                </tr>
+
+            {% endif %}
             </tbody>
         </table>
     </div>
@@ -137,50 +281,50 @@
     {{ form_end(form) }}
 
 {% endblock %}
-{% block js %}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEyeyQLgmJ_Gv7X-Vs5FcfqoWZ3Nz2cM8"></script>
-    <script>
-        $map = $('#happy_cmsbundle_medical_longLat');
-        $(function () {
-            function initialize() {
+    {% block js %}
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEyeyQLgmJ_Gv7X-Vs5FcfqoWZ3Nz2cM8"></script>
+        <script>
+            $map = $('#happy_cmsbundle_medical_longLat');
+            $(function () {
+                function initialize() {
 
-                if ($map.val() != null && $map.val() != '') {
-                    var location = $map.val().split(";");
-                    var myLatlng = new google.maps.LatLng(location[0], location[1]);
-                } else {
-                    var myLatlng = new google.maps.LatLng(47.92, 106.92);
+                    if ($map.val() != null && $map.val() != '') {
+                        var location = $map.val().split(";");
+                        var myLatlng = new google.maps.LatLng(location[0], location[1]);
+                    } else {
+                        var myLatlng = new google.maps.LatLng(47.92, 106.92);
+                    }
+
+                    var mapOptions = {
+                        zoom: 15,
+                        center: myLatlng
+                    };
+                    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        title: "Hi!"
+                    });
+
+                    marker.setMap(map);
+
+
+                    google.maps.event.addListener(map, 'click', function (e) {
+                        marker.setPosition(e.latLng);
+
+                        $map.val(e.latLng.lat() + ";" + e.latLng.lng());
+                    });
                 }
 
-                var mapOptions = {
-                    zoom: 15,
-                    center: myLatlng
-                };
-                var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                google.maps.event.addDomListener(window, 'load', initialize);
+            });
 
-                var marker = new google.maps.Marker({
-                    position: myLatlng,
-                    title: "Hi!"
-                });
+            $("#mapToggle").click(function () {
+                $('#map-canvas').toggle(200);
+            });
 
-                marker.setMap(map);
-
-
-                google.maps.event.addListener(map, 'click', function (e) {
-                    marker.setPosition(e.latLng);
-
-                    $map.val(e.latLng.lat() + ";" + e.latLng.lng());
-                });
-            }
-
-            google.maps.event.addDomListener(window, 'load', initialize);
-        });
-
-        $("#mapToggle").click(function () {
-            $('#map-canvas').toggle(200);
-        });
-
-        $("#mapClear").click(function () {
-            $map.val('');
-        });
-    </script>
-{% endblock %}
+            $("#mapClear").click(function () {
+                $map.val('');
+            });
+        </script>
+    {% endblock %}
