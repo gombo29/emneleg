@@ -1,0 +1,56 @@
+{% extends 'happyCmsBundle::base.html.twig' %}
+
+
+{% block pageheader %}Админ Log{% endblock %}
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    <style>
+        ul li {
+            display: inline-block;
+        }
+    </style>
+    <ul style="list-style: none;padding: 0;">
+        <li>
+            <a href="javascript:void(0)" id="searchlink">Хайлт &DownArrowUpArrow;</a>
+        </li>
+    </ul>
+
+    <fieldset style="border:1px solid #ddd;{%if search%}display:block{%else%}display:none;{% endif %}" id="searchpad">
+        {% include '@happyCms/inc/search.html.twig' with {'route' : 'cms_user_log'} %}
+    </fieldset>
+
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Хэн</th>
+            <th>Хэзээ</th>
+            <th>Хаанаас</th>
+            <th>Юу?</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for con in user %}
+            <tr>
+                <td>{{ con.id }}</td>
+                <td>{{ con.adminname }}</td>
+                <td>{{ con.createdDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ con.ipaddress }}</td>
+                <td><a href="{{ path('cms_medical_show', {'id': con.medId}) }}">{{ con.medId }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'happyCmsBundle:inc:page.html.twig' with {'route' : 'cms_user_log'} %}
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#searchlink').click(function () {
+                $('#searchpad').toggle();
+            });
+        });
+    </script>
+{% endblock %}

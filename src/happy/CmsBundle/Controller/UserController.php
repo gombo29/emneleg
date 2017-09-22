@@ -4,6 +4,7 @@ namespace happy\CmsBundle\Controller;
 
 use happy\CmsBundle\Entity\Project;
 use happy\CmsBundle\Entity\User;
+use happy\CmsBundle\Entity\UserLogs;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,7 +30,7 @@ class UserController extends Controller
      */
     public function indexAction(Request $request, $page)
     {
-        $pagesize = 15;
+        $pagesize = 30;
 
         $em = $this->getDoctrine()->getManager();
         $search = false;
@@ -72,6 +73,58 @@ class UserController extends Controller
         );
     }
 
+
+    /**
+     * Lists all User entities.
+     *
+     * @Route("/log/{page}", name="cms_user_log", requirements={"page" = "\d+"}, defaults={"page" = 1})
+     * @Method("GET")
+     * @Template()
+     */
+    public function logAction(Request $request, $page)
+    {
+        $pagesize = 15;
+
+        $em = $this->getDoctrine()->getManager();
+        $search = false;
+        $searchEntity = new UserLogs();
+        $searchForm = $this->createForm('happy\CmsBundle\Form\SearchForm\UserLogType', $searchEntity);
+
+        if ($request->get("submit") == 'submit') {
+            $searchForm->bind($request);
+            $search = true;
+        }
+
+        $qb = $em->getRepository('happyCmsBundle:UserLogs')->createQueryBuilder('p');
+
+
+        if ($search) {
+            if ($searchEntity->getAdminname() && $searchEntity->getAdminname() != '') {
+                $qb->andWhere('p.adminname like :adminname')
+                    ->setParameter('adminname', '%' . $searchEntity->getAdminname() . '%');
+            }
+        }
+
+
+        $countQueryBuilder = clone $qb;
+        $count = $countQueryBuilder->select('count(p.id)')->getQuery()->getSingleScalarResult();
+
+        $users = $qb
+            ->orderBy('p.id', 'DESC')
+            ->setFirstResult(($page - 1) * $pagesize)
+            ->setMaxResults($pagesize)
+            ->getQuery()
+            ->getArrayResult();
+
+        return array(
+            'pagecount' => ($count % $pagesize) > 0 ? intval($count / $pagesize) + 1 : intval($count / $pagesize),
+            'count' => $count,
+            'page' => $page,
+            'user' => $users,
+            'search' => $search,
+            'searchform' => $searchForm->createView(),
+        );
+    }
 
     /**
      * Creates a new User entity.

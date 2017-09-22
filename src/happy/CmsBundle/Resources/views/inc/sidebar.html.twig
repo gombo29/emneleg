@@ -57,7 +57,6 @@
             href:  path('cms_nurse_index')
         }
         ,
-
         {
             roles: [ 'ROLE_ONLINE_DOCTOR_ADMIN' ],
             icon: 'fa fa-heartbeat',
@@ -70,6 +69,13 @@
             icon: 'fa fa-user',
             title: 'Админ',
             href: path('cms_user_index')
+        }
+        ,
+        {
+            roles: [ 'ROLE_USER_ADMIN' ],
+            icon: 'fa fa-key',
+            title: 'Админ лог',
+            href: path('cms_user_log')
         }
         ,
         {
