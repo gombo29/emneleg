@@ -14,6 +14,31 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('happyCmsBundle:Default:index.html.twig');
+
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('happyCmsBundle:User')->createQueryBuilder('n');
+        $user = $qb
+            ->getQuery()
+            ->getArrayResult();
+
+        $arr = array();
+
+        foreach ($user as $key => $u) {
+            if ($key != 0) {
+                array_push($arr, $u['username']);
+            }
+        }
+
+        $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
+        $medical = $qb
+            ->where($qb->expr()->in('n.who' , ':ids' ))
+            ->setParameter('ids', $arr)
+            ->getQuery()
+            ->getArrayResult();
+        return $this->render('happyCmsBundle:Default:index.html.twig' ,array(
+            "medical" => $medical,
+            "user" => $user
+        ));
     }
 }

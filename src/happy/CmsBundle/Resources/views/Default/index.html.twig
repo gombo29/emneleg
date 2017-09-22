@@ -1,2 +1,19 @@
 {% extends '@happyCms/base.html.twig' %}
 {% block pageheader %}CMS-д тавтай морил!{% endblock %}
+
+{% block body %}
+    <h3>Мэдээлэл цуглуулж байгаа хүмүүсийн цуглуулсан эмнэлгийн тоо:</h3>
+    <div style="margin-left: 50px">
+        {% for key,u in user %}
+            {% if key != 0 %}
+                {% set count = 0 %}
+                {% for m in medical %}
+                    {% if m.who == u.username %}
+                        {% set count = count + 1 %}
+                    {% endif %}
+                {% endfor %}
+                <a href="{{ path('cms_medical_index', {'who': u.username}) }}"><p> <i class="fa fa-user"></i> {{ u.username }}: {{ count }} </p></a>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

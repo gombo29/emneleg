@@ -48,6 +48,15 @@ class MedicalController extends Controller
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
 
+        $who = $request->get('who');
+
+        if($who)
+        {
+            $qb->andWhere('n.who like :name')
+                ->setParameter('name', '%' . $who . '%');
+        }
+
+
         if ($search) {
             if ($searchEntity->getName() && $searchEntity->getName() != '') {
                 $qb->andWhere('n.name like :name')
