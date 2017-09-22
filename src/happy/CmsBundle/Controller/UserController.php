@@ -83,7 +83,7 @@ class UserController extends Controller
      */
     public function logAction(Request $request, $page)
     {
-        $pagesize = 15;
+        $pagesize = 30;
 
         $em = $this->getDoctrine()->getManager();
         $search = false;
