@@ -44,7 +44,7 @@ class MedicalController extends Controller
             ->addOrderBy('n.isOntsloh', 'desc')
             ->orderBy('n.createdDate', 'asc')
             ->where('n.isOntsloh = 1')
-            ->setMaxResults(6)
+//            ->setMaxResults(6)
             ->getQuery()
             ->getArrayResult();
 
@@ -235,6 +235,27 @@ class MedicalController extends Controller
             ->getQuery()
             ->getResult();
 
+        foreach ($generalinfo as $key => $g) {
+            if($g['website'] == null)
+            {
+                $generalinfo[$key]['website'] = 'тодорхойгүй';
+            }
+
+            if($g['busStation'] == null)
+            {
+                $generalinfo[$key]['busStation'] = 'тодорхойгүй';
+            }
+
+            if($g['email'] == null)
+            {
+                $generalinfo[$key]['email'] = 'тодорхойгүй';
+            }
+
+            if($g['fbAddress'] == null)
+            {
+                $generalinfo[$key]['fbAddress'] = 'тодорхойгүй';
+            }
+        }
         $qb = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
         $medicalLabType = $qb
             ->select('lt.id', 'lt.name', 'n.price')
