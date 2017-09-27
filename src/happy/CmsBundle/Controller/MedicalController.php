@@ -73,6 +73,16 @@ class MedicalController extends Controller
                 }
             }
 
+            if ($searchForm->get('isOntsloh')->getData() !== null) {
+                if ($searchEntity->getIsDone() == '1') {
+                    $qb->andWhere('n.isOntsloh = :isOntsloh')
+                        ->setParameter('isOntsloh', true);
+                } else if ($searchEntity->getIsDone() == '0') {
+                    $qb->andWhere('n.isOntsloh = :isOntsloh')
+                        ->setParameter('isOntsloh', false);
+                }
+            }
+
             if ($searchForm->get('ehlehDate')->getData()) {
                 $qb
                     ->andWhere('n.createdDate > :ehlehDate')
