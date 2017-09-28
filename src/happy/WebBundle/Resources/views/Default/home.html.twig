@@ -83,7 +83,7 @@
 
             <div class="swiper-container swiper1" style="margin-top: 30px">
                 <div class="swiper-wrapper">
-                    {% for m in medical[0:5] %}
+                    {% for m in medical[0:3] %}
                         <div class="swiper-slide">
                             {% include  '@happyWeb/inc/inc-medical.html.twig' with { 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
                         </div>
@@ -94,7 +94,7 @@
 
             <div class="swiper-container swiper2">
                 <div class="swiper-wrapper">
-                    {% for m in medical[6:10] %}
+                    {% for m in medical[3:6] %}
                         <div class="swiper-slide" style="margin-top: 30px">
                             {% include  '@happyWeb/inc/inc-medical.html.twig' with {'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
                         </div>
