@@ -864,6 +864,45 @@ class MedicalController extends Controller
         );
     }
 
+
+    /**
+     * Updates medical entity.
+     *
+     * @Route("/admin/update/{id}", name="cms_medical_admin_update" , requirements={"id" = "\d+"})
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function adminupdateAction(Request $request, Medicals $medicals)
+    {
+        $editForm = $this->createForm('happy\CmsBundle\Form\MedicalAdminType', $medicals);
+        $editForm->handleRequest($request);
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $log = new UserLogs();
+            $log->setAdminname($this->container->get('security.context')->getToken()->getUser()->getUsername());
+            $log->setIpaddress($request->getClientIp());
+            $log->setValue($medicals->getName());
+            $log->setAction('Эмнэлэг админ хэсэгт өөрчлөлт хийв.');
+            $log->setMedId($medicals->getId());
+            $log->setCreatedDate(new \DateTime('now'));
+            $em->persist($log);
+
+            $em->flush();
+            $request
+                ->getSession()
+                ->getFlashBag()
+                ->add('success', 'Эмнэлгийн админ хэсэг амжилттай засагдлаа!');
+
+            return $this->redirectToRoute('cms_medical_admin_update', array('id' => $medicals->getId()));
+        }
+
+        return array(
+            'edit_form' => $editForm->createView(),
+        );
+    }
+
     /**
      * Updates banner entity.
      *
