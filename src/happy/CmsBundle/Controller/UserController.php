@@ -103,6 +103,11 @@ class UserController extends Controller
                 $qb->andWhere('p.adminname like :adminname')
                     ->setParameter('adminname', '%' . $searchEntity->getAdminname() . '%');
             }
+
+            if ($searchEntity->getMedId() && $searchEntity->getMedId() != '') {
+                $qb->andWhere('p.medId like :medid')
+                    ->setParameter('medid', '%' . $searchEntity->getMedId() . '%');
+            }
         }
 
 

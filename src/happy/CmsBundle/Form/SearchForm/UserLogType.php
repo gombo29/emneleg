@@ -25,6 +25,15 @@ class UserLogType extends AbstractType
                     )
                 )
             )
+
+            ->add('medId', 'text', array(
+                    'label' => 'Эмнэлэг ID',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'form-control'
+                    )
+                )
+            )
             ;
     }
 
