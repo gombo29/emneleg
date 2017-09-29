@@ -37,7 +37,7 @@
                 <td>{{ con.adminname }}</td>
                 <td>{{ con.createdDate|date('Y-m-d H:i:s') }}</td>
                 <td>{{ con.ipaddress }}</td>
-                <td><a href="{{ path('cms_medical_show', {'id': con.medId}) }}">{{ con.medId }}</a></td>
+                <td><a href="{{ path('cms_medical_show', {'id': con.medId}) }}">{{ con.medId }} - {{ con.value }} - {{ con.action }}</a></td>
             </tr>
         {% endfor %}
         </tbody>
