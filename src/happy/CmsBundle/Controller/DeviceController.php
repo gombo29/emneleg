@@ -4,19 +4,15 @@ namespace happy\CmsBundle\Controller;
 
 use happy\CmsBundle\Entity\Banner;
 use happy\CmsBundle\Entity\Device;
+use Sly\NotificationPusher\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
-use Sly\NotificationPusher\PushManager,
-    Sly\NotificationPusher\Adapter\Apns as ApnsAdapter,
-    Sly\NotificationPusher\Adapter\Gcm as GcmAdapter,
-    Sly\NotificationPusher\Collection\DeviceCollection,
-    Sly\NotificationPusher\Model\Message,
-    Sly\NotificationPusher\Model\Push;
-use Zend\Json\Json;
+require_once __DIR__ . '/../Util/push.php';
+
 
 /**
  * DeviceController controller.
@@ -78,36 +74,20 @@ class DeviceController extends Controller
 
             $em = $this->container->get('doctrine')->getManager();
 
-//            $pushManager = new PushManager(PushManager::ENVIRONMENT_PROD);
-            $pushManager = new PushManager(PushManager::ENVIRONMENT_DEV);
 
+            if ($appType == 'emneleg') {
 
-            if ($appType == 'emneleg') { //customer
-                $apnsAdapter = new ApnsAdapter(array(
-                    'certificate' => $path = $this->get('kernel')->getRootDir() . '/../web/myancash_customer_dev.pem'
-                ));
+                $path = $this->get('kernel')->getRootDir() . '/../web/6prod.pem';
+                $androidKey = 'AIzaSyAmUyIAQEmH_6baO35FokRH3u1OqhGGtnQ';
 
-                $gcmAdapter = new GcmAdapter(array(
-                    'apiKey' => 'AIzaSyBWqdBqFudZJQyP1ktwExhP7imkDv1ZgCw'
-                ));
             } else if ($appType == 'suvilagch') {
-                $apnsAdapter = new ApnsAdapter(array(
-                    'certificate' => $path = $this->get('kernel')->getRootDir() . '/../web/myancash_customer_dev.pem'
-                ));
 
+                $path = $this->get('kernel')->getRootDir() . '/../web/6prod.pem';
+                $androidKey = 'AIzaSyAmUyIAQEmH_6baO35FokRH3u1OqhGGtnQ';
 
-                $gcmAdapter = new GcmAdapter(array(
-                    'apiKey' => 'AIzaSyBWqdBqFudZJQyP1ktwExhP7imkDv1ZgCw'
-                ));
             } else if ($appType == 'emch') {
-                $apnsAdapter = new ApnsAdapter(array(
-                    'certificate' => $path = $this->get('kernel')->getRootDir() . '/../web/myancash_customer_dev.pem'
-                ));
-
-
-                $gcmAdapter = new GcmAdapter(array(
-                    'apiKey' => 'AIzaSyBWqdBqFudZJQyP1ktwExhP7imkDv1ZgCw'
-                ));
+                $path = $this->get('kernel')->getRootDir() . '/../web/6prod.pem';
+                $androidKey = 'AIzaSyAmUyIAQEmH_6baO35FokRH3u1OqhGGtnQ';
             }
 
 
@@ -131,33 +111,13 @@ class DeviceController extends Controller
                     ->add('success', 'Мэдээлэл илгээгдлээ!');
             }
 
-            $iosdevices = array();
-            $androiddevices = array();
-
             foreach ($device as $key => $d) {
                 if ($d->getIsIOS() == true) {
-                    array_push($iosdevices, new Device($d->getDeviceToken()));
-
+                    iOS($text, $d->getDeviceToken(), $path);
                 } else {
-                    array_push($androiddevices, new Device($d->getDeviceToken()));
+                    android($text, $d->getDeviceToken(), $androidKey);
                 }
             }
-
-            $devices = new DeviceCollection($iosdevices);
-            $gcmdevices = new DeviceCollection($androiddevices);
-
-            $message = new Message($text);
-
-            $push = new Push($apnsAdapter, $devices, $message);
-            $gcmpush = new Push($gcmAdapter, $gcmdevices, $message);
-
-            $pushManager->add($push);
-            $pushManager->add($gcmpush);
-
-            $pushManager->push();
-
-
         }
-
     }
 }
