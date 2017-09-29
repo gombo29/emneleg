@@ -29,14 +29,14 @@ class DeviceController extends Controller
     public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $deviceId = $request->get('deviceId');
-        $deviceToken = $request->get('deviceToken');
-        $deviceName = $request->get('deviceName');
+        $deviceId = $request->get('deviceid');
+        $deviceToken = $request->get('devicetoken');
+        $deviceName = $request->get('devicename');
         $osVersion = $request->get('osVersion');
-        $deviceModel = $request->get('deviceModel');
-        $isIOS = $request->get('isIOS');
+        $deviceModel = $request->get('devicemodel');
+        $isIOS = $request->get('isiphone');
         $status = $request->get('status');
-        $apptype = $request->get('appType');
+        $apptype = $request->get('type');
 
         if ($deviceId) {
             $qb = $em->getRepository('happyCmsBundle:Device')->createQueryBuilder('u');
