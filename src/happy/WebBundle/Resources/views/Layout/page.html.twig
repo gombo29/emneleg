@@ -43,7 +43,6 @@
                 <a class="page-link" href="{{ path(route,{'page':pagecount,'type' : type}) }}">{{ pagecount }}</a>
             </li>
             {% if pagecount>page %}
-
                 <li class="page-item">
                     <a class="page-link" href="{{ path(route,{'page':page+1,'type' : type}) }}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
