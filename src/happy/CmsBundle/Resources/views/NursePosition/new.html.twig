@@ -1,0 +1,15 @@
+{% extends 'happyCmsBundle::base.html.twig' %}
+{% block pageheader %}Сувилагчийн байршил нэмэх хэсэг{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-success" type="submit" value="Хадгалах" />
+    {{ form_end(form) }}
+
+    <ul style="float: right;list-style: none">
+        <li>
+            <a href="{{ path('cms_nurse_position_index') }}">Буцах</a>
+        </li>
+    </ul>
+{% endblock %}
