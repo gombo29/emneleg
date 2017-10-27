@@ -4,6 +4,8 @@ namespace happy\CmsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * DoctorType
@@ -37,6 +39,22 @@ class DoctorType
      */
     private $price;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="photo", type="string", length=255,  nullable=true)
+     */
+    private $photo;
+
+    /**
+     *
+     * @Assert\Image(
+     *        mimeTypesMessage = "Зурган файл биш байна!"
+     * )
+     *
+     */
+    public $imagefile;
+
 
     /**
      * @var boolean
@@ -60,6 +78,26 @@ class DoctorType
     private $updatedDate;
 
     /**
+     * Get Image
+     *
+     * @return UploadedFile
+     */
+    public function getImageFile()
+    {
+        return $this->imagefile;
+    }
+
+    /**
+     * Set Image
+     *
+     * @param UploadedFile $file
+     */
+    public function setImageFile(UploadedFile $file = null)
+    {
+        $this->imagefile = $file;
+    }
+
+    /**
      * @ORM\PrePersist
      */
     public function onPrePersist()
@@ -75,6 +113,29 @@ class DoctorType
         $this->setUpdatedDate(new \DateTime("now"));
     }
 
+
+    /**
+     *
+     * @param $container
+     */
+    public function uploadImage(Container $container)
+    {
+
+        if (null === $this->getImageFile()) {
+            return;
+        }
+
+        $resources = $container->getParameter('localstatfolder');
+
+        $dir = 'doctors/qpay';
+        $filename = $this->getImageFile()->getFilename() . '.' . $this->getImageFile()->guessExtension();
+        $this->getImageFile()->move(
+            $resources . '/' . $dir, $filename
+        );
+        $path = $dir . "/" . $filename;
+        $this->photo = $path;
+        $this->imagefile = null;
+    }
 
     /**
      * Get id
@@ -204,5 +265,29 @@ class DoctorType
     public function getIsShow()
     {
         return $this->isShow;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return DoctorType
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
     }
 }

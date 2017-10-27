@@ -23,6 +23,7 @@
         <tr>
             <th>Id</th>
             <th>Нэр</th>
+            <th>QR</th>
             <th>Төлбөр</th>
             <th>Харагдах эсэх</th>
             <th>Үүсгэсэн огноо</th>
@@ -36,6 +37,7 @@
             {% set k = k + 1 %}
             <tr>
                 <td>{{ k }}</td>
+                <td><img src="/{{ localstatfolder }}{{ con.photo }}" width="100"></td>
                 <td>{{ con.name }}</td>
                 <td>{{ con.price }}</td>
                 <td>{% if con.isShow == 1 %}<a href="{{ path('cms_nurse_type_update', { 'id': con.id }) }}" class="btn btn-success"><i class="glyphicon glyphicon-tick"></i>Тийм</a>{% else %}
@@ -46,7 +48,7 @@
                 <td>
                     <ul>
                         <li>
-                            <a class="btn btn-default" href="{{ path('cms_nurse_position_update', { 'id': con.id }) }}"
+                            <a class="btn btn-default" href="{{ path('cms_nurse_type_update', { 'id': con.id }) }}"
                                title="засах"><i class="glyphicon glyphicon-edit"></i></a>
                         </li>
                     </ul>

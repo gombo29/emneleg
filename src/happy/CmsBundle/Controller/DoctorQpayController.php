@@ -71,7 +71,6 @@ class DoctorQpayController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $doctorQPAY->uploadImage($this->container);
             $doctorQPAY->setDoctor($em->getReference('happyCmsBundle:Doctors', $id));
             $doctorQPAY->setName('null');
             $em->persist($doctorQPAY);
@@ -105,7 +104,6 @@ class DoctorQpayController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $em = $this->getDoctrine()->getManager();
-            $nurseQPAY->uploadImage($this->container);
             $em->persist($nurseQPAY);
             $em->flush();
             $request

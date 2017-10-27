@@ -30,12 +30,6 @@ class DoctorQRType extends AbstractType
                 'required' => false,
             ))
 
-            ->add('imagefile', 'file', array(
-                'label' => 'QR оруулах',
-                'required' => true,
-                'attr' => array(
-                    'class' => 'btn btn-success fileinput-button',
-                )))
         ;
     }
 

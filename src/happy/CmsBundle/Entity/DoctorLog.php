@@ -100,6 +100,23 @@ class DoctorLog
     private $updatedDate;
 
     /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $this->setCreatedDate(new \DateTime("now"));
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->setUpdatedDate(new \DateTime("now"));
+    }
+
+
+    /**
      * Get id
      *
      * @return integer

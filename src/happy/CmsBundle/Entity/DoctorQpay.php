@@ -40,7 +40,7 @@ class DoctorQpay
 
     /**
      * @ORM\ManyToOne(targetEntity="DoctorPosition")
-     * @ORM\JoinColumn(name="doctor_type", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="doctor_position", referencedColumnName="id", nullable=true)
      */
     private $doctorPosition;
 

@@ -9,46 +9,24 @@
 {% endblock %}
 {% block body %}
     <div class="project-type-background">
-        <div class="medical-search">
-             <div class="container">
+        <div class="medical-search" style="padding: 10px 0 10px 0;">
+            <div class="container">
                 {% include  '@happyWeb/inc/inc-nurse-search.html.twig' %}
-             </div>
+            </div>
         </div>
         <div class="container" style="text-align: center;margin-bottom: 50px;">
             {% set i = 1 %}
-            {% for key,m in nurse %}
-                {% set a = key + 1 %}
-                <a href="javascript:void(0);"
-                   class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"
-                   onclick="active({{ m.id }}, {{ i }}, '{% if m.photo != null %}/{{ localstatfolder }}{{ m.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.name }}','{{ m.star }}','{{ m.turshlaga }}','{{ m.mergeshil }}' ,'{{ m.timeTable }}')"
-                   id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>
-                    {% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': m.star, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
-                </a>
-                {% if a%5 == 0 %}
 
-                    <div class="nurse-block-detail" id="detail{{ i }}" style="display: none;">
-                        <a href="javascript:void(0);" onclick="closeHide({{ i }});"><i
-                                    style="position: absolute; right: 50px;top: 10px;" class="fa fa-close"></i></a>
-                        <div class="nurse-block-detail-img">
-                            <img src="" id="detailimg{{ i }}">
-                        </div>
-                        <div class="nurse-block-detail-text">
-
-                            <h4 id="detailname{{ i }}" style="font-size: 16px"></h4>
-                            <div id="detailstar{{ i }}"></div>
-
-                            <div id="detailturshlaga{{ i }}" style="text-align: justify"></div>
-                            <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
-                            <div id="detailtime{{ i }}" style="text-align: justify"></div>
-
-                            <a class="btn btn-warning" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага өгөх</a>
-                        </div>
-
-                    </div>
-                    {% set i = i + 1 %}
-                {% endif %}
-                {% if loop.last %}
-                    {% if loop.length%5 !=0 %}
+            {% if nurse != null %}
+                {% for key,m in nurse %}
+                    {% set a = key + 1 %}
+                    <a href="javascript:void(0);"
+                       class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"
+                       onclick="active({{ m.doctor.id }}, {{ i }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','{{ m.doctor.star }}','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"
+                       id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>
+                        {% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': m.doctor.star, 'img': m.doctor.photo, 'phone': m.doctor.phone, 'id': m.doctor.id, 'name' : m.doctor.name } %}
+                    </a>
+                    {% if a%5 == 0 %}
                         <div class="nurse-block-detail" id="detail{{ i }}" style="display: none;">
                             <a href="javascript:void(0);" onclick="closeHide({{ i }});"><i
                                         style="position: absolute; right: 50px;top: 10px;" class="fa fa-close"></i></a>
@@ -64,26 +42,77 @@
                                 <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
                                 <div id="detailtime{{ i }}" style="text-align: justify"></div>
 
-                                <a class="btn btn-warning" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага
+                                <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i
+                                            class="fa fa-phone"></i> Дуудлага
                                     өгөх</a>
                             </div>
 
                         </div>
+                        {% set i = i + 1 %}
                     {% endif %}
-                {% endif %}
-            {% endfor %}
+                    {% if loop.last %}
+                        {% if loop.length%5 !=0 %}
+                            <div class="nurse-block-detail" id="detail{{ i }}" style="display: none;">
+                                <a href="javascript:void(0);" onclick="closeHide({{ i }});"><i
+                                            style="position: absolute; right: 50px;top: 10px;" class="fa fa-close"></i></a>
+                                <div class="nurse-block-detail-img">
+                                    <img src="" id="detailimg{{ i }}">
+                                </div>
+                                <div class="nurse-block-detail-text">
+
+                                    <h4 id="detailname{{ i }}" style="font-size: 16px"></h4>
+                                    <div id="detailstar{{ i }}"></div>
+
+                                    <div id="detailturshlaga{{ i }}" style="text-align: justify"></div>
+                                    <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
+                                    <div id="detailtime{{ i }}" style="text-align: justify"></div>
+
+                                    <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i
+                                                class="fa fa-phone"></i>
+                                        Дуудлага өгөх</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p style="font-size: 50px;margin-top: 50px">Уучлаарай, сувилагч олдсонгүй!</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
 
 {% block js %}
     <script>
+        function submitData(imgurl, dun, nurseid, nursename, service, position) {
+            $('#nurseModal').modal('show');
+
+            $('#suvilagchqr').attr('src', imgurl);
+            $('#suvilagchdun').html(dun);
+
+            $.ajax({
+                url: "{{ path('cms_nurse_call_register') }}",
+                data: {nurseid: nurseid, nursename: nursename, price: dun, service: service, position: position},
+                type: "POST",
+                dataType: "JSON"
+            }).done(function (data) {
+
+            }).error(function () {
+
+            })
+        }
+
+        $(document).ready(function () {
+            $('input[type="radio"]').change(function () {
+                $('#nurseSearch').submit();
+            });
+        });
 
         function closeHide(cc) {
             $('#detail' + cc).hide('blind');
         }
 
-        function active(id, key, img, name, star, turshlaga, mergeshil, time) {
+        function active(id, key, img, name, star, turshlaga, mergeshil, time, imgurl, dun, service, position) {
             $nurse = $('#nurse' + id);
             $nurse.siblings().removeClass("active");
             $nurse.addClass('active', 500);
@@ -127,6 +156,8 @@
                     $('#detail' + i).hide('blind');
                 }
             }
+
+            $('#detailhref').attr('onclick', "submitData('" + imgurl + "','" + dun + "','" + id + "','" + name + "','" + service + "','" + position + "')");
         }
     </script>
 {% endblock %}

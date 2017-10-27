@@ -1,43 +1,43 @@
 <div class="med-search">
-    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 med-search-view-type" style="text-align: left">
-        <h5 class="med-search-text" style="font-size: 30px;">Авах үйлчилгээний төрөл</h5>
-        <form action="" method="get" id="nurseSearch">
+    <form action="{{ path('web_nurse_index') }}" method="get" id="nurseSearch">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 med-search-view-type"
+             style="text-align: left;margin-top: 30px;">
+            <h5 class="med-search-text" style="font-size: 30px;">Сувилагч хайлт</h5>
+            <p style="color: #ffffff;text-align: justify">
+                Та авах үйлчилгээний төрөл болон, дуудлага хүлээн авах байршил сонгоно уу!
+            </p>
+        </div>
+
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 med-search-view-type">
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 med-search-view-type" style="text-align: left;">
+            <h5 class="med-search-text" style="font-size: 20px;">Авах үйлчилгээний төрөл</h5>
             {% for i in nurseService %}
                 {% set isChecked = false %}
-                {% if serviceIds is defined %}
-                    {% for j in serviceIds %}
-                        {% if i.id == j %}
-                            {% set isChecked = true %}
-                        {% endif %}
-                    {% endfor %}
+                {% if i.id == serviceId %}
+                    {% set isChecked = true %}
                 {% endif %}
-                <div class="form-group med-search-checker" style="width: 190px;">
+                <div class="form-group med-search-checker" style="width: 115px;">
                     <input type="radio" class="filled-in" name="services" id="radio{{ i.id }}"
                            value="{{ i.id }}" {% if isChecked == true %} checked{% endif %}>
                     <label for="radio{{ i.id }}">{{ i.name }}</label>
                 </div>
             {% endfor %}
-
-        </form>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 med-search-view-type" style="text-align: left">
-        <h5 class="med-search-text" style="font-size: 30px">Таны байршил</h5>
-        <form action="" method="get" id="nurseSearch">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 med-search-view-type" style="text-align: left;">
+            <h5 class="med-search-text" style="font-size: 20px;text-align: center;">Байршил</h5>
             {% for i in nursePosition %}
                 {% set isChecked = false %}
-                {% if positionIds is defined %}
-                    {% for j in positionIds %}
-                        {% if i.id == j %}
-                            {% set isChecked = true %}
-                        {% endif %}
-                    {% endfor %}
+                {% if i.id == positionId %}
+                    {% set isChecked = true %}
                 {% endif %}
-                <div class="form-group med-search-checker" style="width: 190px;">
+                <div class="form-group med-search-checker" style="width: 150px;">
                     <input type="radio" class="filled-in" name="position" id="radiopos{{ i.id }}"
                            value="{{ i.id }}" {% if isChecked == true %} checked{% endif %}>
                     <label for="radiopos{{ i.id }}">{{ i.name }}</label>
                 </div>
             {% endfor %}
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

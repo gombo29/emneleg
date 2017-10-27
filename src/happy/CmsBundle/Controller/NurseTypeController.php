@@ -55,6 +55,7 @@ class NurseTypeController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $doctorType->uploadImage($this->container);
             $em->persist($doctorType);
             $em->flush();
             $request
@@ -85,7 +86,8 @@ class NurseTypeController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
             $em = $this->getDoctrine()->getManager();
-
+            $doctorType->uploadImage($this->container);
+            $em->persist($doctorType);
             $em->flush();
             $request
                 ->getSession()

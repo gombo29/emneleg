@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="keywords" content="emneleg,эмнэлэг,сувилагч,эрүүл,мэнд,эмч" />
+    <meta name="keywords" content="emneleg,эмнэлэг,сувилагч,эрүүл,мэнд,эмч"/>
     <link rel="shortcut icon" href="{{ asset('recource/ico.ico') }}" sizes="16x16">
     <title>Эмнэлэг.мн - Таны эрүүл мэндийн зөвлөгч - Emneleg.mn</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic"
+          rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('recource/MDBFree/css/bootstrap.min.css') }}" type="text/css" media="screen">
     <link rel="stylesheet" href="{{ asset('recource/MDBFree/css/mdb.min.css') }}" type="text/css" media="screen">
     <link rel="stylesheet" href="{{ asset('recource/MDBFree/css/style.css') }}" type="text/css" media="screen">
@@ -21,6 +22,48 @@
 <body>
 {% block main %}
 {% endblock %}
+
+{% if nurse is defined %}
+    <div class="modal fade" id="nurseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 style="text-align: center;">Таны дуудлага бүртгэгдлээ.</h3>
+                    <p style="text-align: justify">
+                        <b> Та дуудлагаа баталгаажуулахын тулд манай үйлчилгээний данслуу урьдчилгаа төлбөр шилжүүлэх
+                            хэрэгтэй.</b> Үүний тулд та доорх QR Code-г аль ч банкны QPay үйлчилгээ ашиглан
+                        шилжүүлэх боломжтой.
+                    </p>
+                    <img src="" width="200" id="suvilagchqr">
+                    <p style="text-align: justify">
+                        Та Qpay үйлчилгээг ашиглах боломжгүй байгаа бол доорх данслуу урьдчилгаа төлбөр шилжүүлнэ үү!
+                    </p>
+
+                    <p style="color: red">Жич: QR Pay-р гүйлгээ хийхдээ гүйлгээний утга дээр утасны дугаараа бичнэ үү!</p>
+                    <ul style="text-align: left;margin-left: 40px;font-weight: bold">
+                        <li>Хүлээн авах банк: <i>Худалдаа хөгжлийн банк</i></li>
+                        <li>Дансны дугаар: <i>472020237</i></li>
+                        <li>Данс эзэмшигч: Emneleg.mn<i></i></li>
+                        <li>Дүн: <i id="suvilagchdun"></i>₮</li>
+                        <li>Утга: <i>та өөрийн утасны дугаар оруулна уу.</i></li>
+                    </ul>
+
+                    <h5>Утас: 99031675</h5>
+
+                    <h5 style="text-align: center;">Та дуудлагаа баталгаажуулсан тохиолдолд бид 5 минутын дотор тантай
+                        эргэн холбогдох болно.</h5>
+
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
 <script type="text/javascript" src="{{ asset('recource/MDBFree/js/jquery-2.2.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('recource/MDBFree/js/tether.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('recource/MDBFree/js/bootstrap.min.js') }}"></script>

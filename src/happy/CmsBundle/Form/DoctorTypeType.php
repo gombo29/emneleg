@@ -25,6 +25,13 @@ class DoctorTypeType extends AbstractType
                 )
             )
 
+            ->add('imagefile', 'file', array(
+                'label' => 'QR оруулах',
+                'required' => false,
+                'attr' => array(
+                    'class' => 'btn btn-success fileinput-button',
+                )))
+
             ->add('price', 'text', array(
                     'label' => 'Төлбөр',
                     'required' => true,
