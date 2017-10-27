@@ -1,0 +1,69 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %} Сувилагчийн дуудлагын жагсаалт{% endblock %}
+
+{% block style %}
+    <style>
+        ul li {
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Сувилагч нэр</th>
+            <th>Төлбөр</th>
+            <th>Үйлчилгээний төрөл</th>
+            <th>Дуудлага өгсөн байршил</th>
+            <th>Баталгаажсан эсэх</th>
+            <th>Тайлбар</th>
+            <th>Үүсгэсэн огноо</th>
+            <th>Өөрчилсөн огноо</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for k ,con in doctorlog %}
+            {% set k = k + 1 %}
+            <tr>
+                <td>{{ k }}</td>
+                <td><a href="{{ path('cms_nurse_update', {'id': con.doctorId}) }}">{{ con.doctorName }}</a></td>
+                <td>{{ con.price }}₮</td>
+                <td>{{ con.type }}</td>
+                <td>{{ con.position }}</td>
+                <td>{% if con.isConfirm == 1 %}
+                        {% if con.isBack == 1 %}
+                            <p style="color: red">Буцаагдсан</p>
+
+                        {% else %}
+                            <p style="color:green">Баталгаажсан</p>
+                            <p>андуурч дарсан бол доорх товч дээр дарна уу!</p>
+                            <a onclick="if(!confirm('Итгэлтэй байна уу!'))return false;"
+                               href="{{ path('cms_nurse_log_back', {'id': con.id , 'pid': page}) }}"
+                               class="btn btn-warning">андуурсан</a>
+                        {% endif %}
+                    {% else %}
+                        <a onclick="if(!confirm('Итгэлтэй байна уу!'))return false;"
+                           href="{{ path('cms_nurse_log_check', {'id': con.id , 'pid': page}) }}"
+                           class="btn btn-default">Баталгаажуулах</a>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" action="{{ path('cms_nurse_log_text', {'id': con.id, 'pid': page}) }}">
+                        <textarea class="form-control" name="text"> {{ con.descr }}</textarea>
+                        <br>
+                        <input type="submit" class="btn btn-xs btn-success " value="илгээх"/>
+                    </form>
+                </td>
+                <td>{{ con.createdDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ con.updatedDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block js %}
+{% endblock %}

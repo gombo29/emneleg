@@ -38,6 +38,7 @@ class MedicalController extends Controller
         $count = 0;
         $labTypeIds = $request->get('labtypes');
         $medTypeId = $request->get('medtypes');
+
         $medName = $request->get('q');
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');

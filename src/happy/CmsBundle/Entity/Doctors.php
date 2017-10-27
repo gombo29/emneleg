@@ -122,18 +122,6 @@ class Doctors
      */
     private $star;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="DoctorType")
-     * @ORM\JoinColumn(name="doctor_type", referencedColumnName="id", nullable=true)
-     */
-    private $doctorType;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="DoctorPosition")
-     * @ORM\JoinColumn(name="doctor_position", referencedColumnName="id", nullable=true)
-     */
-    private $doctorPosition;
-
 
     /**
      * @var \DateTime
@@ -624,53 +612,5 @@ class Doctors
     public function getStar()
     {
         return $this->star;
-    }
-
-    /**
-     * Set doctorType
-     *
-     * @param \happy\CmsBundle\Entity\DoctorType $doctorType
-     *
-     * @return Doctors
-     */
-    public function setDoctorType(\happy\CmsBundle\Entity\DoctorType $doctorType = null)
-    {
-        $this->doctorType = $doctorType;
-
-        return $this;
-    }
-
-    /**
-     * Get doctorType
-     *
-     * @return \happy\CmsBundle\Entity\DoctorType
-     */
-    public function getDoctorType()
-    {
-        return $this->doctorType;
-    }
-
-    /**
-     * Set doctorPosition
-     *
-     * @param \happy\CmsBundle\Entity\DoctorPosition $doctorPosition
-     *
-     * @return Doctors
-     */
-    public function setDoctorPosition(\happy\CmsBundle\Entity\DoctorPosition $doctorPosition = null)
-    {
-        $this->doctorPosition = $doctorPosition;
-
-        return $this;
-    }
-
-    /**
-     * Get doctorPosition
-     *
-     * @return \happy\CmsBundle\Entity\DoctorPosition
-     */
-    public function getDoctorPosition()
-    {
-        return $this->doctorPosition;
     }
 }

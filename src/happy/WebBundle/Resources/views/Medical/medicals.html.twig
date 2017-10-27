@@ -70,7 +70,7 @@
                     <div class="col-lg-9" style="float: left">
                         {% for m in medical %}
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="float: left;">
-                                {% include  '@happyWeb/inc/inc-medical.html.twig' with {'detailpage': 1, 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.pbhone, 'id': m.id, 'name' : m.name } %}
+                                {% include  '@happyWeb/inc/inc-medical.html.twig' with {'detailpage': 1, 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
                             </div>
                         {% endfor %}
 

@@ -1,0 +1,67 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %} {{ nursename }} сувилагчийн QR жагсаалт{% endblock %}
+
+{% block style %}
+    <style>
+        ul li {
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    <ul style="list-style: none;padding: 0;">
+        <li>
+            <a class="btn btn-success" href="{{ path('cms_nurse_qr_new', {'id': id}) }}">Шинээр
+                үүсгэх</a>
+        </li>
+    </ul>
+
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>QR</th>
+            <th>Үйлчилгээний төрөл нэр</th>
+            <th>Байршил нэр</th>
+            <th>Үнэ</th>
+            <th>Үүсгэсэн огноо</th>
+            <th>Өөрчилсөн огноо</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for k ,con in nurseqr %}
+            {% set k = k + 1 %}
+            <tr>
+                <td>{{ k }}</td>
+                <td><img width="100" src="/{{ localstatfolder }}{{ con.photo }}"></td>
+                <td>{{ con.doctorType.name }}</td>
+                <td>{{ con.doctorPosition.name }}</td>
+                <td>{{ con.doctorType.price }}₮</td>
+                <td>{{ con.createdDate|date('Y-m-d H:i:s') }}</td>
+                <td>{{ con.updatedDate|date('Y-m-d H:i:s') }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a class="btn btn-default"
+                               href="{{ path('cms_nurse_qpay_update', { 'id': con.id , 'nid' : id}) }}"
+                               title="засах"><i class="glyphicon glyphicon-edit"></i></a>
+                        </li>
+                        <li>
+                            <a class="btn btn-default" onclick="if(!confirm('Итгэлтэй байна уу!'))return false;"
+                               href="{{ path('cms_nurse_qpay_delete', { 'id': con.id , 'nid' : id}) }}"
+                               title="утсгах"><i class="glyphicon glyphicon-trash"></i></a>
+                        </li>
+
+
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block js %}
+{% endblock %}

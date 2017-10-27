@@ -28,12 +28,6 @@
             background-color: #ff7020;
         }
 
-        @media (max-width: 768px) {
-
-            .nurse-block-detail {
-                display: none;
-            }
-        }
     </style>
 {% endblock %}
 {% block ogtag %}
@@ -116,34 +110,12 @@
 
     <div class="medical-background" style="padding: 0;padding-top: 30px">
         <div class="container">
-            <div class="home-header" style="margin-bottom: 30px">
-                <h4><i class="fa fa-stethoscope"></i> Сувилагч</h4>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
+                <img src="{{ asset('recource/banner1.jpg') }}" style="margin-bottom: 20px;width: 100%">
+                <img src="{{ asset('recource/banner2.jpg') }}" style="margin-bottom: 20px;width: 100%">
             </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding-left: 0;float: left">
-                <div class="home-header">
-                    {% for m in nurse %}
-                        <div class="nurse-block-detail" style="height: 148px;border: 1px solid #ccc;
-margin-top: 0;
-margin-bottom: 20px;">
-                            <div class="nurse-block-detail-img">
-                                <img src="/{{ localstatfolder }}{{ m.photo }}">
-                            </div>
-                            <div class="nurse-block-detail-text ">
-                                <h4 style="font-size: 16px">{{ m.name }}</h4>
-                                <div class="nurse-name" style="width: 100%;text-align: left;background-color: #ffffff;padding: 0;">
-                                    {% include  '@happyWeb/inc/inc-nurse-star.html.twig' with {'star': m.star} %}
-                                </div>
-                                <a class="btn btn-warning" style="margin-left: 0;" href="{{ path('web_nurse_index') }}"><i
-                                            class="fa fa-phone"></i> Дуудлага
-                                    өгөх</a>
-                            </div>
-
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="display: inline-block">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="float: left">
                 <img src="{{ asset('recource/banner1.jpg') }}" style="margin-bottom: 20px;width: 100%">
                 <img src="{{ asset('recource/banner2.jpg') }}" style="margin-bottom: 20px;width: 100%">
             </div>

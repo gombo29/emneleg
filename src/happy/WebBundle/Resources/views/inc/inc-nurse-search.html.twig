@@ -1,0 +1,43 @@
+<div class="med-search">
+    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 med-search-view-type" style="text-align: left">
+        <h5 class="med-search-text" style="font-size: 30px;">Авах үйлчилгээний төрөл</h5>
+        <form action="" method="get" id="nurseSearch">
+            {% for i in nurseService %}
+                {% set isChecked = false %}
+                {% if serviceIds is defined %}
+                    {% for j in serviceIds %}
+                        {% if i.id == j %}
+                            {% set isChecked = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <div class="form-group med-search-checker" style="width: 190px;">
+                    <input type="radio" class="filled-in" name="services" id="radio{{ i.id }}"
+                           value="{{ i.id }}" {% if isChecked == true %} checked{% endif %}>
+                    <label for="radio{{ i.id }}">{{ i.name }}</label>
+                </div>
+            {% endfor %}
+
+        </form>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 med-search-view-type" style="text-align: left">
+        <h5 class="med-search-text" style="font-size: 30px">Таны байршил</h5>
+        <form action="" method="get" id="nurseSearch">
+            {% for i in nursePosition %}
+                {% set isChecked = false %}
+                {% if positionIds is defined %}
+                    {% for j in positionIds %}
+                        {% if i.id == j %}
+                            {% set isChecked = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <div class="form-group med-search-checker" style="width: 190px;">
+                    <input type="radio" class="filled-in" name="position" id="radiopos{{ i.id }}"
+                           value="{{ i.id }}" {% if isChecked == true %} checked{% endif %}>
+                    <label for="radiopos{{ i.id }}">{{ i.name }}</label>
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+</div>

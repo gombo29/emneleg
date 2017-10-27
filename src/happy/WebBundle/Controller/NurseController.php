@@ -2,7 +2,9 @@
 
 namespace happy\WebBundle\Controller;
 
+use happy\CmsBundle\Entity\DoctorPosition;
 use happy\CmsBundle\Entity\Doctors;
+use happy\CmsBundle\Entity\DoctorType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -25,66 +27,100 @@ class NurseController extends Controller
      * @Template()
      *
      */
-    public function indexAction(Request $request, $page)
+    public function indexAction(Request $request)
     {
-        $pagesize = 20;
-
-        $searchEntity = new Doctors();
-        $searchForm = $this->createForm('happy\CmsBundle\Form\SearchForm\NurseSearchType', $searchEntity);
-        $search = false;
-        if ($request->get("submit") == 'submit') {
-            $searchForm->bind($request);
-            $search = true;
-        }
 
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Doctors')->createQueryBuilder('n');
-
-        if ($search) {
-
-            if ($searchEntity->getName() && $searchEntity->getName() != '') {
-                $qb->andWhere('n.name like :name')
-                    ->setParameter('name', '%' . $searchEntity->getName() . '%');
-            }
-
-            if ($searchForm->get('ehlehDate')->getData()) {
-                $qb
-                    ->andWhere('n.createdDate > :ehlehDate')
-                    ->setParameter('ehlehDate', $searchEntity->ehlehDate);
-            }
-
-            if ($searchForm->get('duusahDate')->getData()) {
-                $qb
-                    ->andWhere('n.createdDate < :duusahDate')
-                    ->setParameter('duusahDate', $searchEntity->duusahDate);
-            }
-
-        }
-        $qb
-            ->andWhere('n.isDoctor = 0')
-            ->andWhere('n.isShow = 1');
-
-
-        $countQueryBuilder = clone $qb;
-        $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
         /**@var Doctors[] $nurse */
         $nurse = $qb
+            ->andWhere('n.isDoctor = 0')
+            ->andWhere('n.isShow = 1')
             ->orderBy('n.createdDate', 'asc')
-            ->orderBy('n.star', 'desc')
-            ->setFirstResult(($page - 1) * $pagesize)
-            ->setMaxResults($pagesize)
+            ->addOrderBy('n.star', 'desc')
+            ->getQuery()
+            ->getArrayResult();
+
+        $positionIds = $request->get('position');
+        $serviceIds = $request->get('services');
+
+        $qb = $em->getRepository('happyCmsBundle:DoctorType')->createQueryBuilder('n');
+        /**@var DoctorType[] $nurseType */
+        $nurseType = $qb
+            ->orderBy('n.id', 'asc')
+            ->getQuery()
+            ->getArrayResult();
+
+        $qb = $em->getRepository('happyCmsBundle:DoctorPosition')->createQueryBuilder('n');
+        /**@var DoctorPosition[] $nursePosition */
+        $nursePosition = $qb
+            ->orderBy('n.id', 'asc')
             ->getQuery()
             ->getArrayResult();
 
         return $this->render('@happyWeb/Nurse/index.html.twig', array(
-            'pagecount' => ($count % $pagesize) > 0 ? intval($count / $pagesize) + 1 : intval($count / $pagesize),
-            'count' => $count,
-            'page' => $page,
-            'search' => $search,
-            'searchform' => $searchForm->createView(),
-            'nurse' => $nurse
+            'nurse' => $nurse,
+            'nurseService' => $nurseType,
+            'nursePosition' => $nursePosition,
+            'positionIds' => $positionIds,
+            'serviceIds' => $serviceIds,
         ));
     }
+
+
+
+//    /**
+//     *  Lists all content entities.
+//     *
+//     * @Route("/{page}", name="web_nurse_index", requirements={"page" = "\d+"}, defaults={"page" = 1})
+//     * @Method("GET")
+//     * @Template()
+//     *
+//     */
+//    public function indexAction(Request $request, $page)
+//    {
+//        $pagesize = 20;
+//
+//        $searchEntity = new Doctors();
+//        $searchForm = $this->createForm('happy\CmsBundle\Form\SearchForm\NurseSearchType', $searchEntity);
+//        $search = false;
+//
+//        if ($request->get("submit") == 'submit') {
+//            $searchForm->bind($request);
+//            $search = true;
+//        }
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $qb = $em->getRepository('happyCmsBundle:Doctors')->createQueryBuilder('n');
+//
+//        if ($search) {
+//
+//        }
+//        $qb
+//            ->andWhere('n.isDoctor = 0')
+//            ->andWhere('n.isShow = 1');
+//
+//
+//        $countQueryBuilder = clone $qb;
+//        $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
+//        /**@var Doctors[] $nurse */
+//        $nurse = $qb
+//            ->orderBy('n.createdDate', 'asc')
+//            ->orderBy('n.star', 'desc')
+//            ->setFirstResult(($page - 1) * $pagesize)
+//            ->setMaxResults($pagesize)
+//            ->getQuery()
+//            ->getArrayResult();
+//
+//        return $this->render('@happyWeb/Nurse/index.html.twig', array(
+//            'pagecount' => ($count % $pagesize) > 0 ? intval($count / $pagesize) + 1 : intval($count / $pagesize),
+//            'count' => $count,
+//            'page' => $page,
+//            'search' => $search,
+//            'searchform' => $searchForm->createView(),
+//            'nurse' => $nurse
+//        ));
+//    }
 
     /**
      * Updates doctor entity.

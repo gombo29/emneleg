@@ -39,6 +39,12 @@ class DoctorQpay
     private $doctorType;
 
     /**
+     * @ORM\ManyToOne(targetEntity="DoctorPosition")
+     * @ORM\JoinColumn(name="doctor_type", referencedColumnName="id", nullable=true)
+     */
+    private $doctorPosition;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Doctors")
      * @ORM\JoinColumn(name="doctor", referencedColumnName="id", nullable=true)
      */
@@ -288,5 +294,29 @@ class DoctorQpay
     public function getDoctor()
     {
         return $this->doctor;
+    }
+
+    /**
+     * Set doctorPosition
+     *
+     * @param \happy\CmsBundle\Entity\DoctorPosition $doctorPosition
+     *
+     * @return DoctorQpay
+     */
+    public function setDoctorPosition(\happy\CmsBundle\Entity\DoctorPosition $doctorPosition = null)
+    {
+        $this->doctorPosition = $doctorPosition;
+
+        return $this;
+    }
+
+    /**
+     * Get doctorPosition
+     *
+     * @return \happy\CmsBundle\Entity\DoctorPosition
+     */
+    public function getDoctorPosition()
+    {
+        return $this->doctorPosition;
     }
 }
