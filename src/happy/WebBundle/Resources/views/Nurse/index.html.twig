@@ -16,7 +16,6 @@
         </div>
         <div class="container" style="text-align: center;margin-bottom: 50px;">
             {% set i = 1 %}
-
             {% if nurse != null %}
                 {% for key,m in nurse %}
                     {% set a = key + 1 %}
@@ -34,17 +33,12 @@
                                 <img src="" id="detailimg{{ i }}">
                             </div>
                             <div class="nurse-block-detail-text">
-
                                 <h4 id="detailname{{ i }}" style="font-size: 16px"></h4>
                                 <div id="detailstar{{ i }}"></div>
-
                                 <div id="detailturshlaga{{ i }}" style="text-align: justify"></div>
                                 <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
                                 <div id="detailtime{{ i }}" style="text-align: justify"></div>
-
-                                <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i
-                                            class="fa fa-phone"></i> Дуудлага
-                                    өгөх</a>
+                                <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага өгөх</a>
                             </div>
 
                         </div>
@@ -59,17 +53,12 @@
                                     <img src="" id="detailimg{{ i }}">
                                 </div>
                                 <div class="nurse-block-detail-text">
-
                                     <h4 id="detailname{{ i }}" style="font-size: 16px"></h4>
                                     <div id="detailstar{{ i }}"></div>
-
                                     <div id="detailturshlaga{{ i }}" style="text-align: justify"></div>
                                     <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
                                     <div id="detailtime{{ i }}" style="text-align: justify"></div>
-
-                                    <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i
-                                                class="fa fa-phone"></i>
-                                        Дуудлага өгөх</a>
+                                    <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага өгөх</a>
                                 </div>
                             </div>
                         {% endif %}
@@ -81,49 +70,38 @@
         </div>
     </div>
 {% endblock %}
-
 {% block js %}
     <script>
         function submitData(imgurl, dun, nurseid, nursename, service, position) {
             $('#nurseModal').modal('show');
-
             $('#suvilagchqr').attr('src', imgurl);
             $('#suvilagchdun').html(dun);
-
             $.ajax({
                 url: "{{ path('cms_nurse_call_register') }}",
                 data: {nurseid: nurseid, nursename: nursename, price: dun, service: service, position: position},
                 type: "POST",
                 dataType: "JSON"
             }).done(function (data) {
-
             }).error(function () {
-
             })
         }
-
         $(document).ready(function () {
             $('input[type="radio"]').change(function () {
                 $('#nurseSearch').submit();
             });
         });
-
         function closeHide(cc) {
             $('#detail' + cc).hide('blind');
         }
-
         function active(id, key, img, name, star, turshlaga, mergeshil, time, imgurl, dun, service, position) {
             $nurse = $('#nurse' + id);
             $nurse.siblings().removeClass("active");
             $nurse.addClass('active', 500);
             for (i = 1; i <= 5; i++) {
                 if (i == key) {
-
                     $('#detail' + i).hide().show('blind');
-
                     $('#detailimg' + i).attr('src', img);
                     $('#detailname' + i).text(name);
-
                     if (star == 0) {
                         starHtml = '<i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
                     }
@@ -150,13 +128,11 @@
                     $('#detailturshlaga' + i).html('<b>Ажлын туршлага:</b>' + '<p>' + turshlaga + '</p>');
                     $('#detailmergeshil' + i).html('<b>Мэргэшсэн чиглэл:</b>' + '<p>' + mergeshil + '</p>');
                     $('#detailtime' + i).html('<b>Боломжит цагийн хуваарь:</b>' + '<p>' + time + '</p>');
-
                 }
                 else {
                     $('#detail' + i).hide('blind');
                 }
             }
-
             $('#detailhref').attr('onclick', "submitData('" + imgurl + "','" + dun + "','" + id + "','" + name + "','" + service + "','" + position + "')");
         }
     </script>

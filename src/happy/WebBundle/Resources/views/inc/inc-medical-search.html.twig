@@ -1,32 +1,24 @@
 <div class="med-search">
-    <div class="col-lg-1 col-md-6 col-sm-12 col-xs-12 med-search-view-type">
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 med-search-view-type">
-        <h5 class="med-search-text">Эмнэлгийн хайлт</h5>
-        <ul class="nav nav-tabs nav-justified" style="border-bottom:none">
-            <li class="nav-item med-menu">
-                <a class="nav-link {% if current is defined %} {% if type == 1 %}active {% endif %}{% endif %}"
-                   href="{{ path('medicals', {'type' : 1}) }}" style="font-size: 14px;"><i
-                            class="fa fa-list"></i> <br>Жагсаалт</a>
-            </li>
-            <li class="nav-item med-menu">
-                <a class="nav-link {% if current is defined %} {% if type == 2 %}active {% endif %}{% endif %}"
-                   href="{{ path('medicals', {'type' : 2}) }}" style="font-size: 14px;"><i
-                            class="fa fa-th-large"></i> <br>Төрөл</a>
-            </li>
-            <li class="nav-item med-menu">
-                <a class="nav-link {% if current is defined %} {% if type == 3 %}active {% endif %}{% endif %}"
-                   href="{{ path('medicals', {'type' : 3}) }}" style="font-size: 14px;"><i
-                            class="fa fa-map-marker"></i> <br>Map</a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 med-search-type">
-        {% if medTypeId is defined %}
-        <form action="{{ path('medicals', {'type': viewType, 'medtypes': medTypeId}) }}" method="get" id="medicalSearch">
-        {% else %}
-        <form action="{{ path('medicals', {'type': viewType}) }}" method="get" id="medicalSearch">
-            {% endif %}
+    <form action="{{ path('medicals', {'type': viewType}) }}" method="get" id="medicalSearch">
+        <div class="col-lg-1 col-md-6 col-sm-12 col-xs-12 med-search-view-type">
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 med-search-view-type">
+            <h5 class="med-search-text">Эмнэлгийн хайлт</h5>
+            <ul class="nav nav-tabs nav-justified" style="border-bottom:none">
+                <li class="nav-item med-menu">
+                    <a class="nav-link {% if current is defined %} {% if type == 1 %}active {% endif %}{% endif %}"
+                       href="{{ path('medicals', {'type' : 1}) }}" style="font-size: 14px;"><i
+                                class="fa fa-list"></i> <br>Жагсаалт</a>
+                </li>
+                <li class="nav-item med-menu">
+                    <a class="nav-link {% if current is defined %} {% if type == 3 %}active {% endif %}{% endif %}"
+                       href="{{ path('medicals', {'type' : 3}) }}" style="font-size: 14px;"><i
+                                class="fa fa-map-marker"></i> <br>Map</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 med-search-type">
             {% for i in labType %}
                 {% set isChecked = false %}
                 {% if labTypeIds is defined %}
@@ -42,6 +34,41 @@
                     <label for="checkbox{{ i.id }}">{{ i.name }}</label>
                 </div>
             {% endfor %}
-        </form>
-    </div>
+        </div>
+        <div class="med-search-type"
+             style="display: block;width: 100%;height: 120px;padding-right: 60px;">
+            <div class="swiper-container swipermainmedtype">
+                <div class="swiper-wrapper">
+                    {% for i in medType %}
+                        {% set isCheckedm = false %}
+                        {% if medTypeId is defined %}
+                            {% for j in medTypeId %}
+                                {% if i.id == j %}
+                                    {% set isCheckedm = true %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <input type="checkbox" class="filled-in" name="medtypes[]" id="checkbox{{ i.id }}00"
+                               value="{{ i.id }}" {% if isCheckedm == true %} checked{% endif %}>
+
+
+                        <div class="swiper-slide medtype-active mini {% if isCheckedm == true %}swipermedtype{% endif %}"
+                             style="text-align: center;background-color: #ffffff;">
+                            <label for="checkbox{{ i.id }}00" style="width: 100%;cursor: pointer">
+                                <div style="width: 100%;position: relative;display: inline-block;margin-top: 10px;">
+                                    <img src="/{{ localstatfolder }}{{ i.img }}" style="width:50px;">
+                                </div>
+                                <br>
+                                <div style="width: 100%;position: relative;display: inline-block;">
+                                    <p style="color: #219494;font-size: 16px;display: block" title="{{ i.name }}">
+                                        {% if  i.name|length > 12 %}{{ i.name|slice(0, 10) }}...{% else %}{{ i.name }}{% endif %}</p>
+                                </div>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-scrollbar"></div>
+            </div>
+        </div>
+    </form>
 </div>

@@ -1,7 +1,7 @@
 {% extends '@happyWeb/Layout/base.html.twig' %}
 {% block style %}
+    <link rel="stylesheet" href="{{ asset('recource/css/swiper.min.css') }}" type="text/css" media="screen">
     <style>
-
         .nav-tabs .nav-link {
             color: #ffffff;
         }
@@ -47,39 +47,10 @@
                         {% endfor %}
                         {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals','type': 1} %}
                     </div>
-                </div>                       
-            </div>
-
-            <!-- Type -->
-            <div class="tab-pane fade {% if viewType == 2 %}in show active{% endif %}" id="type"
-                 role="tabpanel">
-
-                <div class="container" style="margin-top: 30px;margin-bottom: 30px">
-                    <div class="col-lg-3" style="float: left">
-                        <div class="list-group">
-                            {% for i in medType %}
-                                <a href="{{ path('medicals', {'type': viewType, 'medtypes':  i.id }) }}"
-                                   class="list-group-item {% if medTypeId == i.id %}active{% endif %}">
-                                    <img src="/{{ localstatfolder }}{{ i.img }}"
-                                         style="width: 20px;margin-right: 10px;">{{ i.name }}
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div class="col-lg-9" style="float: left">
-                        {% for m in medical %}
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="float: left;">
-                                {% include  '@happyWeb/inc/inc-medical.html.twig' with {'detailpage': 1, 'isWifi': m.isWifi, 'isCard': m.isCard , 'isCar': m.isParking, 'headline': m.headline, 'img': m.photo, 'phone': m.phone, 'id': m.id, 'name' : m.name } %}
-                            </div>
-                        {% endfor %}
-
-                        {% include '@happyWeb/Layout/page.html.twig' with {'route' : 'medicals', 'type': 2} %}
-                    </div>
                 </div>
             </div>
 
-            <!-- MAP -->
+                <!-- MAP -->
             <div class="tab-pane fade  {% if viewType == 3 %}in show active{% endif %}" id="map"
                  role="tabpanel">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
@@ -91,11 +62,35 @@
 {% endblock %}
 
     {% block js %}
+        <script type="text/javascript" src="{{ asset('recource/js/swiper.min.js') }}"></script>
         {% if viewType == 3 %}
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEyeyQLgmJ_Gv7X-Vs5FcfqoWZ3Nz2cM8"></script>
         {% endif %}
+
         <script>
+
             $(document).ready(function () {
+                medicalnum = 10;
+                if ($(window).width() > 1072) {
+                    medicalnum = 8;
+                } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+                    medicalnum = 4;
+                }
+                else if ($(window).width() <= 768) {
+                    medicalnum = 2;
+                }
+
+                var swiper = new Swiper('.swipermainmedtype', {
+                    slidesPerView: medicalnum,
+                    spaceBetween: 30,
+                    scrollbar: {
+                        el: '.swiper-scrollbar',
+                        hide: true
+                    },
+                    freeMode: true,
+                });
+
+
                 $value = $(".selectBox option:selected").text();
                 if ($value != '') {
                     defaulttext = $value;

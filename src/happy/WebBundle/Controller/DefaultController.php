@@ -69,13 +69,22 @@ class DefaultController extends Controller
             ->getQuery()
             ->getArrayResult();
 
+        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+        /**@var MedicalType[] $medType */
+        $medType = $qb
+            ->select('n.id, n.name, n.img, n.imgActive')
+            ->orderBy('n.id', 'asc')
+            ->getQuery()
+            ->getArrayResult();
+
         return $this->render('@happyWeb/Default/home.html.twig', array(
             'id' => 1,
             'medical' => $medical,
             'labType' => $labType,
             'advice' => $advice,
             'viewType' => 1,
-            'nurse' => $nurse
+            'nurse' => $nurse,
+            'medType' => $medType,
 
         ));
     }

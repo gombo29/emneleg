@@ -28,39 +28,31 @@ class MedicalController extends Controller
      */
     public function medicalsAction(Request $request, $page, $type)
     {
-        // type :  1 => list ; 2 => type ; 3 => map
-        if ($type == 2) {
-            $pagesize = 5;
-        } else {
-            $pagesize = 20;
-        }
+        // type :  1 => list ; 3 => map
 
+        $pagesize = 20;
         $count = 0;
         $labTypeIds = $request->get('labtypes');
-        $medTypeId = $request->get('medtypes');
+        $medTypeIds = $request->get('medtypes');
 
         $medName = $request->get('q');
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
+        $medIds = array();
 
-        $medicalMedIds = null;
-        if ($medTypeId) {
+        if ($medTypeIds) {
             $qblab = $em->getRepository('happyCmsBundle:MedicalMedType')->createQueryBuilder('n');
 
             $medicalMedIds = $qblab
                 ->select('m.id')
                 ->leftJoin('n.medical', 'm')
-                ->where($qblab->expr()->in('n.medicalType', ':p1'))
-                ->setParameter('p1', $medTypeId)
+                ->andWhere($qblab->expr()->in('n.medicalType', ':p2'))
+                ->setParameter('p2', $medTypeIds)
                 ->groupBy('m.id')
                 ->getQuery()
                 ->getArrayResult();
 
-            if ($medicalMedIds) {
-                $qb
-                    ->andWhere($qb->expr()->in('n.id', ':medIds'))
-                    ->setParameter(':medIds', $medicalMedIds);
-            }
+            array_push($medIds, $medicalMedIds);
         }
 
         if ($labTypeIds) {
@@ -69,28 +61,24 @@ class MedicalController extends Controller
             $qblab
                 ->select('m.id')
                 ->leftJoin('n.medical', 'm')
-                ->where($qblab->expr()->in('n.labType', ':p1'))
+                ->andWhere($qblab->expr()->in('n.labType', ':p1'))
                 ->setParameter('p1', $labTypeIds);
 
-            if ($medicalMedIds != null) {
-                $qblab
-                    ->andWhere($qblab->expr()->in('n.medical', ':p1'))
-                    ->setParameter('p1', $medicalMedIds);
-            }
-
-            $medicalIds = $qblab
+            $medicalLabIds = $qblab
                 ->groupBy('m.id')
                 ->having('COUNT(m.id) = :labcount')
                 ->setParameter('labcount', sizeof($labTypeIds))
                 ->getQuery()
                 ->getArrayResult();
 
-            if ($medicalIds) {
-                $qb
-                    ->where($qb->expr()->in('n.id', ':medIds'))
-                    ->setParameter(':medIds', $medicalIds);
-            }
+            array_push($medIds, $medicalLabIds);
+        }
 
+
+        if ($medIds) {
+            $qb
+                ->andWhere($qb->expr()->in('n.id', ':medIds'))
+                ->setParameter(':medIds', $medIds);
         }
 
         if ($medName) {
@@ -121,9 +109,6 @@ class MedicalController extends Controller
             ->getQuery()
             ->getArrayResult();
 
-        $medType = null;
-
-
         $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
         /**@var MedicalType[] $medType */
         $medType = $qb
@@ -142,7 +127,7 @@ class MedicalController extends Controller
                 'viewType' => $type,
                 'medType' => $medType,
                 'labTypeIds' => $labTypeIds,
-                'medTypeId' => $medTypeId
+                'medTypeId' => $medTypeIds
             )
         );
     }

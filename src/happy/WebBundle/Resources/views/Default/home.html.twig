@@ -27,7 +27,6 @@
             color: #ffffff;
             background-color: #ff7020;
         }
-
     </style>
 {% endblock %}
 {% block ogtag %}
@@ -101,7 +100,7 @@
 
     <!-- Medical Search -->
 
-    <div class="medical-search">
+    <div class="medical-search" style="margin-top: 20px">
         {% include  '@happyWeb/inc/inc-medical-search.html.twig' %}
     </div>
 
@@ -191,6 +190,28 @@
                 autoplay: 2500,
                 autoplayDisableOnInteraction: false
             });
+
+
+            medicalnum1 = 10;
+            if ($(window).width() > 1072) {
+                medicalnum1 = 10;
+            } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+                medicalnum1 = 4;
+            }
+            else if ($(window).width() <= 768) {
+                medicalnum1 = 2;
+            }
+
+            var swiper = new Swiper('.swipermainmedtype', {
+                slidesPerView: medicalnum1,
+                spaceBetween: 30,
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true
+                },
+                freeMode: true
+            });
+
 
             $('input[type="checkbox"]').change(function () {
                 $('#medicalSearch').submit();
