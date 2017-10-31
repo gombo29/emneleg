@@ -69,7 +69,6 @@ input, optgroup, select, textarea {
     border-width: 2px;
 }
 
-
 [type="radio"] + label::after, [type="radio"] + label::before {
     content: '';
     position: absolute;
@@ -95,13 +94,9 @@ input, optgroup, select, textarea {
     transform: scale(1.02);
 }
 
-
 [type="radio"]:checked + label::before {
     border-color: transparent;
 }
-
-
-
 
 [type="radio"]:not(:checked) + label::after {
 
@@ -122,6 +117,7 @@ input, optgroup, select, textarea {
     -webkit-transition: .28s ease;
     transition: .28s ease;
 }
+
 [type="radio"] + label, [type="checkbox"] + label {
     position: relative;
     padding-left: 35px;
@@ -467,6 +463,10 @@ label, output {
     bottom: 0;
     left: 15%;
     text-align: center;
+}
+
+.swipermedtype {
+    border: 3px solid #ff7020 !important;
 }
 
 .banner-menu a {
@@ -1183,6 +1183,14 @@ label, output {
 
 .profile-project-status-success {
     background-color: darkgreen;
+}
+
+.mini {
+    border: 3px solid #ffffff;
+}
+
+.mini:hover {
+    border: 3px solid #ff7020;
 }
 
 .profile-img-block {
