@@ -30,7 +30,9 @@
             {% set k = k + 1 %}
             <tr>
                 <td>{{ k }}</td>
-                <td><a href="{{ path('cms_nurse_update', {'id': con.doctorId}) }}">{{ con.doctorName }}</a></td>
+                <td>
+                    <a href="{{ path('cms_nurse_update', {'id': con.doctorId}) }}">{{ con.doctorName }}</a>
+                </td>
                 <td>{{ con.price }}₮</td>
                 <td>{{ con.type }}</td>
                 <td>{{ con.position }}</td>

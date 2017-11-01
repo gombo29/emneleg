@@ -1,5 +1,5 @@
 {% extends '@happyCms/base.html.twig' %}
-{% block pageheader %}Цахим эмч асуулт засах хэсэг{% endblock %}
+{% block pageheader %}Цахим эмч ангилал засах хэсэг{% endblock %}
 
 {% block body %}
     {% include ':inc:flashmsg.html.twig' %}
@@ -8,5 +8,5 @@
     {{ form_widget(edit_form) }}
     <input class="btn btn-success" type="submit" value="Засах"/>
     {{ form_end(edit_form) }}
-    <a style="float: left;margin-bottom: 10px" href="{{ path('cms_online_doctor', {'id': typeid}) }}">Буцах</a>
+    <a style="float: left;margin-bottom: 10px" href="{{ path('cms_online_doctor_type') }}">Буцах</a>
 {% endblock %}

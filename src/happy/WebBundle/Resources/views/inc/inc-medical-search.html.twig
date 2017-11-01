@@ -36,7 +36,7 @@
             {% endfor %}
         </div>
         <div class="med-search-type"
-             style="display: block;width: 100%;height: 120px;padding-right: 60px;">
+             style="display: block;width: 100%;height: 120px;padding-right: 60px;margin-top: 15px;">
             <div class="swiper-container swipermainmedtype">
                 <div class="swiper-wrapper">
                     {% for i in medType %}
@@ -54,7 +54,7 @@
 
                         <div class="swiper-slide medtype-active mini {% if isCheckedm == true %}swipermedtype{% endif %}"
                              style="text-align: center;background-color: #ffffff;">
-                            <label for="checkbox{{ i.id }}00" style="width: 100%;cursor: pointer">
+                            <label for="checkbox{{ i.id }}00" style="width: 100%;cursor: pointer;margin-bottom: 0;">
                                 <div style="width: 100%;position: relative;display: inline-block;margin-top: 10px;">
                                     <img src="/{{ localstatfolder }}{{ i.img }}" style="width:50px;">
                                 </div>

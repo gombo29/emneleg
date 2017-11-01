@@ -1,5 +1,5 @@
 {% extends 'happyCmsBundle::base.html.twig' %}
-{% block pageheader %}Цахим эмч асуулт нэмэх хэсэг{% endblock %}
+{% block pageheader %}Цахим эмч ангилал нэмэх хэсэг{% endblock %}
 
 {% block body %}
     {{ form_start(form) }}
@@ -9,7 +9,7 @@
 
     <ul style="float: right;list-style: none">
         <li>
-            <a href="{{ path('cms_online_doctor', {'id' : typeid}) }}">Буцах</a>
+            <a href="{{ path('cms_online_doctor_type') }}">Буцах</a>
         </li>
     </ul>
 {% endblock %}

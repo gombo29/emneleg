@@ -41,19 +41,25 @@ class MedicalController extends Controller
         $medIds = array();
 
         if ($medTypeIds) {
-            $qblab = $em->getRepository('happyCmsBundle:MedicalMedType')->createQueryBuilder('n');
-
-            $medicalMedIds = $qblab
+            $qbmed = $em->getRepository('happyCmsBundle:MedicalMedType')->createQueryBuilder('n');
+            $medicalMedIds = $qbmed
                 ->select('m.id')
                 ->leftJoin('n.medical', 'm')
-                ->andWhere($qblab->expr()->in('n.medicalType', ':p2'))
+                ->andWhere($qbmed->expr()->in('n.medicalType', ':p2'))
                 ->setParameter('p2', $medTypeIds)
                 ->groupBy('m.id')
                 ->getQuery()
                 ->getArrayResult();
 
-            array_push($medIds, $medicalMedIds);
+            if (sizeof($medicalMedIds) > 0) {
+                foreach ($medicalMedIds as $mm) {
+                    if (!in_array($mm, $medIds)) {
+                        array_push($medIds, $mm);
+                    }
+                }
+            }
         }
+
 
         if ($labTypeIds) {
             $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
@@ -69,9 +75,16 @@ class MedicalController extends Controller
                 ->having('COUNT(m.id) = :labcount')
                 ->setParameter('labcount', sizeof($labTypeIds))
                 ->getQuery()
-                ->getArrayResult();
+                ->getResult();
 
-            array_push($medIds, $medicalLabIds);
+            if (sizeof($medicalLabIds) > 0) {
+                foreach ($medicalLabIds as $item) {
+                    if (!in_array($item, $medIds)) {
+                        array_push($medIds, $item);
+                    }
+                }
+            }
+
         }
 
 
@@ -86,6 +99,8 @@ class MedicalController extends Controller
                 ->andWhere('n.name like :medName')
                 ->setParameter(':medName', '%' . $medName . '%');
         }
+
+        $qb->andWhere('n.isDone = 1');
 
         if ($type != 3) {
             $countQueryBuilder = clone $qb;
@@ -116,7 +131,6 @@ class MedicalController extends Controller
             ->orderBy('n.id', 'asc')
             ->getQuery()
             ->getArrayResult();
-
         return $this->render('@happyWeb/Medical/medicals.html.twig',
             array(
                 'pagecount' => ($count % $pagesize) > 0 ? intval($count / $pagesize) + 1 : intval($count / $pagesize),
@@ -136,7 +150,6 @@ class MedicalController extends Controller
      * Remove Medical entity.
      *
      * @Route("/detail/{id}", name="medical_detail" , requirements={"id" = "\d+"})
-     *
      *
      */
     public function medicalDetailAction(Medicals $medicals)

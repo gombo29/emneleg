@@ -16,37 +16,6 @@ class OnlineDoctorQuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
-            ->add('type', 'entity', array(
-                'label' => 'Ангилал',
-                'class' => 'happy\CmsBundle\Entity\OnlineDoctorType',
-                'property' => 'name',
-                'required' => true,
-                'attr' => array(
-                    "class" => "form-control",
-                )
-            ))
-
-            ->add('parentYes', 'entity', array(
-                'label' => 'Тийм',
-                'class' => 'happy\CmsBundle\Entity\OnlineDoctorQuestion',
-                'property' => 'name',
-                'required' => false,
-                'attr' => array(
-                    "class" => "form-control",
-                )
-            ))
-
-            ->add('parentNo', 'entity', array(
-                'label' => 'Үгүй',
-                'class' => 'happy\CmsBundle\Entity\OnlineDoctorQuestion',
-                'property' => 'name',
-                'required' => false,
-                'attr' => array(
-                    "class" => "form-control",
-                )
-            ))
-
             ->add('name', 'text', array(
                     'label' => 'Асуулт',
                     'required' => true,
@@ -55,7 +24,28 @@ class OnlineDoctorQuestionType extends AbstractType
                     )
                 )
             )
-
+            ->add('descr', 'textarea', array(
+                    'label' => 'Тайлбар',
+                    'required' => false,
+                    'attr' => array(
+                        "class" => "form-control",
+                    )
+                )
+            )
+            ->add('isFirst', 'choice',
+                array(
+                    'label' => 'Эхнийх эсэх',
+                    'choices' => array(
+                        '1' => 'Тийм',
+                        '0' => 'Үгүй'
+                    ),
+                    'expanded' => true,
+                    'required' => false,
+                    'attr' => array(
+                        "class" => "form-control col-md-2 col-lg-3",
+                    )
+                )
+            )
             ->add('isLast', 'choice',
                 array(
                     'label' => 'Сүүлчийнх эсэх',
@@ -69,17 +59,7 @@ class OnlineDoctorQuestionType extends AbstractType
                         "class" => "form-control col-md-2 col-lg-3",
                     )
                 )
-            )
-
-            ->add('descr', 'textarea', array(
-                    'label' => 'Тайлбар',
-                    'required' => false,
-                    'attr' => array(
-                        "class" => "form-control",
-                    )
-                )
-            )
-           ;
+            );
     }
 
     /**

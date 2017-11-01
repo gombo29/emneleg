@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-                <!-- MAP -->
+            <!-- MAP -->
             <div class="tab-pane fade  {% if viewType == 3 %}in show active{% endif %}" id="map"
                  role="tabpanel">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
@@ -70,11 +70,19 @@
         <script>
 
             $(document).ready(function () {
-                medicalnum = 10;
-                if ($(window).width() > 1072) {
-                    medicalnum = 8;
+
+                if (window.location.search != '') {
+                    $.each($('.pagination a'), function (key, val) {
+                        $(this).attr('href', $(this).attr('href') + window.location.search);
+                    });
+                }
+
+                medicalnum = 11;
+
+                if ($(window).width() > 1072  && $(window).width() <= 1600) {
+                    medicalnum = 7;
                 } else if ($(window).width() <= 1072 && $(window).width() > 768) {
-                    medicalnum = 4;
+                    medicalnum = 3;
                 }
                 else if ($(window).width() <= 768) {
                     medicalnum = 2;
@@ -82,12 +90,12 @@
 
                 var swiper = new Swiper('.swipermainmedtype', {
                     slidesPerView: medicalnum,
-                    spaceBetween: 30,
+                    spaceBetween: 5,
                     scrollbar: {
                         el: '.swiper-scrollbar',
                         hide: true
                     },
-                    freeMode: true,
+                    freeMode: true
                 });
 
 

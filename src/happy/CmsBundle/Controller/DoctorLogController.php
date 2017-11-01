@@ -57,6 +57,7 @@ class DoctorLogController extends Controller
 
         /**@var DoctorLog[] $doctorLog */
         $doctorLog = $qb
+            ->andWhere('n.doctorId is not null')
             ->orderBy('n.createdDate', 'desc')
             ->setFirstResult(($page - 1) * $pagesize)
             ->setMaxResults($pagesize)

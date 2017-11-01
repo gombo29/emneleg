@@ -40,33 +40,29 @@ class OnlineDoctorQuestion
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OnlineDoctorQuestion", inversedBy="childrenYes")
+     * @ORM\ManyToOne(targetEntity="OnlineDoctorQuestion", inversedBy="children")
      * @ORM\JoinColumn(name="parent_yes_id", referencedColumnName="id", nullable=true)
      */
-    private $parentYes;
+    private $parent;
 
     /**
-     * @ORM\OneToMany(targetEntity="OnlineDoctorQuestion", mappedBy="parentYes" )
+     * @ORM\OneToMany(targetEntity="OnlineDoctorQuestion", mappedBy="parent" )
      */
-    private $childrenYes;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="OnlineDoctorQuestion", inversedBy="childrenNo")
-     * @ORM\JoinColumn(name="parent_no_id", referencedColumnName="id", nullable=true)
-     */
-    private $parentNo;
-
-    /**
-     * @ORM\OneToMany(targetEntity="OnlineDoctorQuestion", mappedBy="parentYes")
-     */
-    private $childrenNo;
+    private $children;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_done", type="boolean",  nullable=true)
+     * @ORM\Column(name="is_last", type="boolean",  nullable=true)
      */
     private $isLast;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_first", type="boolean",  nullable=true)
+     */
+    private $isFirst;
 
     /**
      * @var string
@@ -201,125 +197,9 @@ class OnlineDoctorQuestion
      */
     public function __construct()
     {
-        $this->childrenYes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->childrenNo = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Set parentYes
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $parentYes
-     *
-     * @return OnlineDoctorQuestion
-     */
-    public function setParentYes(\happy\CmsBundle\Entity\OnlineDoctorQuestion $parentYes = null)
-    {
-        $this->parentYes = $parentYes;
-
-        return $this;
-    }
-
-    /**
-     * Get parentYes
-     *
-     * @return \happy\CmsBundle\Entity\OnlineDoctorQuestion
-     */
-    public function getParentYes()
-    {
-        return $this->parentYes;
-    }
-
-    /**
-     * Add childrenYe
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $childrenYe
-     *
-     * @return OnlineDoctorQuestion
-     */
-    public function addChildrenYe(\happy\CmsBundle\Entity\OnlineDoctorQuestion $childrenYe)
-    {
-        $this->childrenYes[] = $childrenYe;
-
-        return $this;
-    }
-
-    /**
-     * Remove childrenYe
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $childrenYe
-     */
-    public function removeChildrenYe(\happy\CmsBundle\Entity\OnlineDoctorQuestion $childrenYe)
-    {
-        $this->childrenYes->removeElement($childrenYe);
-    }
-
-    /**
-     * Get childrenYes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildrenYes()
-    {
-        return $this->childrenYes;
-    }
-
-    /**
-     * Set parentNo
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $parentNo
-     *
-     * @return OnlineDoctorQuestion
-     */
-    public function setParentNo(\happy\CmsBundle\Entity\OnlineDoctorQuestion $parentNo = null)
-    {
-        $this->parentNo = $parentNo;
-
-        return $this;
-    }
-
-    /**
-     * Get parentNo
-     *
-     * @return \happy\CmsBundle\Entity\OnlineDoctorQuestion
-     */
-    public function getParentNo()
-    {
-        return $this->parentNo;
-    }
-
-    /**
-     * Add childrenNo
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $childrenNo
-     *
-     * @return OnlineDoctorQuestion
-     */
-    public function addChildrenNo(\happy\CmsBundle\Entity\OnlineDoctorQuestion $childrenNo)
-    {
-        $this->childrenNo[] = $childrenNo;
-
-        return $this;
-    }
-
-    /**
-     * Remove childrenNo
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $childrenNo
-     */
-    public function removeChildrenNo(\happy\CmsBundle\Entity\OnlineDoctorQuestion $childrenNo)
-    {
-        $this->childrenNo->removeElement($childrenNo);
-    }
-
-    /**
-     * Get childrenNo
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildrenNo()
-    {
-        return $this->childrenNo;
-    }
 
     /**
      * Set isLast
@@ -367,5 +247,87 @@ class OnlineDoctorQuestion
     public function getDescr()
     {
         return $this->descr;
+    }
+
+    /**
+     * Set isFirst
+     *
+     * @param boolean $isFirst
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function setIsFirst($isFirst)
+    {
+        $this->isFirst = $isFirst;
+
+        return $this;
+    }
+
+    /**
+     * Get isFirst
+     *
+     * @return boolean
+     */
+    public function getIsFirst()
+    {
+        return $this->isFirst;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $parent
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function setParent(\happy\CmsBundle\Entity\OnlineDoctorQuestion $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \happy\CmsBundle\Entity\OnlineDoctorQuestion
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $child
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function addChild(\happy\CmsBundle\Entity\OnlineDoctorQuestion $child)
+    {
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $child
+     */
+    public function removeChild(\happy\CmsBundle\Entity\OnlineDoctorQuestion $child)
+    {
+        $this->children->removeElement($child);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

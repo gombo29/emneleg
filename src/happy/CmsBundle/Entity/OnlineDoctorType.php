@@ -34,6 +34,18 @@ class OnlineDoctorType
 
 
     /**
+     * @ORM\ManyToOne(targetEntity="OnlineDoctorType", inversedBy="children")
+     * @ORM\JoinColumn(name="parent", referencedColumnName="id", nullable=true)
+     */
+    private $parent;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="OnlineDoctorType", mappedBy="parent" )
+     */
+    private $children;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_date", type="datetime", nullable=true)
@@ -128,5 +140,70 @@ class OnlineDoctorType
     public function getUpdatedDate()
     {
         return $this->updatedDate;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorType $parent
+     *
+     * @return OnlineDoctorType
+     */
+    public function setParent(\happy\CmsBundle\Entity\OnlineDoctorType $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \happy\CmsBundle\Entity\OnlineDoctorType
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorType $child
+     *
+     * @return OnlineDoctorType
+     */
+    public function addChild(\happy\CmsBundle\Entity\OnlineDoctorType $child)
+    {
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorType $child
+     */
+    public function removeChild(\happy\CmsBundle\Entity\OnlineDoctorType $child)
+    {
+        $this->children->removeElement($child);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
     }
 }

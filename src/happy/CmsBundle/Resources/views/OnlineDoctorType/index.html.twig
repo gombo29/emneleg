@@ -1,0 +1,62 @@
+{% extends '@happyCms/base.html.twig' %}
+{% block pageheader %}Цахим эмч ангилал жагсаалт{% endblock %}
+
+{% block style %}
+    <style>
+        ul li {
+            display: inline-block;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include ':inc:flashmsg.html.twig' %}
+    <ul style="list-style: none;padding: 0;">
+        <li>
+            <a class="btn btn-success" href="{{ path('cms_online_doctor_type_new') }}">Шинээр
+                үүсгэх</a>
+        </li>
+    </ul>
+
+
+
+    <ul style="list-style: circle;margin-left: 50px">
+        {% for k ,con in type %}
+            {% set k = k + 1 %}
+            <li style="display: block;padding: 10px">
+                {{ k }}.{{ con.name }}
+                <a
+                        href="{{ path('cms_online_doctor_type_update', { 'id': con.id }) }}"
+                        title="засах"><i class="glyphicon glyphicon-edit"></i></a>
+                {#<a href="{{ path('cms_online_doctor_type_delete', { 'id': con.id }) }}"#}
+                   {#title="утсгах" onclick="if(!confirm('Итгэлтэй байна уу!'))return false;"><i#}
+                            {#class="glyphicon glyphicon-trash"></i></a>#}
+
+            </li>
+
+            {% if con.children %}
+                <ul style="list-style: circle">
+                    {% for m ,child in con.children %}
+                        {% set m = m + 1 %}
+                        <li style="display: block;margin-left: 50px;padding: 10px">
+                            {{ m }}.{{ child.name }}
+                            <a
+                                    href="{{ path('cms_online_doctor_type_update', { 'id': child.id }) }}"
+                                    title="засах"><i class="glyphicon glyphicon-edit"></i></a>
+                            {#<a href="{{ path('cms_online_doctor_type_delete', { 'id': child.id }) }}"#}
+                               {#title="утсгах" onclick="if(!confirm('Итгэлтэй байна уу!'))return false;"><i#}
+                                        {#class="glyphicon glyphicon-trash"></i></a>#}
+                            <a href="{{ path('cms_online_doctor', { 'id': child.id }) }}"
+                               title="утсгах" ><i
+                                        class="glyphicon glyphicon-plus"></i></a>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+
+    </ul>
+{% endblock %}
+{% block js %}
+{% endblock %}
