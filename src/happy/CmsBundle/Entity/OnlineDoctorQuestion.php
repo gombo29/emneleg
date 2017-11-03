@@ -46,9 +46,20 @@ class OnlineDoctorQuestion
     private $parent;
 
     /**
+     * @ORM\ManyToOne(targetEntity="OnlineDoctorQuestion", inversedBy="children1")
+     * @ORM\JoinColumn(name="parent_one", referencedColumnName="id", nullable=true)
+     */
+    private $parent1;
+
+    /**
      * @ORM\OneToMany(targetEntity="OnlineDoctorQuestion", mappedBy="parent" )
      */
     private $children;
+
+    /**
+     * @ORM\OneToMany(targetEntity="OnlineDoctorQuestion", mappedBy="parent1" )
+     */
+    private $children1;
 
     /**
      * @var boolean
@@ -329,5 +340,63 @@ class OnlineDoctorQuestion
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set parent1
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $parent1
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function setParent1(\happy\CmsBundle\Entity\OnlineDoctorQuestion $parent1 = null)
+    {
+        $this->parent1 = $parent1;
+
+        return $this;
+    }
+
+    /**
+     * Get parent1
+     *
+     * @return \happy\CmsBundle\Entity\OnlineDoctorQuestion
+     */
+    public function getParent1()
+    {
+        return $this->parent1;
+    }
+
+    /**
+     * Add children1
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $children1
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function addChildren1(\happy\CmsBundle\Entity\OnlineDoctorQuestion $children1)
+    {
+        $this->children1[] = $children1;
+
+        return $this;
+    }
+
+    /**
+     * Remove children1
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $children1
+     */
+    public function removeChildren1(\happy\CmsBundle\Entity\OnlineDoctorQuestion $children1)
+    {
+        $this->children1->removeElement($children1);
+    }
+
+    /**
+     * Get children1
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren1()
+    {
+        return $this->children1;
     }
 }

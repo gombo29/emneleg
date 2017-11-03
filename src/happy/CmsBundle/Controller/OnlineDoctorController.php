@@ -5,6 +5,7 @@ namespace happy\CmsBundle\Controller;
 use happy\CmsBundle\Entity\DoctorQpay;
 use happy\CmsBundle\Entity\OnlineDoctorQuestion;
 use happy\CmsBundle\Entity\OnlineDoctorType;
+use happy\CmsBundle\Form\OnlineDoctorQuestionType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,6 +38,8 @@ class OnlineDoctorController extends Controller
             ->addSelect('t')
             ->leftJoin('n.parent', 'p')
             ->addSelect('p')
+            ->leftJoin('n.parent1', 'p1')
+            ->addSelect('p1')
             ->where('t.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
@@ -64,10 +67,8 @@ class OnlineDoctorController extends Controller
                 break;
             }
         }
-
         $arrTree = $this->buildTree($questions);
-//        var_dump($arrTree);
-//        exit();
+
 
         return $this->render('@happyCms/OnlineDoctor/index.html.twig', array(
             'questions' => $arrTree,
@@ -82,6 +83,14 @@ class OnlineDoctorController extends Controller
 
         foreach ($elements as $element) {
             if ($element['parent']['id'] == $parentId) {
+                $children = $this->buildTree($elements, $element['id']);
+                if ($children) {
+                    $element['children'] = $children;
+                }
+                $branch[] = $element;
+            }
+
+            if ($element['parent1']['id'] == $parentId) {
                 $children = $this->buildTree($elements, $element['id']);
                 if ($children) {
                     $element['children'] = $children;
@@ -103,7 +112,7 @@ class OnlineDoctorController extends Controller
     public function newAction(Request $request, $typeid)
     {
         $question = new OnlineDoctorQuestion();
-        $form = $this->createForm('happy\CmsBundle\Form\OnlineDoctorQuestionType', $question);
+        $form = $this->createForm(new OnlineDoctorQuestionType($typeid), $question );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -141,7 +150,7 @@ class OnlineDoctorController extends Controller
      */
     public function updateAction(Request $request, OnlineDoctorQuestion $question, $typeid)
     {
-        $editForm = $this->createForm('happy\CmsBundle\Form\OnlineDoctorQuestionType', $question);
+        $editForm = $this->createForm(new OnlineDoctorQuestionType($typeid), $question);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
