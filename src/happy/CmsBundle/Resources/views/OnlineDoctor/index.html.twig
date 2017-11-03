@@ -1,71 +1,30 @@
-{% import _self as template %}
 {% extends '@happyCms/base.html.twig' %}
 {% block pageheader %} {{ typename }} ангилал дахь асуултууд{% endblock %}
 
 {% block style %}
-
-    <link rel="stylesheet" href="{{ asset('recource/tree.css') }}" type="text/css">
     <style>
         ul li {
-            display: inline-block;
+            list-style: disc;
         }
     </style>
 {% endblock %}
 
-
-{% macro menutable(entities,level, typeid) %}
-    {% import _self as template %}
-    {% for con in entities %}
-        <li>
-            <p>
-                {{ con.name }}
-                <br>
-                <a href="{{ path('cms_online_doctor_update', { 'id': con.id, 'typeid': typeid}) }}"
-                   class="btn btn-default btn-xs"
-                   title="засах">
-                    <i class="glyphicon glyphicon-edit"></i></a>
-
-                <a href="{{ path('cms_online_doctor_new', { 'parentid': con.id, 'typeid': typeid}) }}"
-                   class="btn btn-default btn-xs">
-                    <i class="glyphicon glyphicon-plus"></i></a>
-
-                <a href="#"
-                   class="btn btn-default btn-xs" data-toggle="popover"
-                   title="{{ con.name }}"
-                   data-content="{{con.descr }}">
-                    <i class="glyphicon glyphicon-eye-open"></i></a>
-
-
-                <a href="{{ path('cms_online_doctor_delete', { 'id': con.id , 'typeid': typeid}) }}"
-                   onclick="if(!confirm('Та итгэлтэй байна уу!')){return false;}" class="btn btn-default btn-xs">
-                    <i class="glyphicon glyphicon-trash"></i></a>
-            </p>
-            {% if con.children is defined %}
-                <ul>
-                    {{ template.menutable( con.children, level+1, typeid) }}
-                </ul>
-            {% endif %}
-        </li>
-    {% endfor %}
-{% endmacro %}
-
 {% block body %}
     {% include ':inc:flashmsg.html.twig' %}
 
-    {% if questions|length == 0 %}
-        <ul style="list-style: none;padding: 0;">
+
+    <ul style="list-style: none;padding: 0;">
         <li>
             <a class="btn btn-success" href="{{ path('cms_online_doctor_new', {'typeid' : typeid} ) }}">Шинээр
                 үүсгэх</a>
         </li>
-        </ul>{% endif %}
-
-<div style="width: 4000px">
-    <div class="tree">
+    </ul>
+    <div>
         <ul>
-            {% for con in questions %}
-                <li>
-                    <p>{{ con.name }}
+            {% for key, con in questions %}
+                {% set key = key + 1 %}
+                <li {% if con.isFirst == 1 %}style="color: red"{% endif %} {% if con.isLast == 1 %}style="color: #a559b8"{% endif %}>
+                    <p> {{ key }}. {{ con.descr }}
                         <a href="{{ path('cms_online_doctor_update', { 'id': con.id , 'typeid': typeid}) }}"
                            class="btn btn-default btn-xs"
                            title="засах">
@@ -74,19 +33,14 @@
                         <a class="btn btn-default btn-xs"
                            href="{{ path('cms_online_doctor_new', {'typeid' : typeid,'parentid': con.id} ) }}"> <i
                                     class="glyphicon glyphicon-plus"></i></a>
-                        <a href="{{ path('cms_online_doctor_delete', { 'id': con.id , 'typeid': typeid}) }}"
-                           class="btn btn-default btn-xs">
-                            <i class="glyphicon glyphicon-trash"></i></a>
+                        {#<a href="{{ path('cms_online_doctor_delete', { 'id': con.id , 'typeid': typeid}) }}"#}
+                        {#class="btn btn-default btn-xs">#}
+                        {#<i class="glyphicon glyphicon-trash"></i></a>#}
                     </p>
-                    {% if con.children is defined %}
-                        <ul>
-                            {{ template.menutable(con.children, 0, typeid) }}
-                        </ul>
-                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
-    </div></div>
+    </div>
 {% endblock %}
 {% block js %}
     <script>
@@ -95,3 +49,5 @@
         });
     </script>
 {% endblock %}
+
+

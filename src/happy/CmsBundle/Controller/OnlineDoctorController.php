@@ -36,10 +36,10 @@ class OnlineDoctorController extends Controller
         $questions = $qb
             ->leftJoin('n.type', 't')
             ->addSelect('t')
-            ->leftJoin('n.parent', 'p')
-            ->addSelect('p')
-            ->leftJoin('n.parent1', 'p1')
-            ->addSelect('p1')
+            ->leftJoin('n.childYes', 'yes')
+            ->addSelect('yes')
+            ->leftJoin('n.childNo', 'no')
+            ->addSelect('no')
             ->where('t.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
@@ -67,39 +67,12 @@ class OnlineDoctorController extends Controller
                 break;
             }
         }
-        $arrTree = $this->buildTree($questions);
-
 
         return $this->render('@happyCms/OnlineDoctor/index.html.twig', array(
-            'questions' => $arrTree,
+            'questions' => $questions,
             'typeid' => $id,
             'typename' => $typename,
         ));
-    }
-
-    public function buildTree(array $elements, $parentId = 0)
-    {
-        $branch = array();
-
-        foreach ($elements as $element) {
-            if ($element['parent']['id'] == $parentId) {
-                $children = $this->buildTree($elements, $element['id']);
-                if ($children) {
-                    $element['children'] = $children;
-                }
-                $branch[] = $element;
-            }
-
-            if ($element['parent1']['id'] == $parentId) {
-                $children = $this->buildTree($elements, $element['id']);
-                if ($children) {
-                    $element['children'] = $children;
-                }
-                $branch[] = $element;
-            }
-        }
-
-        return $branch;
     }
 
     /**

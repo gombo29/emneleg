@@ -2,6 +2,7 @@
 
 namespace happy\CmsBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -21,10 +22,15 @@ class OnlineDoctorTypeType extends AbstractType
                 'class' => 'happy\CmsBundle\Entity\OnlineDoctorType',
                 'property' => 'name',
                 'required' => true,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('pp')
+                        ->where('pp.parent is null');
+                },
                 'attr' => array(
                     "class" => "form-control",
                 )
             ))
+
             ->add('name', 'text', array(
                     'label' => 'Асуулт',
                     'required' => true,

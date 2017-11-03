@@ -25,53 +25,47 @@ class OnlineDoctorQuestionType extends AbstractType
     {
         $builder
 
-            ->add('parent', 'entity', array(
-                'class' => 'happyCmsBundle:OnlineDoctorQuestion',
-                'label' => '1 дахь эцэг сонгох',
-                'property' => 'descr',
-                'required' => false,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('pp')
-                        ->where('pp.type = :type')
-                        ->setParameter('type' , $this->type);
-                },
-                'attr' => array(
-                    "class" => "form-control",
-                )
-            ))
 
-            ->add('parent1', 'entity', array(
-                'class' => 'happyCmsBundle:OnlineDoctorQuestion',
-                'label' => '2 дахь эцэг сонгох',
-                'property' => 'descr',
-                'required' => false,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('pp')
-                        ->where('pp.type = :type')
-                        ->setParameter('type' , $this->type);
-                },
-                'attr' => array(
-                    "class" => "form-control",
-                )
-            ))
-
-
-            ->add('name', 'text', array(
-                    'label' => 'Асуулт',
-                    'required' => true,
-                    'attr' => array(
-                        "class" => "form-control",
-                    )
-                )
-            )
             ->add('descr', 'textarea', array(
-                    'label' => 'Тайлбар',
+                    'label' => 'Асуулт / Хариулт',
                     'required' => false,
                     'attr' => array(
                         "class" => "form-control",
                     )
                 )
             )
+
+            ->add('childYes', 'entity', array(
+                'class' => 'happyCmsBundle:OnlineDoctorQuestion',
+                'label' => 'Тийм хариулт',
+                'property' => 'descr',
+                'required' => false,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('pp')
+                        ->where('pp.type = :type')
+                        ->setParameter('type' , $this->type);
+                },
+                'attr' => array(
+                    "class" => "form-control",
+                )
+            ))
+
+            ->add('childNo', 'entity', array(
+                'class' => 'happyCmsBundle:OnlineDoctorQuestion',
+                'label' => 'Үгүй хариулт',
+                'property' => 'descr',
+                'required' => false,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('pp')
+                        ->where('pp.type = :type')
+                        ->setParameter('type' , $this->type);
+                },
+                'attr' => array(
+                    "class" => "form-control",
+                )
+            ))
+
+
             ->add('isFirst', 'choice',
                 array(
                     'label' => 'Эхнийх эсэх',

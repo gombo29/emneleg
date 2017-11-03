@@ -25,13 +25,6 @@ class OnlineDoctorQuestion
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
-     */
-    private $name;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="OnlineDoctorType")
@@ -40,26 +33,17 @@ class OnlineDoctorQuestion
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OnlineDoctorQuestion", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_yes_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="OnlineDoctorQuestion")
+     * @ORM\JoinColumn(name="child_yes", referencedColumnName="id", nullable=true)
      */
-    private $parent;
+    private $childYes;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OnlineDoctorQuestion", inversedBy="children1")
-     * @ORM\JoinColumn(name="parent_one", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="OnlineDoctorQuestion")
+     * @ORM\JoinColumn(name="child_no", referencedColumnName="id", nullable=true)
      */
-    private $parent1;
+    private $childNo;
 
-    /**
-     * @ORM\OneToMany(targetEntity="OnlineDoctorQuestion", mappedBy="parent" )
-     */
-    private $children;
-
-    /**
-     * @ORM\OneToMany(targetEntity="OnlineDoctorQuestion", mappedBy="parent1" )
-     */
-    private $children1;
 
     /**
      * @var boolean
@@ -106,30 +90,6 @@ class OnlineDoctorQuestion
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return OnlineDoctorQuestion
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -284,119 +244,53 @@ class OnlineDoctorQuestion
         return $this->isFirst;
     }
 
+
+
     /**
-     * Set parent
+     * Set childYes
      *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $parent
+     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $childYes
      *
      * @return OnlineDoctorQuestion
      */
-    public function setParent(\happy\CmsBundle\Entity\OnlineDoctorQuestion $parent = null)
+    public function setChildYes(\happy\CmsBundle\Entity\OnlineDoctorQuestion $childYes = null)
     {
-        $this->parent = $parent;
+        $this->childYes = $childYes;
 
         return $this;
     }
 
     /**
-     * Get parent
+     * Get childYes
      *
      * @return \happy\CmsBundle\Entity\OnlineDoctorQuestion
      */
-    public function getParent()
+    public function getChildYes()
     {
-        return $this->parent;
+        return $this->childYes;
     }
 
     /**
-     * Add child
+     * Set childNo
      *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $child
+     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $childNo
      *
      * @return OnlineDoctorQuestion
      */
-    public function addChild(\happy\CmsBundle\Entity\OnlineDoctorQuestion $child)
+    public function setChildNo(\happy\CmsBundle\Entity\OnlineDoctorQuestion $childNo = null)
     {
-        $this->children[] = $child;
+        $this->childNo = $childNo;
 
         return $this;
     }
 
     /**
-     * Remove child
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $child
-     */
-    public function removeChild(\happy\CmsBundle\Entity\OnlineDoctorQuestion $child)
-    {
-        $this->children->removeElement($child);
-    }
-
-    /**
-     * Get children
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Set parent1
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $parent1
-     *
-     * @return OnlineDoctorQuestion
-     */
-    public function setParent1(\happy\CmsBundle\Entity\OnlineDoctorQuestion $parent1 = null)
-    {
-        $this->parent1 = $parent1;
-
-        return $this;
-    }
-
-    /**
-     * Get parent1
+     * Get childNo
      *
      * @return \happy\CmsBundle\Entity\OnlineDoctorQuestion
      */
-    public function getParent1()
+    public function getChildNo()
     {
-        return $this->parent1;
-    }
-
-    /**
-     * Add children1
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $children1
-     *
-     * @return OnlineDoctorQuestion
-     */
-    public function addChildren1(\happy\CmsBundle\Entity\OnlineDoctorQuestion $children1)
-    {
-        $this->children1[] = $children1;
-
-        return $this;
-    }
-
-    /**
-     * Remove children1
-     *
-     * @param \happy\CmsBundle\Entity\OnlineDoctorQuestion $children1
-     */
-    public function removeChildren1(\happy\CmsBundle\Entity\OnlineDoctorQuestion $children1)
-    {
-        $this->children1->removeElement($children1);
-    }
-
-    /**
-     * Get children1
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getChildren1()
-    {
-        return $this->children1;
+        return $this->childNo;
     }
 }
