@@ -1,77 +1,99 @@
 {% extends '@happyWeb/Layout/base.html.twig' %}
 {% block style %}
-    <link href="{{ asset('recource/onlinedoctor/juma-quiz.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('recource/onlinedoctor/example.css') }}" rel="stylesheet">
+    <style>
+        .white-text {
+            font-size: 40px;
+        }
+
+        .hm-green-strong .full-bg-img, .hm-green-strong .mask {
+            background-color: #39adad;
+        }
+    </style>
 {% endblock %}
 {% block body %}
     <div class="project-type-background">
-        <div class="container" style="text-align: center;margin-bottom: 30px;margin-top: 110px;" id="zz-quiz">
-            <div>
-                <h1>Цахим эмч буланд тавтай морил</h1>
-                <div class="juma-quiz">
-                    <ol id="js--my-quiz">
-                        <li>
-                            <h3 id="acc--question-one">Таны 3+4=6 зөв үү?</h3>
-                            <ul>
-                                <li role="checkbox" tabindex="0" aria-checked="false"
-                                    aria-labelledby="acc--question-one"
-                                    data-points="0">Тийм
-                                </li>
-                                <li role="checkbox" tabindex="0" aria-checked="false"
-                                    aria-labelledby="acc--question-one"
-                                    data-points="1">Үгүй
+        <div class="container" style="text-align: center;margin-bottom: 30px;margin-top: 110px;">
 
-                            </ul>
-                        </li>
-                        <li>
-                            <h3 id="acc--question-two">Таны 1+2=3 зөв үү?</h3>
-                            <ul>
-                                <li role="checkbox" tabindex="0" aria-checked="false"
-                                    aria-labelledby="acc--question-two"
-                                    data-points="1">Тийм
-                                </li>
-                                <li trole="checkbox" tabindex="0" aria-checked="false"
-                                    aria-labelledby="acc--question-two"
-                                    data-points="0">Үгүй
-                                </li>
-                            </ul>
-                        </li>
-                    </ol>
-                    <ul class="juma-score">
-                        <li data-points="1">
-                            <h3>Хариулт</h3>
-                            <p>
-                                Та тоондоо дундаж юм байна.
-                            </p>
-                        </li>
-                        <li data-points="2">
-                            <h3>Хариулт</h3>
-                            <p>
-                                Та тоондоо сайн юм байна.
-                            </p>
-                        </li>
-                        <li data-points="0">
-                            <h3>Хариулт</h3>
-                            <p>Та тоондоо муу юм байна.</p>
-                        </li>
-                    </ul>
+            <div class="row">
+                <div class="col-md-12" style="margin-bottom: 30px">
+                    <div class="home-header">
+                        <h4><i class="fa fa-heartbeat"></i> Цахим эмч</h4>
+                    </div>
+
+                    <h5 style="margin-top: 30px">Та доорх 4 төрлөөс сонгоно уу?</h5>
                 </div>
+                <div class="col-md-3" style="margin-bottom: 30px">
+
+                </div>
+                <div class="col-md-6" style="margin-bottom: 30px">
+
+                    <div class="col-md-6" style="margin-bottom: 30px;float:left">
+                        <a href="{{ path('online_doctor_question', {'id': 1}) }}" style="cursor: pointer">
+                            <div class="view overlay hm-green-strong"
+                                 style="background-color: #FFF;border: 2px solid #39adad;">
+                                <img src="/resources/medical_type/img/full/phpXXJ26e.png"
+                                     class="img-fluid " alt="">
+                                <div class="mask flex-center">
+                                    <p class="white-text">Насанд хүрсэн</p>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+
+
+                    <div class="col-md-6" style="margin-bottom: 30px;float:left">
+
+                        <a href="{{ path('online_doctor_question', {'id': 2}) }}" style="cursor: pointer">
+                            <div class="view overlay hm-green-strong"
+                                 style="background-color: #FFF;border: 2px solid #39adad;">
+                                <img src="/resources/medical_type/img/full/phpZ3lTYL.png"
+                                     class="img-fluid " alt="">
+                                <div class="mask flex-center">
+                                    <p class="white-text">Хүүхэд</p>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+
+                    <div class="col-md-6" style="margin-bottom: 30px;float:left">
+
+                        <a href="{{ path('online_doctor_question', {'id': 3}) }}" style="cursor: pointer">
+                            <div class="view overlay hm-green-strong"
+                                 style="background-color: #FFF;border: 2px solid #39adad;">
+                                <img src="resources/medical_type/img/full/phpM2hLpK.png"
+                                     class="img-fluid " alt="">
+                                <div class="mask flex-center">
+                                    <p class="white-text">Эрэгтэй</p>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+
+                    <div class="col-md-6" style="margin-bottom: 30px;float:left">
+                        <a href="{{ path('online_doctor_question', {'id': 4}) }}" style="cursor: pointer">
+                            <div class="view overlay hm-green-strong"
+                                 style="background-color: #FFF;border: 2px solid #39adad;">
+                                <img src="/resources/medical_type/img/full/phpFqwACC.png"
+                                     class="img-fluid " alt="">
+                                <div class="mask flex-center">
+                                    <p class="white-text">Эмэгтэй</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3" style="margin-bottom: 30px">
+
+                </div>
+
             </div>
 
         </div>
     </div>
 {% endblock %}
+
 {% block js %}
-    <script type="text/javascript" src="{{ asset('recource/onlinedoctor/jquery.juma-quiz-min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            $('#zz-quiz').jumaQuiz({
-                container: 'js--my-quiz',
-                progress: false,
-                nextAuto: true,
-                showFinalScore: true,
-                code: '1'
-            });
-        });
-    </script>
 {% endblock %}
