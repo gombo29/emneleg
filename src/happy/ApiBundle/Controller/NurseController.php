@@ -139,7 +139,7 @@ class NurseController extends Controller
     /**
      *  Lists all project entities.
      *
-     * @Route("/nurse-log", name="api_nurse_log")
+     * @Route("/log", name="api_nurse_log")
      * @Method({"GET", "POST"})
      *
      */
@@ -151,19 +151,24 @@ class NurseController extends Controller
         $nurseprice = $request->request->get('price');
         $service = $request->request->get('service');
         $position = $request->request->get('position');
-
-        $em = $this->container->get('doctrine')->getManager();
-        $doctorlog = new DoctorLog();
-        $doctorlog->setType($service);
-        $doctorlog->setDoctorId($nurseid);
-        $doctorlog->setDoctorName($nursename);
-        $doctorlog->setPrice($nurseprice);
-        $doctorlog->setPosition($position);
-        $em->persist($doctorlog);
-        $em->flush();
-        return new JsonResponse(array(
-            'status' => 'ok',
-        ));
+        if ($nurseid == null) {
+            return new JsonResponse(array(
+                'status' => 'nurse id null bn',
+            ));
+        } else {
+            $em = $this->container->get('doctrine')->getManager();
+            $doctorlog = new DoctorLog();
+            $doctorlog->setType($service);
+            $doctorlog->setDoctorId($nurseid);
+            $doctorlog->setDoctorName($nursename);
+            $doctorlog->setPrice($nurseprice);
+            $doctorlog->setPosition($position);
+            $em->persist($doctorlog);
+            $em->flush();
+            return new JsonResponse(array(
+                'status' => 'ok',
+            ));
+        }
     }
 
 
