@@ -16,6 +16,14 @@ class OnlineDoctorQuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
+            ->add('parent', 'entity', array(
+                'class' => 'happyCmsBundle:OnlineDoctorQuestion',
+                'label'=>'Эцэг сонгох',
+                'property' => 'descr',
+                'required' => false,
+            ))
+
             ->add('name', 'text', array(
                     'label' => 'Асуулт',
                     'required' => true,
