@@ -24,12 +24,17 @@
                    class="btn btn-default btn-xs"
                    title="засах">
                     <i class="glyphicon glyphicon-edit"></i></a>
-                <br>
 
                 <a href="{{ path('cms_online_doctor_new', { 'parentid': con.id, 'typeid': typeid}) }}"
                    class="btn btn-default btn-xs">
                     <i class="glyphicon glyphicon-plus"></i></a>
-                <br>
+
+                <a href="#"
+                   class="btn btn-default btn-xs" data-toggle="popover"
+                   title="{{ con.name }}"
+                   data-content="{{con.descr }}">
+                    <i class="glyphicon glyphicon-eye-open"></i></a>
+
 
                 <a href="{{ path('cms_online_doctor_delete', { 'id': con.id , 'typeid': typeid}) }}"
                    onclick="if(!confirm('Та итгэлтэй байна уу!')){return false;}" class="btn btn-default btn-xs">
@@ -84,4 +89,9 @@
     </div>
 {% endblock %}
 {% block js %}
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 {% endblock %}
