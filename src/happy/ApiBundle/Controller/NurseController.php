@@ -2,6 +2,7 @@
 
 namespace happy\ApiBundle\Controller;
 
+use happy\CmsBundle\Entity\DoctorFeedback;
 use happy\CmsBundle\Entity\DoctorLog;
 use happy\CmsBundle\Entity\DoctorPosition;
 use happy\CmsBundle\Entity\Doctors;
@@ -132,6 +133,9 @@ class NurseController extends Controller
                             Дүн: 20000₮',
                 "Phone" => 'Асуух зүйл байвал: 99031675',
                 "Footer" => 'Та дуудлагаа баталгаажуулсан тохиолдолд бид 5 минутын дотор тантай эргэн холбогдох болно.'
+            ),
+            200, array(
+                'Access-Control-Allow-Origin' => '*'
             )
         );
     }
@@ -169,6 +173,37 @@ class NurseController extends Controller
                 'status' => 'ok',
             ));
         }
+    }
+
+    /**
+     *  Lists all project entities.
+     *
+     * @Route("/feedback", name="api_nurse_feedback")
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function nurseFeedbackAction(Request $request)
+    {
+        $nurseid = $request->request->get('id');
+        $content = $request->request->get('content');
+
+        if ($nurseid == null) {
+            return new JsonResponse(array(
+                'status' => 'nurse id null bn',
+            ));
+        } else {
+            $em = $this->container->get('doctrine')->getManager();
+            $doctorFeedback = new DoctorFeedback();
+            $doctorFeedback->setDoctorId($nurseid);
+            $doctorFeedback->setContent($content);
+            $em->persist($doctorFeedback);
+            $em->flush();
+            return new JsonResponse(array(
+                'status' => 'ok',
+            ));
+        }
+
+
     }
 
 
