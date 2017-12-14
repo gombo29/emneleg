@@ -87,8 +87,8 @@ class NurseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $positionId = $request->request->get('position');
-        $serviceId = $request->request->get('services');
+        $positionId = $request->get('position');
+        $serviceId = $request->get('services');
 
         if ($positionId == null && $serviceId == null) {
             $positionId = 1;
