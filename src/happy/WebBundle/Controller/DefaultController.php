@@ -2,6 +2,7 @@
 
 namespace happy\WebBundle\Controller;
 
+use happy\CmsBundle\Entity\Banner;
 use happy\CmsBundle\Entity\Content;
 use happy\CmsBundle\Entity\LaboratoryType;
 use happy\CmsBundle\Entity\Medicals;
@@ -36,6 +37,15 @@ class DefaultController extends Controller
             ->addOrderBy('n.isOntsloh', 'desc')
             ->where('n.isOntsloh = 1')
             ->andWhere('n.isRemove = 0')
+            ->getQuery()
+            ->getArrayResult();
+
+        $qb = $em->getRepository('happyCmsBundle:Banner')->createQueryBuilder('n');
+        /**@var Banner[] $banner */
+        $banner = $qb
+            ->where('n.publishDate < :now')
+            ->andWhere('n.endDate > :now')
+            ->setParameter('now', new \DateTime('now'))
             ->getQuery()
             ->getArrayResult();
 
@@ -85,6 +95,7 @@ class DefaultController extends Controller
             'viewType' => 1,
             'nurse' => $nurse,
             'medType' => $medType,
+            'banner' => $banner,
 
         ));
     }

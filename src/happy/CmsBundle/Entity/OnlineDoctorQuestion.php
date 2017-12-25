@@ -55,6 +55,13 @@ class OnlineDoctorQuestion
     /**
      * @var boolean
      *
+     * @ORM\Column(name="is_selected", type="boolean",  nullable=true)
+     */
+    private $isSelected;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="is_first", type="boolean",  nullable=true)
      */
     private $isFirst;
@@ -292,5 +299,29 @@ class OnlineDoctorQuestion
     public function getChildNo()
     {
         return $this->childNo;
+    }
+
+    /**
+     * Set isSelected
+     *
+     * @param boolean $isSelected
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function setIsSelected($isSelected)
+    {
+        $this->isSelected = $isSelected;
+
+        return $this;
+    }
+
+    /**
+     * Get isSelected
+     *
+     * @return boolean
+     */
+    public function getIsSelected()
+    {
+        return $this->isSelected;
     }
 }

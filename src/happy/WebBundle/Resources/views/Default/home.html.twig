@@ -43,10 +43,13 @@
 
     <div id="carousel-example-1z" class="carousel slide carousel-fade top-slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active">
-                <img src="{{ asset('recource/banner.jpg') }}" class="slide-img">
-            </div>
+            {% for key, entity in  banner %}
+                <div class="carousel-item {% if key == 0 %}active{% endif %}">
+                    <img src="{{ localstatfolder }}/{{ entity.img }}" class="slide-img">
+                </div>
+            {% endfor %}
         </div>
+
         <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">өмнөх</span>
@@ -141,81 +144,81 @@
     </div>
 {% endblock %}
 
-{% block js %}
-    <script src="{{ asset('recource/js/swiper.min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            medicalnum = 2;
-            if ($(window).width() > 1072) {
+    {% block js %}
+        <script src="{{ asset('recource/js/swiper.min.js') }}"></script>
+        <script>
+            $(document).ready(function () {
                 medicalnum = 2;
-            } else if ($(window).width() <= 1072 && $(window).width() > 768) {
-                medicalnum = 2;
-            }
-            else if ($(window).width() <= 768) {
-                medicalnum = 1;
-            }
+                if ($(window).width() > 1072) {
+                    medicalnum = 2;
+                } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+                    medicalnum = 2;
+                }
+                else if ($(window).width() <= 768) {
+                    medicalnum = 1;
+                }
 
-            newsnum = 4;
-            if ($(window).width() > 1072) {
                 newsnum = 4;
-            } else if ($(window).width() <= 1072 && $(window).width() > 768) {
-                newsnum = 2;
-            }
-            else if ($(window).width() <= 768) {
-                newsnum = 1;
-            }
+                if ($(window).width() > 1072) {
+                    newsnum = 4;
+                } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+                    newsnum = 2;
+                }
+                else if ($(window).width() <= 768) {
+                    newsnum = 1;
+                }
 
-            var swiper1 = new Swiper('.swiper1', {
-                pagination: '.swiper-pagination1',
-                paginationClickable: true,
-                spaceBetween: 30,
-                slidesPerView: medicalnum,
-                autoplay: 2500,
-                autoplayDisableOnInteraction: false
-            });
-            var swiper2 = new Swiper('.swiper2', {
-                pagination: '.swiper-pagination2',
-                paginationClickable: true,
-                spaceBetween: 30,
-                slidesPerView: medicalnum,
-                autoplay: 2500,
-                autoplayDisableOnInteraction: false
-            });
+                var swiper1 = new Swiper('.swiper1', {
+                    pagination: '.swiper-pagination1',
+                    paginationClickable: true,
+                    spaceBetween: 30,
+                    slidesPerView: medicalnum,
+                    autoplay: 2500,
+                    autoplayDisableOnInteraction: false
+                });
+                var swiper2 = new Swiper('.swiper2', {
+                    pagination: '.swiper-pagination2',
+                    paginationClickable: true,
+                    spaceBetween: 30,
+                    slidesPerView: medicalnum,
+                    autoplay: 2500,
+                    autoplayDisableOnInteraction: false
+                });
 
-            var swiper4 = new Swiper('.swiper4', {
-                pagination: '.swiper-pagination2',
-                paginationClickable: true,
-                spaceBetween: 30,
-                slidesPerView: newsnum,
-                autoplay: 2500,
-                autoplayDisableOnInteraction: false
-            });
+                var swiper4 = new Swiper('.swiper4', {
+                    pagination: '.swiper-pagination2',
+                    paginationClickable: true,
+                    spaceBetween: 30,
+                    slidesPerView: newsnum,
+                    autoplay: 2500,
+                    autoplayDisableOnInteraction: false
+                });
 
 
-            medicalnum1 = 10;
-            if ($(window).width() > 1072) {
                 medicalnum1 = 10;
-            } else if ($(window).width() <= 1072 && $(window).width() > 768) {
-                medicalnum1 = 4;
-            }
-            else if ($(window).width() <= 768) {
-                medicalnum1 = 2;
-            }
+                if ($(window).width() > 1072) {
+                    medicalnum1 = 10;
+                } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+                    medicalnum1 = 4;
+                }
+                else if ($(window).width() <= 768) {
+                    medicalnum1 = 2;
+                }
 
-            var swiper = new Swiper('.swipermainmedtype', {
-                slidesPerView: medicalnum1,
-                spaceBetween: 30,
-                scrollbar: {
-                    el: '.swiper-scrollbar',
-                    hide: true
-                },
-                freeMode: true
+                var swiper = new Swiper('.swipermainmedtype', {
+                    slidesPerView: medicalnum1,
+                    spaceBetween: 30,
+                    scrollbar: {
+                        el: '.swiper-scrollbar',
+                        hide: true
+                    },
+                    freeMode: true
+                });
+
+
+                $('input[type="checkbox"]').change(function () {
+                    $('#medicalSearch').submit();
+                });
             });
-
-
-            $('input[type="checkbox"]').change(function () {
-                $('#medicalSearch').submit();
-            });
-        });
-    </script>
-{% endblock %}
+        </script>
+    {% endblock %}
