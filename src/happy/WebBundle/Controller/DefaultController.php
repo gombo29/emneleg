@@ -15,16 +15,16 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
 
-    /**
-     * @Route("/")
-     */
-    public function indexAction()
-    {
-        return $this->render('@happyWeb/Default/comingsoon.html.twig');
-    }
+//    /**
+//     * @Route("/")
+//     */
+//    public function indexAction()
+//    {
+//        return $this->render('@happyWeb/Default/comingsoon.html.twig');
+//    }
 
     /**
-     * @Route("/home", name="home_page")
+     * @Route("/", name="home_page")
      */
     public function homeAction()
     {
