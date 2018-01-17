@@ -79,7 +79,7 @@ class NurseController extends Controller
     /**
      *  Lists all project entities.
      *
-     * @Route("/", name="api_nurse")
+     * @Route("/", name="api_nurse_list")
      * @Method({"GET", "POST"})
      *
      */
