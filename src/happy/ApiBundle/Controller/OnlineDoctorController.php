@@ -96,14 +96,28 @@ class OnlineDoctorController extends Controller
         $qb = $em->getRepository('happyCmsBundle:OnlineDoctorQuestion')->createQueryBuilder('n');
         /**@var Doctors[] $nurse */
         $answers = $qb
+            ->select('n.id', 'n.isLast', 'n.isFirst', 'n.descr', 'cy.id as YesId', 'cn.id as NoId')
             ->where('n.type = :tid')
             ->setParameter('tid', $id)
             ->leftJoin('n.childYes', 'cy')
-            ->addSelect('cy')
+//            ->addSelect('cy')
             ->leftJoin('n.childNo', 'cn')
-            ->addSelect('cn')
+//            ->addSelect('cn')
             ->getQuery()
             ->getArrayResult();
+
+        foreach ($answers as $key=>$ans)
+        {
+            if($ans['isLast'] == null)
+            {
+                $answers[$key]['isLast'] = false;
+            }
+
+            if($ans['isFirst'] == null)
+            {
+                $answers[$key]['isFirst'] = false;
+            }
+        }
 
         return new JsonResponse(
             array(
