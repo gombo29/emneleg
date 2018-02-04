@@ -106,7 +106,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -128,7 +128,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -142,7 +142,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -156,7 +156,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -178,7 +178,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -192,7 +192,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -206,7 +206,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -220,7 +220,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -254,7 +254,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => true,
+                    'required' => false,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )

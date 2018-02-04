@@ -33,9 +33,9 @@
                         <a class="btn btn-default btn-xs"
                            href="{{ path('cms_online_doctor_new', {'typeid' : typeid,'parentid': con.id} ) }}"> <i
                                     class="glyphicon glyphicon-plus"></i></a>
-                        {#<a href="{{ path('cms_online_doctor_delete', { 'id': con.id , 'typeid': typeid}) }}"#}
-                        {#class="btn btn-default btn-xs">#}
-                        {#<i class="glyphicon glyphicon-trash"></i></a>#}
+                        <a href="{{ path('cms_online_doctor_delete', { 'id': con.id , 'typeid': typeid}) }}"
+                        class="btn btn-default btn-xs" onclick="if(!confirm('Итгэлтэй байна уу!'))return false;">
+                        <i class="glyphicon glyphicon-trash"></i></a>
                     </p>
                 </li>
             {% endfor %}
