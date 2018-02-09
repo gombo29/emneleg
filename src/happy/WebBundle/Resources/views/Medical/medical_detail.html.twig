@@ -151,6 +151,8 @@
             </div>
 
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs12 medical-detail-main">
+
+               {% if medicalphoto|length > 0 %}
                 <div class="swiper-container swiper1">
                     <div class="swiper-wrapper">
                         {% for m in medicalphoto %}
@@ -166,6 +168,7 @@
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                 </div>
+                {% endif %}
 
                 <div class="medical-detail-gadnah">
                     <h4 class="med-detail-icon">Эмнэлгийн товч танилцуулга</h4>
