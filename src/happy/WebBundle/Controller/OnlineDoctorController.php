@@ -31,6 +31,7 @@ class OnlineDoctorController extends Controller
         $questions = $qb
             ->where('n.parent = :id')
             ->setParameter('id', $id)
+            ->andWhere('n.isFinish = 1')
             ->getQuery()
             ->getArrayResult();
 

@@ -71,6 +71,7 @@ class OnlineDoctorController extends Controller
             ->select('n.id', 'n.name')
             ->where('n.parent = :pid')
             ->setParameter('pid', $id)
+            ->andWhere('n.isFinish = 1')
             ->getQuery()
             ->getArrayResult();
 

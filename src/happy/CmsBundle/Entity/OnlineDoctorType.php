@@ -40,6 +40,13 @@ class OnlineDoctorType
     private $parent;
 
 
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="is_finish", type="boolean",nullable=true)
+     */
+    private $isFinish;
+
     /**
      * @ORM\OneToMany(targetEntity="OnlineDoctorType", mappedBy="parent" )
      */
@@ -205,5 +212,29 @@ class OnlineDoctorType
     public function getChildren()
     {
         return $this->children;
+    }
+
+    /**
+     * Set isFinish
+     *
+     * @param boolean $isFinish
+     *
+     * @return OnlineDoctorType
+     */
+    public function setIsFinish($isFinish)
+    {
+        $this->isFinish = $isFinish;
+
+        return $this;
+    }
+
+    /**
+     * Get isFinish
+     *
+     * @return boolean
+     */
+    public function getIsFinish()
+    {
+        return $this->isFinish;
     }
 }

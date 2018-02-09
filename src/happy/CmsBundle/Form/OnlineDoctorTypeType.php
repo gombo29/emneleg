@@ -39,6 +39,22 @@ class OnlineDoctorTypeType extends AbstractType
                     )
                 )
             )
+
+            ->add('isFinish', 'choice',
+                array(
+                    'label' => 'Веб дээр харуулах эсэх',
+                    'choices' => array(
+                        '1' => 'Тийм',
+                        '0' => 'Үгүй'
+                    ),
+                    'expanded' => true,
+                    'required' => false,
+                    'attr' => array(
+                        "class" => "form-control col-md-2 col-lg-3",
+                    )
+                )
+            );
+
         ;
     }
 
