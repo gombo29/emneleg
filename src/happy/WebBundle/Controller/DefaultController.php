@@ -24,7 +24,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/home", name="home_page")
+     * @Route("/hidden", name="home_page")
      */
     public function homeAction()
     {
