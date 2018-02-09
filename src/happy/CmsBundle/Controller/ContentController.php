@@ -3,6 +3,7 @@
 namespace happy\CmsBundle\Controller;
 
 use happy\CmsBundle\Entity\Content;
+use happy\CmsBundle\Entity\MedicalPhoto;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -173,9 +174,9 @@ class ContentController extends Controller
     public function deleteAction(Request $request, Content $content)
     {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($content);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($content);
+        $em->flush();
 
         $request
             ->getSession()
@@ -213,4 +214,59 @@ class ContentController extends Controller
         }
         throw $this->createNotFoundException('Wrong request.');
     }
+
+    /**
+     * Creates a upload news image with ck.
+     *
+     * @Route("/stamp/{page}", name="stamp" , requirements={"page" = "\d+"}, defaults={"page" = 1})
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function stampAction($page)
+    {
+
+        $pagesize = 5;
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('happyCmsBundle:MedicalPhoto')->createQueryBuilder('n');
+        /**@var MedicalPhoto[] $img */
+        $images = $qb
+            ->setFirstResult(($page - 1) * $pagesize)
+            ->setMaxResults($pagesize)
+            ->getQuery()
+            ->getArrayResult();
+
+
+        $thumbUploadFolder = $this->container->getParameter('localthumbfolder');
+        $statFolder = $this->container->getParameter('localstatfolder');
+        $imageGod = $this->container->get('imagegod');
+
+        foreach ($images as $image) {
+
+
+
+            $img = $em->getRepository('happyCmsBundle:MedicalPhoto')->find($image['id']);
+            $img->setStampPath($image['path']);
+            $em->persist($img);
+            list($sx_raw, $sy_raw) = $imageGod->getWidthHeiht($statFolder . $image['path']);
+
+
+            if($sx_raw <= 1000)
+            {
+                $imageGod->stampImage($thumbUploadFolder . "stamp100.png", $statFolder . $image['path'], $thumbUploadFolder . $image['path'], 20, 20);
+
+            }else if($sx_raw <= 2000)
+            {
+                $imageGod->stampImage($thumbUploadFolder . "stamp200.png", $statFolder . $image['path'], $thumbUploadFolder . $image['path'], 40, 40);
+
+            }else
+            {
+                $imageGod->stampImage($thumbUploadFolder . "stamp600.png", $statFolder . $image['path'], $thumbUploadFolder . $image['path'], 80, 80);
+            }
+        }
+
+        $em->flush();
+
+        exit();
+    }
+
 }

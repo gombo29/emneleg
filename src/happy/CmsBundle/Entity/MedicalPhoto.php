@@ -56,6 +56,12 @@ class MedicalPhoto
      */
     private $path;
 
+    /**
+     * @var string
+     * @ORM\Column(name="stamp_path", type="string" ,nullable=true)
+     */
+    private $stamp_path;
+
 
     /**
      * @var \DateTime
@@ -320,5 +326,29 @@ class MedicalPhoto
     public function getTailbar()
     {
         return $this->tailbar;
+    }
+
+    /**
+     * Set stampPath
+     *
+     * @param string $stampPath
+     *
+     * @return MedicalPhoto
+     */
+    public function setStampPath($stampPath)
+    {
+        $this->stamp_path = $stampPath;
+
+        return $this;
+    }
+
+    /**
+     * Get stampPath
+     *
+     * @return string
+     */
+    public function getStampPath()
+    {
+        return $this->stamp_path;
     }
 }

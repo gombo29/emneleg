@@ -373,11 +373,12 @@ class ImageGod
 
     public function stampImage($stampurl, $rawImagePath, $stampedImagePath, $marge_right = 0, $marge_bottom = 0, $percent = 90)
     {
+
         list($sx, $sy) = $this->getWidthHeiht($stampurl);
         if($sx == -1)
             return false;
-        $stamp = imagecreatefrompng($stampurl);
 
+        $stamp = imagecreatefrompng($stampurl);
         $img_type = exif_imagetype($rawImagePath);
 
         switch($img_type) {
@@ -407,10 +408,9 @@ class ImageGod
                 break;
             default: return 2;
         }
+
         imagedestroy($im);
         imagedestroy($stamp);
-
-
         if($success === false)
             return 3;
 
