@@ -225,7 +225,7 @@ class ContentController extends Controller
     public function stampAction($page)
     {
 
-        $pagesize = 10;
+        $pagesize = 100;
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:MedicalPhoto')->createQueryBuilder('n');
         /**@var MedicalPhoto[] $img */

@@ -189,6 +189,15 @@ class MedicalController extends Controller
 
         $tasagInfo = json_decode($medicals->getTasagInfo());
 
+
+        $qb = $em->getRepository('happyCmsBundle:MedicalType')->createQueryBuilder('n');
+        /**@var MedicalType[] $medType */
+        $medType = $qb
+            ->select('n.id, n.name, n.img, n.imgActive')
+            ->orderBy('n.id', 'asc')
+            ->getQuery()
+            ->getArrayResult();
+
         return $this->render('@happyWeb/Medical/medical_detail.html.twig',
             array(
                 'medical' => $medicals,
@@ -198,6 +207,7 @@ class MedicalController extends Controller
                 'tasagInfo' => $tasagInfo,
                 'labType' => $labType,
                 'viewType' => 1,
+                'medType' => $medType,
             )
         );
     }

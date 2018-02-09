@@ -45,6 +45,7 @@ twig:
     globals:
             statfolder:  "%statfolder%"
             localstatfolder:  "%localstatfolder%"
+            localthumbfolder:  "%localthumbfolder%"
 
 # Doctrine Configuration
 doctrine:

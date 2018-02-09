@@ -151,12 +151,12 @@
             </div>
 
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs12 medical-detail-main">
-                <div class="swiper-container">
+                <div class="swiper-container swiper1">
                     <div class="swiper-wrapper">
                         {% for m in medicalphoto %}
                             <div class="swiper-slide"
                                  style="text-align: center;background-color: #39adad;vertical-align: middle">
-                                <img src="/{{ localstatfolder }}{{ m.stamp_path }}">
+                                <img src="/{{ localthumbfolder }}{{ m.stamp_path }}">
                             </div>
                         {% endfor %}
                     </div>
@@ -291,7 +291,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEyeyQLgmJ_Gv7X-Vs5FcfqoWZ3Nz2cM8"></script>
     <script>
         $(document).ready(function () {
-            var swiper = new Swiper('.swiper-container', {
+            var swiper = new Swiper('.swiper1', {
                 pagination: '.swiper-pagination',
                 slidesPerView: 'auto',
                 centeredSlides: true,
@@ -302,7 +302,32 @@
                 prevButton: '.swiper-button-prev',
                 loop: true
             });
+
+
+            medicalnum1 = 10;
+            if ($(window).width() > 1072) {
+                medicalnum1 = 10;
+            } else if ($(window).width() <= 1072 && $(window).width() > 768) {
+                medicalnum1 = 4;
+            }
+            else if ($(window).width() <= 768) {
+                medicalnum1 = 2;
+            }
+
+            var swiper2 = new Swiper('.swipermainmedtype', {
+                slidesPerView: medicalnum1,
+                spaceBetween: 30,
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true
+                },
+                freeMode: true
+            });
         });
+
+
+
+
         var count = 0;
         function moreText() {
             count = count + 1;
