@@ -22,6 +22,11 @@
                                 <img src="/{{ localstatfolder }}{{ q.photo }}"
                                      style="width: 50%;margin-bottom: 40px;margin-top: 30px">
                             {% endif %}
+
+                            {% if q.photo2 %}
+                                <img src="/{{ localstatfolder }}{{ q.photo2 }}"
+                                     style="width: 50%;margin-bottom: 40px;margin-top: 30px">
+                            {% endif %}
                         {% else %}
                             <img src="{{ asset('recource/question.png') }}">
                             <p style="font-size: 24px;"> {{ q.descr }}</p>

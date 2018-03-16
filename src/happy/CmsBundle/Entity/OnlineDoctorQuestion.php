@@ -95,6 +95,13 @@ class OnlineDoctorQuestion
      */
     private $photo;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="photo2", type="string", length=255,  nullable=true)
+     */
+    private $photo2;
+
 
     /**
      *
@@ -128,6 +135,36 @@ class OnlineDoctorQuestion
 
     /**
      *
+     * @Assert\Image(
+     *        mimeTypesMessage = "Зурган файл биш байна!"
+     * )
+     *
+     */
+    public $imagefile2;
+
+    /**
+     * Get Image
+     *
+     * @return UploadedFile
+     */
+    public function getImageFile2()
+    {
+        return $this->imagefile2;
+    }
+
+    /**
+     * Set Image
+     *
+     * @param UploadedFile $file
+     */
+    public function setImageFile2(UploadedFile $file = null)
+    {
+        $this->imagefile2 = $file;
+    }
+
+
+    /**
+     *
      * @param $container
      */
     public function uploadImage(Container $container)
@@ -149,6 +186,29 @@ class OnlineDoctorQuestion
         $this->imagefile = null;
     }
 
+
+    /**
+     *
+     * @param $container
+     */
+    public function uploadImage2(Container $container)
+    {
+
+        if (null === $this->getImageFile2()) {
+            return;
+        }
+
+        $resources = $container->getParameter('localstatfolder');
+
+        $dir = 'online-doctor/img';
+        $filename = $this->getImageFile2()->getFilename() . '.' . $this->getImageFile2()->guessExtension();
+        $this->getImageFile2()->move(
+            $resources . '/' . $dir, $filename
+        );
+        $path = $dir . "/" . $filename;
+        $this->photo2 = $path;
+        $this->imagefile2 = null;
+    }
 
     /**
      * Get id
@@ -231,6 +291,7 @@ class OnlineDoctorQuestion
     {
         return $this->type;
     }
+
     /**
      * Constructor
      */
@@ -311,7 +372,6 @@ class OnlineDoctorQuestion
     {
         return $this->isFirst;
     }
-
 
 
     /**
@@ -408,5 +468,29 @@ class OnlineDoctorQuestion
     public function getPhoto()
     {
         return $this->photo;
+    }
+
+    /**
+     * Set photo2
+     *
+     * @param string $photo2
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function setPhoto2($photo2)
+    {
+        $this->photo2 = $photo2;
+
+        return $this;
+    }
+
+    /**
+     * Get photo2
+     *
+     * @return string
+     */
+    public function getPhoto2()
+    {
+        return $this->photo2;
     }
 }

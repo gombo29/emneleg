@@ -10,6 +10,13 @@
         <a href="{{ path('cms_online_doctor_update_photo' , {'id' : question.id, 'typeid': typeid}) }}"
            onclick="if(!confirm('Итгэлтэй байна уу!'))return false;" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Зураг устгах</a>
     {% endif %}
+
+    {% if question.photo2 %}
+        <p><b>Бүдүүвч зураг №2</b></p>
+        <img src="/{{ localstatfolder }}{{ question.photo2 }}" width="300">
+        <a href="{{ path('cms_online_doctor_update_photo_two' , {'id' : question.id, 'typeid': typeid}) }}"
+           onclick="if(!confirm('Итгэлтэй байна уу!'))return false;" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Зураг 2 устгах</a>
+    {% endif %}
     {{ form_start(edit_form) }}
 
     {{ form_widget(edit_form) }}

@@ -99,6 +99,8 @@ class OnlineDoctorController extends Controller
             }
 
             $question->uploadImage($this->container);
+            $question->uploadImage2($this->container);
+
             $em->persist($question);
             $em->flush();
             $request
@@ -130,6 +132,7 @@ class OnlineDoctorController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $question->uploadImage($this->container);
+            $question->uploadImage2($this->container);
             $em->persist($question);
             $em->flush();
             $request
@@ -159,6 +162,28 @@ class OnlineDoctorController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $question->setPhoto(null);
+        $em->persist($question);
+        $em->flush();
+        $request
+            ->getSession()
+            ->getFlashBag()
+            ->add('success', 'Зураг амжилттай устлаа!');
+
+        return $this->redirectToRoute('cms_online_doctor_update', array('id' => $question->getId(), 'typeid' => $typeid));
+    }
+
+    /**
+     * Updates banner entity.
+     *
+     * @Route("/update-photo-two/{id}/{typeid}", name="cms_online_doctor_update_photo_two" , requirements={"id" = "\d+", "typeid" = "\d+"})
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function removeImg2Action(Request $request, OnlineDoctorQuestion $question, $typeid)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $question->setPhoto2(null);
         $em->persist($question);
         $em->flush();
         $request

@@ -100,6 +100,13 @@ class OnlineDoctorQuestionType extends AbstractType
                 'attr' => array(
                     'class' => 'btn btn-success fileinput-button',
                 )))
+
+            ->add('imagefile2', 'file', array(
+                'label' => 'Бүдүүвч зураг №2 оруулах',
+                'required' => false,
+                'attr' => array(
+                    'class' => 'btn btn-success fileinput-button',
+                )))
         ;
     }
 
