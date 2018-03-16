@@ -19,11 +19,13 @@
                             <p style="font-size: 24px;"> {{ q.descr }}</p>
 
                             {% if q.photo %}
+                                <p>Бүдүүвч 1</p>
                                 <img src="/{{ localstatfolder }}{{ q.photo }}"
                                      style="width: 50%;margin-bottom: 40px;margin-top: 30px">
                             {% endif %}
 
                             {% if q.photo2 %}
+                                <p>Бүдүүвч 2</p>
                                 <img src="/{{ localstatfolder }}{{ q.photo2 }}"
                                      style="width: 50%;margin-bottom: 40px;margin-top: 30px">
                             {% endif %}
