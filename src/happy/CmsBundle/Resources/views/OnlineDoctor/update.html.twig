@@ -3,6 +3,13 @@
 
 {% block body %}
     {% include ':inc:flashmsg.html.twig' %}
+
+    {% if question.photo %}
+        <p><b>Бүдүүвч зураг</b></p>
+        <img src="/{{ localstatfolder }}{{ question.photo }}" width="300">
+        <a href="{{ path('cms_online_doctor_update_photo' , {'id' : question.id, 'typeid': typeid}) }}"
+           onclick="if(!confirm('Итгэлтэй байна уу!'))return false;" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Зураг устгах</a>
+    {% endif %}
     {{ form_start(edit_form) }}
 
     {{ form_widget(edit_form) }}

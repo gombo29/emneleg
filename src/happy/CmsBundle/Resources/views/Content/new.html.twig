@@ -1,11 +1,11 @@
 {% extends 'happyCmsBundle::base.html.twig' %}
-{% block pageheader %}Зөвлөгөө нэмэх хэсэг{% endblock %}
+{% block pageheader %}Мэдээлэл нэмэх хэсэг{% endblock %}
 
 {% block body %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <input class="btn btn-success" type="submit" value="Хадгалах" style="margin-top: 20px;margin-bottom: 25px"/>
-    <a class="btn btn-default" href="{{ path('cms_content_index') }}" style="margin-top: 20px;margin-bottom: 25px">Зөвлөгөөний жагсаалт буцах</a>
+    <a class="btn btn-default" href="{{ path('cms_content_index') }}" style="margin-top: 20px;margin-bottom: 25px">Мэдээний жагсаалт буцах</a>
     {{ form_end(form) }}
 {% endblock %}
 {% block js %}

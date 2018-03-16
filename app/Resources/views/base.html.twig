@@ -24,50 +24,6 @@
 {% block main %}
 {% endblock %}
 
-{% if nurse is defined %}
-    <div class="modal fade" id="nurseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h3 style="text-align: center;">Таны дуудлага бүртгэгдлээ.</h3>
-                    <p style="text-align: justify">
-                        <b> Та дуудлагаа баталгаажуулахын тулд манай үйлчилгээний данслуу урьдчилгаа төлбөр шилжүүлэх
-                            хэрэгтэй.</b> Үүний тулд та доорх QR Code-г аль ч банкны QPay үйлчилгээ ашиглан
-                        шилжүүлэх боломжтой.
-                    </p>
-                    <img src="" width="200" id="suvilagchqr">
-
-                    <p style="color: red">Жич: QPay үйлчилгээгээр гүйлгээ хийхдээ гүйлгээний утга дээр утасны дугаараа бичнэ үү!</p>
-
-                    <p style="text-align: justify">
-                        Та Qpay үйлчилгээг ашиглах боломжгүй байгаа бол доорх данслуу урьдчилгаа төлбөр шилжүүлнэ үү!
-                    </p>
-
-
-                    <ul style="text-align: left;margin-left: 40px;font-weight: bold">
-                        <li>Хүлээн авах банк: <i>Худалдаа хөгжлийн банк</i></li>
-                        <li>Дансны дугаар: <i>472020237</i></li>
-                        <li>Данс эзэмшигч: Emneleg.mn<i></i></li>
-                        <li>Дүн: <i id="suvilagchdun"></i>₮</li>
-                        <li>Утга: <i>та өөрийн утасны дугаар оруулна уу.</i></li>
-                    </ul>
-
-                    <h5>Асуух зүйл байвал: 99031675</h5>
-
-                    <h5 style="text-align: center;">Та дуудлагаа баталгаажуулсан тохиолдолд бид 5 минутын дотор тантай
-                        эргэн холбогдох болно.</h5>
-
-
-                    <div class="text-center">
-                        <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endif %}
 <script type="text/javascript" src="{{ asset('recource/MDBFree/js/jquery-2.2.3.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('recource/MDBFree/js/tether.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('recource/MDBFree/js/bootstrap.min.js') }}"></script>
@@ -75,5 +31,9 @@
 <script type="text/javascript" src="{{ asset('recource/MDBFree/js/emneleg.js') }}"></script>
 {% block js %}
 {% endblock %}
+
+{% block modal %}
+{% endblock %}
+
 </body>
 </html>

@@ -18,7 +18,7 @@ class ContentType extends AbstractType
         $builder
 
             ->add('contentType', 'entity', array(
-                'label' => 'Зөвлөгөө төрөл',
+                'label' => 'Мэдээний төрөл',
                 'class' => 'happy\CmsBundle\Entity\ContentType',
                 'property' => 'name',
                 'required' => true,

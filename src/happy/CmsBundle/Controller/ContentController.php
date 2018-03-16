@@ -237,11 +237,11 @@ class ContentController extends Controller
 
 
         $thumbUploadFolder = $this->container->getParameter('localthumbfolder');
+        $thumbUploadFolderOpa = $this->container->getParameter('localthumbfolderopa');
         $statFolder = $this->container->getParameter('localstatfolder');
         $imageGod = $this->container->get('imagegod');
 
         foreach ($images as $image) {
-
 
 
             $img = $em->getRepository('happyCmsBundle:MedicalPhoto')->find($image['id']);
@@ -250,23 +250,87 @@ class ContentController extends Controller
             list($sx_raw, $sy_raw) = $imageGod->getWidthHeiht($statFolder . $image['path']);
 
 
-            if($sx_raw <= 1000)
-            {
-                $imageGod->stampImage($thumbUploadFolder . "stamp100.png", $statFolder . $image['path'], $thumbUploadFolder . $image['path'], 20, 20);
+            $marge_right = $sx_raw / 3;
 
-            }else if($sx_raw <= 2000)
-            {
-                $imageGod->stampImage($thumbUploadFolder . "stamp200.png", $statFolder . $image['path'], $thumbUploadFolder . $image['path'], 40, 40);
 
-            }else
-            {
-                $imageGod->stampImage($thumbUploadFolder . "stamp600.png", $statFolder . $image['path'], $thumbUploadFolder . $image['path'], 80, 80);
+            if ($sx_raw <= 1000) {
+                $img_url = "stamp400-opa.png";
+            } else if ($sx_raw <= 2000) {
+                $img_url = "stamp400-opa.png";
+            } else if ($sx_raw <= 4000) {
+                $img_url = "stamp1200-opa.png";
+            } else {
+                $img_url = "stamp1200-opa.png";
             }
+
+            $marge_bottom = $sy_raw / 3;
+
+            $imageGod->stampImage($thumbUploadFolder . $img_url, $thumbUploadFolder . $image['stamp_path'], $thumbUploadFolderOpa . $image['path'], $marge_right, $marge_bottom);
         }
+
 
         $em->flush();
 
         exit();
+    }
+
+
+    /**
+     *
+     * @Route("/convert-text/{page}", name="convertImage" , requirements={"page" = "\d+"}, defaults={"page" = 1})
+     * @Method({"GET", "POST"})
+     *
+     */
+    public function convertTextAction($page)
+    {
+        $pagesize = 1000;
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
+        /**@var MedicalPhoto[] $img */
+        $medicals = $qb
+            ->setFirstResult(($page - 1) * $pagesize)
+            ->setMaxResults($pagesize)
+            ->getQuery()
+            ->getArrayResult();
+        foreach ($medicals as $medical) {
+
+            $med = $em->getRepository('happyCmsBundle:Medicals')->find($medical['id']);
+            $med->setNameLat($this->textConvert(mb_strtolower($medical['name'])));
+            $em->persist($med);
+        }
+        $em->flush();
+        exit();
+    }
+
+    public function textConvert($text)
+    {
+        if (preg_match('/^[\w\d\s.,-]*$/', $text)) {
+
+            return str_replace($this->getLatinLetters(), $this->getCyrillicLetters(), $text);
+        }
+
+        return str_replace($this->getCyrillicLetters(), $this->getLatinLetters(), $text);
+    }
+
+    public function getLatinLetters()
+    {
+        return array(
+            'a', 'b', 'v', 'g', 'd', 'e', 'yo',
+            'j', 'z', 'i', 'i', 'k', 'l', 'm',
+            'n', 'o', 'oe', 'p', 'r', 's', 't',
+            'u', 'ue', 'f', 'h', 'ts', 'ch', 'sh',
+            'sh', '', 'i', '', 'e', 'yu', 'ya');
+    }
+
+    public function getCyrillicLetters()
+    {
+        return array(
+            'а', 'б', 'в', 'г', 'д', 'е', 'ё',
+            'ж', 'з', 'и', 'й', 'к', 'л', 'м',
+            'н', 'о', 'ө', 'п', 'р', 'с', 'т',
+            'у', 'ү', 'ф', 'х', 'ц', 'ч', 'ш',
+            'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я',
+        );
     }
 
 }

@@ -21,48 +21,10 @@
                     {% set a = key + 1 %}
                     <a href="javascript:void(0);"
                        class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"
-                       onclick="active({{ m.doctor.id }}, {{ i }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','{{ m.doctor.star }}','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"
+                       onclick="showDetail({{ m.doctor.id }}, {{ i }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','0','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"
                        id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>
-                        {% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': m.doctor.star, 'img': m.doctor.photo, 'phone': m.doctor.phone, 'id': m.doctor.id, 'name' : m.doctor.name } %}
+                        {% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': '', 'img': m.doctor.photo, 'phone': m.doctor.phone, 'id': m.doctor.id, 'name' : m.doctor.name } %}
                     </a>
-                    {% if a%5 == 0 %}
-                        <div class="nurse-block-detail" id="detail{{ i }}" style="display: none;">
-                            <a href="javascript:void(0);" onclick="closeHide({{ i }});"><i
-                                        style="position: absolute; right: 50px;top: 10px;" class="fa fa-close"></i></a>
-                            <div class="nurse-block-detail-img">
-                                <img src="" id="detailimg{{ i }}">
-                            </div>
-                            <div class="nurse-block-detail-text">
-                                <h4 id="detailname{{ i }}" style="font-size: 16px"></h4>
-                                <div id="detailstar{{ i }}"></div>
-                                <div id="detailturshlaga{{ i }}" style="text-align: justify"></div>
-                                <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
-                                <div id="detailtime{{ i }}" style="text-align: justify"></div>
-                                <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага өгөх</a>
-                            </div>
-
-                        </div>
-                        {% set i = i + 1 %}
-                    {% endif %}
-                    {% if loop.last %}
-                        {% if loop.length%5 !=0 %}
-                            <div class="nurse-block-detail" id="detail{{ i }}" style="display: none;">
-                                <a href="javascript:void(0);" onclick="closeHide({{ i }});"><i
-                                            style="position: absolute; right: 50px;top: 10px;" class="fa fa-close"></i></a>
-                                <div class="nurse-block-detail-img">
-                                    <img src="" id="detailimg{{ i }}">
-                                </div>
-                                <div class="nurse-block-detail-text">
-                                    <h4 id="detailname{{ i }}" style="font-size: 16px"></h4>
-                                    <div id="detailstar{{ i }}"></div>
-                                    <div id="detailturshlaga{{ i }}" style="text-align: justify"></div>
-                                    <div id="detailmergeshil{{ i }}" style="text-align: justify"></div>
-                                    <div id="detailtime{{ i }}" style="text-align: justify"></div>
-                                    <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i class="fa fa-phone"></i> Дуудлага өгөх</a>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endif %}
                 {% endfor %}
             {% else %}
                 <p style="font-size: 50px;margin-top: 50px">Уучлаарай, сувилагч олдсонгүй!</p>
@@ -73,6 +35,7 @@
 {% block js %}
     <script>
         function submitData(imgurl, dun, nurseid, nursename, service, position) {
+            $('#nurseListModal').modal('hide');
             $('#nurseModal').modal('show');
             $('#suvilagchqr').attr('src', imgurl);
             $('#suvilagchdun').html(dun);
@@ -85,55 +48,132 @@
             }).error(function () {
             })
         }
+
         $(document).ready(function () {
             $('input[type="radio"]').change(function () {
                 $('#nurseSearch').submit();
             });
         });
-        function closeHide(cc) {
-            $('#detail' + cc).hide('blind');
-        }
-        function active(id, key, img, name, star, turshlaga, mergeshil, time, imgurl, dun, service, position) {
-            $nurse = $('#nurse' + id);
-            $nurse.siblings().removeClass("active");
-            $nurse.addClass('active', 500);
-            for (i = 1; i <= 5; i++) {
-                if (i == key) {
-                    $('#detail' + i).hide().show('blind');
-                    $('#detailimg' + i).attr('src', img);
-                    $('#detailname' + i).text(name);
-                    if (star == 0) {
-                        starHtml = '<i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
-                    }
-                    else if (star > 0 && star < 10) {
-                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
-                    }
+        function showDetail(id, key, img, name, star, turshlaga, mergeshil, time, imgurl, dun, service, position) {
+            $('#nurseListModal').modal('show');
 
-                    else if (star > 11 && star < 20) {
-                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
-                    }
+            $('#detailimg').attr('src', img);
+            $('#detailname').html(name);
+            $('#detailturshlaga').html(turshlaga);
+            $('#detailmergeshil').html(mergeshil);
+            $('#detailtime').html(time);
 
-                    else if (star > 21 && star < 30) {
-                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
-                    }
 
-                    else if (star > 31 && star < 40) {
-                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star-o" style="color: #ff7020"></i>';
-                    }
-
-                    else {
-                        starHtml = '<i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i> <i class="fa fa-star" style="color: #ff7020"></i>';
-                    }
-                    $('#detailstar' + i).html(starHtml);
-                    $('#detailturshlaga' + i).html('<b>Ажлын туршлага:</b>' + '<p>' + turshlaga + '</p>');
-                    $('#detailmergeshil' + i).html('<b>Мэргэшсэн чиглэл:</b>' + '<p>' + mergeshil + '</p>');
-                    $('#detailtime' + i).html('<b>Боломжит цагийн хуваарь:</b>' + '<p>' + time + '</p>');
-                }
-                else {
-                    $('#detail' + i).hide('blind');
-                }
-            }
             $('#detailhref').attr('onclick', "submitData('" + imgurl + "','" + dun + "','" + id + "','" + name + "','" + service + "','" + position + "')");
         }
     </script>
+{% endblock %}
+
+{% block modal %}
+    <div class="modal fade" id="nurseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3 style="text-align: center;">Таны дуудлага бүртгэгдлээ.</h3>
+                    <p style="text-align: justify">
+                        <b> Та дуудлагаа баталгаажуулахын тулд манай үйлчилгээний данслуу урьдчилгаа төлбөр шилжүүлэх
+                            хэрэгтэй.</b> Үүний тулд та доорх QR Code-г аль ч банкны QPay үйлчилгээ ашиглан
+                        шилжүүлэх боломжтой.
+                    </p>
+                    <img src="" width="200" id="suvilagchqr">
+
+                    <p style="color: red">Жич: QPay үйлчилгээгээр гүйлгээ хийхдээ гүйлгээний утга дээр утасны дугаараа
+                        бичнэ үү!</p>
+
+                    <p style="text-align: justify">
+                        Та Qpay үйлчилгээг ашиглах боломжгүй байгаа бол доорх данслуу урьдчилгаа төлбөр шилжүүлнэ үү!
+                    </p>
+
+
+                    <ul style="text-align: left;margin-left: 40px;font-weight: bold">
+                        <li>Хүлээн авах банк: <i>Худалдаа хөгжлийн банк</i></li>
+                        <li>Дансны дугаар: <i>472020237</i></li>
+                        <li>Данс эзэмшигч: Emneleg.mn<i></i></li>
+                        <li>Дүн: <i id="suvilagchdun"></i>₮</li>
+                        <li>Утга: <i>та өөрийн утасны дугаар оруулна уу.</i></li>
+                    </ul>
+
+                    <h5>Асуух зүйл байвал: 99031675</h5>
+
+                    <h5 style="text-align: center;">Та дуудлагаа баталгаажуулсан тохиолдолд бид 5 минутын дотор таньтай
+                        эргэн холбогдох болно.</h5>
+
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="nurseListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="text-align: left;">
+                    <div class="row">
+
+                        <div class="nurse-block-detail col-md-4">
+                            <div class="nurse-block-detail-img">
+                                <img src="" id="detailimg">
+                            </div>
+                            <div class="nurse-block-detail-text">
+                                <h4 id="detailname" style="font-size: 16px"></h4>
+                                <div id="detailstar" style="text-align: center;height: 30px">
+                                    <a class="nurselike" onclick="addLike(id)"><i
+                                                class="fa fa-thumbs-up"></i>
+                                        <b class="likecount">12</b></a>
+                                    <a class="nursedislike" onclick="disLike(id)"> <i class="fa fa-thumbs-down"></i>
+                                        <b class="dislikecount"> 12</b></a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="col-md-12">
+                                <div style="display: inline-block;font-weight: bold"> Туршлага:</div>
+                                <div id="detailturshlaga" style="display: inline-block;margin-left: 20px;"></div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div style="display: inline-block;font-weight: bold"> Мэргэшил:</div>
+                                <div id="detailmergeshil" style="display: inline-block;margin-left: 20px;"></div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div style="display: inline-block;font-weight: bold"> Боломжит цагийн хуваарь:</div>
+                                <div id="detailtime" style="display: inline-block;margin-left: 20px;"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div style="display: inline-block;font-weight: bold"> Лиценз:</div>
+                                Одоогоор оруулаагүй байна.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <div class="text-center">
+                        <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i class="fa fa-phone"></i>
+                            Дуудлага өгөх</a>
+
+                        <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

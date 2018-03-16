@@ -72,7 +72,7 @@ class DefaultController extends Controller
 
         $nurse = $qb
             ->orderBy('n.createdDate', 'asc')
-            ->orderBy('n.star', 'desc')
+            ->orderBy('n.like', 'desc')
             ->andWhere('n.isDoctor = 0')
             ->andWhere('n.isShow = 1')
             ->setMaxResults(2)

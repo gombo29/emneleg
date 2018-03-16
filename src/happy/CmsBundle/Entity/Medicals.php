@@ -35,6 +35,13 @@ class Medicals
     /**
      * @var string
      *
+     * @ORM\Column(name="name_lat", type="string", length=100, nullable=true)
+     */
+    private $nameLat;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name_galig", type="string", length=100, nullable=true)
      */
     private $nameGalig;
@@ -1194,5 +1201,29 @@ class Medicals
     public function getWho()
     {
         return $this->who;
+    }
+
+    /**
+     * Set nameLat
+     *
+     * @param string $nameLat
+     *
+     * @return Medicals
+     */
+    public function setNameLat($nameLat)
+    {
+        $this->nameLat = $nameLat;
+
+        return $this;
+    }
+
+    /**
+     * Get nameLat
+     *
+     * @return string
+     */
+    public function getNameLat()
+    {
+        return $this->nameLat;
     }
 }

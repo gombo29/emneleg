@@ -29,13 +29,20 @@ class OnlineDoctorController extends Controller
         $qb = $em->getRepository('happyCmsBundle:OnlineDoctorType')->createQueryBuilder('n');
         /**@var OnlineDoctorType[] $questions */
         $questions = $qb
-            ->where('n.parent = :id')
+            ->leftJoin('n.parent', 'p')
+            ->addSelect('p')
+            ->where('p.id = :id')
             ->setParameter('id', $id)
             ->andWhere('n.isFinish = 1')
             ->getQuery()
             ->getArrayResult();
+        $typeName = 'Тодорхойгүй';
 
-        return $this->render('@happyWeb/OnlineDoctor/question.html.twig', array('questions' => $questions));
+        if (sizeof($questions) > 0) {
+            $typeName = $questions[0]['parent']['name'];
+        }
+
+        return $this->render('@happyWeb/OnlineDoctor/question.html.twig', array('questions' => $questions, 'name' => $typeName));
     }
 
     /**

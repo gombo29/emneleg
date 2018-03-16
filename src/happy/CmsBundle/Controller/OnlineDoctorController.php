@@ -85,7 +85,7 @@ class OnlineDoctorController extends Controller
     public function newAction(Request $request, $typeid)
     {
         $question = new OnlineDoctorQuestion();
-        $form = $this->createForm(new OnlineDoctorQuestionType($typeid), $question );
+        $form = $this->createForm(new OnlineDoctorQuestionType($typeid), $question);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,10 +94,11 @@ class OnlineDoctorController extends Controller
             $em = $this->getDoctrine()->getManager();
             $question->setType($em->getReference('happyCmsBundle:OnlineDoctorType', $typeid));
 
-            if($parent)
-            {
+            if ($parent) {
                 $question->setParent($em->getReference('happyCmsBundle:OnlineDoctorQuestion', $parent));
             }
+
+            $question->uploadImage($this->container);
             $em->persist($question);
             $em->flush();
             $request
@@ -128,19 +129,44 @@ class OnlineDoctorController extends Controller
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $question->uploadImage($this->container);
             $em->persist($question);
             $em->flush();
             $request
                 ->getSession()
                 ->getFlashBag()
                 ->add('success', 'Асуулт амжилттай засагдлаа!');
-            return $this->redirectToRoute('cms_online_doctor', array('id' => $typeid));
+            return $this->redirectToRoute('cms_online_doctor_update', array('id' => $question->getId(), 'typeid' => $typeid));
         }
 
         return array(
             'edit_form' => $editForm->createView(),
-            'typeid' => $typeid
+            'typeid' => $typeid,
+            'question' => $question
         );
+    }
+
+
+    /**
+     * Updates banner entity.
+     *
+     * @Route("/update-photo/{id}/{typeid}", name="cms_online_doctor_update_photo" , requirements={"id" = "\d+", "typeid" = "\d+"})
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function removeImgAction(Request $request, OnlineDoctorQuestion $question, $typeid)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $question->setPhoto(null);
+        $em->persist($question);
+        $em->flush();
+        $request
+            ->getSession()
+            ->getFlashBag()
+            ->add('success', 'Зураг амжилттай устлаа!');
+
+        return $this->redirectToRoute('cms_online_doctor_update', array('id' => $question->getId(), 'typeid' => $typeid));
     }
 
 
@@ -150,7 +176,8 @@ class OnlineDoctorController extends Controller
      * @Route("/delete/{id}/{typeid}", name="cms_online_doctor_delete", requirements={"id" = "\d+", "typeid" = "\d+"})
      * @Method("GET")
      */
-    public function deleteAction(Request $request, OnlineDoctorQuestion $question, $typeid)
+    public
+    function deleteAction(Request $request, OnlineDoctorQuestion $question, $typeid)
     {
 
         $em = $this->getDoctrine()->getManager();

@@ -25,6 +25,15 @@ class MedicalType extends AbstractType
                 )
             )
 
+            ->add('nameLat', 'text', array(
+                    'label' => 'Эмнэлгийн нэр /Латин/',
+                    'required' => true,
+                    'attr' => array(
+                        "class" => "form-control",
+                    )
+                )
+            )
+
             ->add('headline', 'textarea', array(
                     'label' => 'Тайлбар',
                     'required' => true,

@@ -88,6 +88,67 @@ class OnlineDoctorQuestion
      */
     private $updatedDate;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="photo", type="string", length=255,  nullable=true)
+     */
+    private $photo;
+
+
+    /**
+     *
+     * @Assert\Image(
+     *        mimeTypesMessage = "Зурган файл биш байна!"
+     * )
+     *
+     */
+    public $imagefile;
+
+    /**
+     * Get Image
+     *
+     * @return UploadedFile
+     */
+    public function getImageFile()
+    {
+        return $this->imagefile;
+    }
+
+    /**
+     * Set Image
+     *
+     * @param UploadedFile $file
+     */
+    public function setImageFile(UploadedFile $file = null)
+    {
+        $this->imagefile = $file;
+    }
+
+
+    /**
+     *
+     * @param $container
+     */
+    public function uploadImage(Container $container)
+    {
+
+        if (null === $this->getImageFile()) {
+            return;
+        }
+
+        $resources = $container->getParameter('localstatfolder');
+
+        $dir = 'online-doctor/img';
+        $filename = $this->getImageFile()->getFilename() . '.' . $this->getImageFile()->guessExtension();
+        $this->getImageFile()->move(
+            $resources . '/' . $dir, $filename
+        );
+        $path = $dir . "/" . $filename;
+        $this->photo = $path;
+        $this->imagefile = null;
+    }
+
 
     /**
      * Get id
@@ -323,5 +384,29 @@ class OnlineDoctorQuestion
     public function getIsSelected()
     {
         return $this->isSelected;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
     }
 }

@@ -93,7 +93,14 @@ class OnlineDoctorQuestionType extends AbstractType
                         "class" => "form-control col-md-2 col-lg-3",
                     )
                 )
-            );
+            )
+            ->add('imagefile', 'file', array(
+                'label' => 'Бүдүүвч зураг оруулах',
+                'required' => false,
+                'attr' => array(
+                    'class' => 'btn btn-success fileinput-button',
+                )))
+        ;
     }
 
     /**

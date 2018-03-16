@@ -96,8 +96,12 @@ class MedicalController extends Controller
 
         if ($medName) {
             $qb
-                ->andWhere('n.name like :medName')
-                ->setParameter(':medName', '%' . $medName . '%');
+                ->andWhere($qb->expr()->orX(
+                    $qb->expr()->like('n.name', ':medName'),
+                    $qb->expr()->like('n.nameLat', ':medName')
+                ))
+                ->setParameter('medName','%' . $medName . '%');
+            ;
         }
 
         $qb->andWhere('n.isDone = 1');

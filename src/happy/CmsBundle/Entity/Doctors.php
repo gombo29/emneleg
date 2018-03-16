@@ -118,9 +118,15 @@ class Doctors
 
     /**
      * @var int
-     * @ORM\Column(name="star", type="integer", nullable=true)
+     * @ORM\Column(name="like_m", type="integer", nullable=true)
      */
-    private $star;
+    private $like;
+
+    /**
+     * @var int
+     * @ORM\Column(name="dislike_m", type="integer", nullable=true)
+     */
+    private $dislike;
 
 
     /**
@@ -591,26 +597,50 @@ class Doctors
     }
 
     /**
-     * Set star
+     * Set like
      *
-     * @param integer $star
+     * @param integer $like
      *
      * @return Doctors
      */
-    public function setStar($star)
+    public function setLike($like)
     {
-        $this->star = $star;
+        $this->like = $like;
 
         return $this;
     }
 
     /**
-     * Get star
+     * Get like
      *
      * @return integer
      */
-    public function getStar()
+    public function getLike()
     {
-        return $this->star;
+        return $this->like;
+    }
+
+    /**
+     * Set dislike
+     *
+     * @param integer $dislike
+     *
+     * @return Doctors
+     */
+    public function setDislike($dislike)
+    {
+        $this->dislike = $dislike;
+
+        return $this;
+    }
+
+    /**
+     * Get dislike
+     *
+     * @return integer
+     */
+    public function getDislike()
+    {
+        return $this->dislike;
     }
 }

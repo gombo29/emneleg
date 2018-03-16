@@ -1726,11 +1726,7 @@ label, output {
 
 .nurse-block-detail {
     width: 100%;
-    height: 250px;
     background-color: #ffffff;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 16px;
     text-align: left;
     position: relative;
 }
@@ -1749,12 +1745,9 @@ label, output {
 
 .nurse-block-detail-text {
     display: inline-block;
-    margin-left: 20px;
     font-size: 12px;
     text-align: left;
-    vertical-align: top;
-    margin-top: 15px;
-    width: 60%;
+    width: 100%;
 }
 
 @media (max-width: 1024px) {
@@ -1902,4 +1895,24 @@ label, output {
         width: 38px;
         height: 38px;
     }
+}
+
+.nurselike {
+    margin-right: 10px;
+}
+
+.nurselike i {
+    color: darkgreen
+}
+
+.nursedislike i {
+    color: darkred
+}
+
+.nurselike:hover {
+    font-size: 16px;
+}
+
+.nursedislike:hover {
+    font-size: 16px;
 }

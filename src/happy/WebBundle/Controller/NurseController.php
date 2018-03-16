@@ -58,7 +58,6 @@ class NurseController extends Controller
             ->andWhere('d.isDoctor = 0')
             ->andWhere('d.isShow = 1')
             ->orderBy('d.createdDate', 'asc')
-            ->addOrderBy('d.star', 'desc')
             ->groupBy('d.id')
             ->getQuery()
             ->getArrayResult();
@@ -143,6 +142,52 @@ class NurseController extends Controller
         return new JsonResponse(array(
             'status' => 'ok',
         ));
+    }
 
+
+    /**
+     * Updates doctor entity.
+     *
+     * @Route("/like", name="cms_nurse_like" )
+     * @Method({"POST"})
+     * @Template()
+     */
+    public function likeAction(Request $request)
+    {
+        $status = array('code' == 1, 'info' => 'Алдаа гарлаа');
+        $nurseId = $request->request->get('nurseId');
+        $em = $this->container->get('doctrine')->getManager();
+        $nurse = $em->getRepository('happyCmsBundle:Doctors')->find($nurseId);
+
+        if ($nurse) {
+            $nurse->setLike($nurse->getLike() + 1);
+            $status = array('code' == 0, 'info' => 'Амжилттай');
+            $em->flush();
+        }
+
+        return new JsonResponse($status);
+    }
+
+    /**
+     * Updates doctor entity.
+     *
+     * @Route("/dislike", name="cms_nurse_dislike" )
+     * @Method({"POST"})
+     * @Template()
+     */
+    public function dislikeAction(Request $request)
+    {
+        $status = array('code' == 1, 'info' => 'Алдаа гарлаа');
+        $nurseId = $request->request->get('nurseId');
+        $em = $this->container->get('doctrine')->getManager();
+        $nurse = $em->getRepository('happyCmsBundle:Doctors')->find($nurseId);
+
+        if ($nurse) {
+            $nurse->setLike($nurse->getDisLike() + 1);
+            $status = array('code' == 0, 'info' => 'Амжилттай');
+            $em->flush();
+        }
+
+        return new JsonResponse($status);
     }
 }

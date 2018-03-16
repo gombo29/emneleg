@@ -11,9 +11,9 @@
     {{ form_start(edit_form) }}
     {{ form_widget(edit_form) }}
     <input class="btn btn-success" type="submit" value="Засах" style="margin-top: 20px;margin-bottom: 30px"/>
-    <a class="btn btn-default" href="{{ path('cms_content_index') }}" style="margin-top: 20px;margin-bottom: 30px">Зөвлөгөөний жагсаалт
+    <a class="btn btn-default" href="{{ path('cms_content_index') }}" style="margin-top: 20px;margin-bottom: 30px">Мэдээний жагсаалт
         буцах</a>
-    <a class="btn btn-default" href="{{ path('cms_content_show', {'id':content.id }) }}" style="margin-top: 20px;margin-bottom: 30px">Зөвлөгөөний
+    <a class="btn btn-default" href="{{ path('cms_content_show', {'id':content.id }) }}" style="margin-top: 20px;margin-bottom: 30px">Мэдээний
         дэлгэрэнгүй буцах</a>
 
     {{ form_end(edit_form) }}
