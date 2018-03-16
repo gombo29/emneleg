@@ -161,7 +161,7 @@ class NurseController extends Controller
 
         if ($nurse) {
             $nurse->setLike($nurse->getLike() + 1);
-            $status = array('code' == 0, 'info' => 'Амжилттай');
+            $status = array('code' => 0, 'info' => 'Амжилттай', 'result' => $nurse->getLike());
             $em->flush();
         }
 
@@ -183,8 +183,8 @@ class NurseController extends Controller
         $nurse = $em->getRepository('happyCmsBundle:Doctors')->find($nurseId);
 
         if ($nurse) {
-            $nurse->setLike($nurse->getDisLike() + 1);
-            $status = array('code' == 0, 'info' => 'Амжилттай');
+            $nurse->setDisLike($nurse->getDisLike() + 1);
+            $status = array('code' => 0, 'info' => 'Амжилттай', 'result' => $nurse->getDisLike());
             $em->flush();
         }
 

@@ -21,7 +21,7 @@
                     {% set a = key + 1 %}
                     <a href="javascript:void(0);"
                        class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"
-                       onclick="showDetail({{ m.doctor.id }}, {{ i }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','0','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"
+                       onclick="showDetail({{ m.doctor.id }}, {{ key }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','{{ m.doctor.like }}','{{ m.doctor.dislike }}','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"
                        id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>
                         {% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': '', 'img': m.doctor.photo, 'phone': m.doctor.phone, 'id': m.doctor.id, 'name' : m.doctor.name } %}
                     </a>
@@ -54,7 +54,7 @@
                 $('#nurseSearch').submit();
             });
         });
-        function showDetail(id, key, img, name, star, turshlaga, mergeshil, time, imgurl, dun, service, position) {
+        function showDetail(id, key, img, name, likecount, dislikecount, turshlaga, mergeshil, time, imgurl, dun, service, position) {
             $('#nurseListModal').modal('show');
 
             $('#detailimg').attr('src', img);
@@ -63,8 +63,54 @@
             $('#detailmergeshil').html(mergeshil);
             $('#detailtime').html(time);
 
+            if (!likecount) {
+                $('.likecount').html(0);
+            } else {
+                $('.likecount').html(likecount);
+            }
 
+            if (!dislikecount) {
+                $('.dislikecount').html(0);
+            } else {
+                $('.dislikecount').html(dislikecount);
+            }
+
+            $('.nurselike').attr('onclick', 'addLike(' + id + ')');
+            $('.nursedislike').attr('onclick', 'disLike(' + id + ')');
             $('#detailhref').attr('onclick', "submitData('" + imgurl + "','" + dun + "','" + id + "','" + name + "','" + service + "','" + position + "')");
+        }
+
+        function addLike(id) {
+
+            $.ajax({
+                url: "{{ path('cms_nurse_like') }}",
+                data: {nurseId: id},
+                type: "POST",
+                dataType: "JSON"
+            }).done(function (data) {
+                if (data.code == 0) {
+                    console.log(data.result);
+                    $('.likecount').html(data.result);
+                }
+            }).error(function () {
+            })
+
+        }
+
+        function disLike(id) {
+            $.ajax({
+                url: "{{ path('cms_nurse_dislike') }}",
+                data: {nurseId: id},
+                type: "POST",
+                dataType: "JSON"
+            }).done(function (data) {
+
+                if (data.code == 0) {
+
+                    $('.dislikecount').html(data.result);
+                }
+            }).error(function () {
+            })
         }
     </script>
 {% endblock %}
@@ -130,11 +176,11 @@
                             <div class="nurse-block-detail-text">
                                 <h4 id="detailname" style="font-size: 16px"></h4>
                                 <div id="detailstar" style="text-align: center;height: 30px">
-                                    <a class="nurselike" onclick="addLike(id)"><i
+                                    <a class="nurselike"><i
                                                 class="fa fa-thumbs-up"></i>
-                                        <b class="likecount">12</b></a>
-                                    <a class="nursedislike" onclick="disLike(id)"> <i class="fa fa-thumbs-down"></i>
-                                        <b class="dislikecount"> 12</b></a>
+                                        <b class="likecount">0</b></a>
+                                    <a class="nursedislike"> <i class="fa fa-thumbs-down"></i>
+                                        <b class="dislikecount">0</b></a>
                                 </div>
 
                             </div>
