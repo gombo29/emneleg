@@ -130,12 +130,11 @@ class MedicalController extends Controller
     {
         $pagesize = 10;
         $em = $this->getDoctrine()->getManager();
+
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
-        $qbMedType = $em->getRepository('happyCmsBundle:MedicalMedType')->createQueryBuilder('n');
-
         $keyword = $request->get('name');
+        $qbMedType = $em->getRepository('happyCmsBundle:MedicalMedType')->createQueryBuilder('n');
         $labIds = $request->get('labIds');
-
 
         $medicalMedIds = $qbMedType
             ->select('m.id')
@@ -171,8 +170,11 @@ class MedicalController extends Controller
 
         if ($keyword) {
             $qb
-                ->andWhere('n.name like :keyword')
-                ->setParameter(':keyword', '%' . $keyword . '%');
+                ->andWhere($qb->expr()->orX(
+                    $qb->expr()->like('n.name', ':medName'),
+                    $qb->expr()->like('n.nameLat', ':medName')
+                ))
+                ->setParameter('medName', '%' . $keyword . '%');
         }
 
         $countQueryBuilder = clone $qb;
@@ -236,23 +238,19 @@ class MedicalController extends Controller
             ->getResult();
 
         foreach ($generalinfo as $key => $g) {
-            if($g['website'] == null)
-            {
+            if ($g['website'] == null) {
                 $generalinfo[$key]['website'] = 'тодорхойгүй';
             }
 
-            if($g['busStation'] == null)
-            {
+            if ($g['busStation'] == null) {
                 $generalinfo[$key]['busStation'] = 'тодорхойгүй';
             }
 
-            if($g['email'] == null)
-            {
+            if ($g['email'] == null) {
                 $generalinfo[$key]['email'] = 'тодорхойгүй';
             }
 
-            if($g['fbAddress'] == null)
-            {
+            if ($g['fbAddress'] == null) {
                 $generalinfo[$key]['fbAddress'] = 'тодорхойгүй';
             }
         }
