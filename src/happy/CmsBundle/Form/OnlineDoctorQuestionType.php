@@ -11,6 +11,8 @@ class OnlineDoctorQuestionType extends AbstractType
 {
     public $type;
 
+
+
     public function __construct($type)
     {
         $this->type = $type;
@@ -107,6 +109,27 @@ class OnlineDoctorQuestionType extends AbstractType
                 'attr' => array(
                     'class' => 'btn btn-success fileinput-button',
                 )))
+
+
+            ->add('linkNode', 'text', array(
+                    'label' => 'Холбоос',
+                    'required' => true,
+                    'attr' => array(
+                        "class" => "form-control",
+                    )
+                )
+            )
+
+
+            ->add('linkNode', 'entity', array(
+                'class' => 'happyCmsBundle:OnlineDoctorType',
+                'label' => 'Холбоос',
+                'property' => 'name',
+                'required' => false,
+                'attr' => array(
+                    "class" => "form-control",
+                )
+            ))
         ;
     }
 
