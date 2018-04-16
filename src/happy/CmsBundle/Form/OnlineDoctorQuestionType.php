@@ -10,12 +10,14 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class OnlineDoctorQuestionType extends AbstractType
 {
     public $type;
+    public $par;
 
 
 
-    public function __construct($type)
+    public function __construct($type, $par)
     {
         $this->type = $type;
+        $this->par = $par;
     }
 
 
@@ -126,6 +128,11 @@ class OnlineDoctorQuestionType extends AbstractType
                 'label' => 'Холбоос',
                 'property' => 'name',
                 'required' => false,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('pp')
+                        ->where('pp.parent = :par')
+                        ->setParameter('par' , $this->par);
+                },
                 'attr' => array(
                     "class" => "form-control",
                 )

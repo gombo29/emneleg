@@ -84,14 +84,16 @@ class OnlineDoctorController extends Controller
      */
     public function newAction(Request $request, $typeid)
     {
+        $em = $this->getDoctrine()->getManager();
+        $type = $em->getRepository('happyCmsBundle:OnlineDoctorType')->find($typeid);
         $question = new OnlineDoctorQuestion();
-        $form = $this->createForm(new OnlineDoctorQuestionType($typeid), $question);
+        $form = $this->createForm(new OnlineDoctorQuestionType($typeid, $type->getParent()->getId()), $question);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $parent = $request->get('parentid');
-            $em = $this->getDoctrine()->getManager();
+
             $question->setType($em->getReference('happyCmsBundle:OnlineDoctorType', $typeid));
 
             if ($parent) {
@@ -126,10 +128,11 @@ class OnlineDoctorController extends Controller
      */
     public function updateAction(Request $request, OnlineDoctorQuestion $question, $typeid)
     {
-        $editForm = $this->createForm(new OnlineDoctorQuestionType($typeid), $question);
+        $editForm = $this->createForm(new OnlineDoctorQuestionType($typeid, $question->getType()->getParent()->getId()), $question);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
             $question->uploadImage($this->container);
             $question->uploadImage2($this->container);

@@ -68,11 +68,12 @@ class OnlineDoctorController extends Controller
         $answers = $qb
             ->leftJoin('n.childYes', 'yes')
             ->leftJoin('n.childNo', 'no')
+            ->leftJoin('n.linkNode', 'l')
             ->addSelect('yes')
             ->addSelect('no')
+            ->addSelect('l')
             ->getQuery()
             ->getArrayResult();
-
         return $this->render('@happyWeb/OnlineDoctor/answers.html.twig', array('answers' => $answers));
     }
 }

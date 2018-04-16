@@ -17,15 +17,19 @@
                             <img src="{{ asset('recource/tick.png') }}"
                                  style="width: 150px;margin-bottom: 40px;margin-top: 30px">
                             <p style="font-size: 24px;"> {{ q.descr }}</p>
-
+                            {% if q.linkNode %}
+                                <a style="font-size: 20px;margin-bottom: 20px;display: block;"
+                                   href="{{ path('online_doctor_answers' , {'id': q.linkNode.id, 'isfirst': 1}) }}">"{{ q.linkNode.name }}
+                                    " бүдүүвчлүү энд дарж орно уу!</a>
+                            {% endif %}
                             {% if q.photo %}
-                                <p>Бүдүүвч 1</p>
+                                <p>Нэмэлт 1</p>
                                 <img src="/{{ localstatfolder }}{{ q.photo }}"
                                      style="width: 50%;margin-bottom: 40px;margin-top: 30px">
                             {% endif %}
 
                             {% if q.photo2 %}
-                                <p>Бүдүүвч 2</p>
+                                <p>Нэмэлт 2</p>
                                 <img src="/{{ localstatfolder }}{{ q.photo2 }}"
                                      style="width: 50%;margin-bottom: 40px;margin-top: 30px">
                             {% endif %}
