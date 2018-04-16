@@ -13,7 +13,6 @@ class OnlineDoctorQuestionType extends AbstractType
     public $par;
 
 
-
     public function __construct($type, $par)
     {
         $this->type = $type;
@@ -28,8 +27,6 @@ class OnlineDoctorQuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
-
             ->add('descr', 'textarea', array(
                     'label' => 'Асуулт / Хариулт',
                     'required' => false,
@@ -38,7 +35,6 @@ class OnlineDoctorQuestionType extends AbstractType
                     )
                 )
             )
-
             ->add('childYes', 'entity', array(
                 'class' => 'happyCmsBundle:OnlineDoctorQuestion',
                 'label' => 'Тийм хариулт',
@@ -47,13 +43,12 @@ class OnlineDoctorQuestionType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('pp')
                         ->where('pp.type = :type')
-                        ->setParameter('type' , $this->type);
+                        ->setParameter('type', $this->type);
                 },
                 'attr' => array(
                     "class" => "form-control",
                 )
             ))
-
             ->add('childNo', 'entity', array(
                 'class' => 'happyCmsBundle:OnlineDoctorQuestion',
                 'label' => 'Үгүй хариулт',
@@ -62,14 +57,12 @@ class OnlineDoctorQuestionType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('pp')
                         ->where('pp.type = :type')
-                        ->setParameter('type' , $this->type);
+                        ->setParameter('type', $this->type);
                 },
                 'attr' => array(
                     "class" => "form-control",
                 )
             ))
-
-
             ->add('isFirst', 'choice',
                 array(
                     'label' => 'Эхнийх эсэх',
@@ -104,15 +97,12 @@ class OnlineDoctorQuestionType extends AbstractType
                 'attr' => array(
                     'class' => 'btn btn-success fileinput-button',
                 )))
-
             ->add('imagefile2', 'file', array(
                 'label' => 'Бүдүүвч зураг №2 оруулах',
                 'required' => false,
                 'attr' => array(
                     'class' => 'btn btn-success fileinput-button',
                 )))
-
-
             ->add('linkNode', 'text', array(
                     'label' => 'Холбоос',
                     'required' => true,
@@ -121,23 +111,16 @@ class OnlineDoctorQuestionType extends AbstractType
                     )
                 )
             )
-
-
             ->add('linkNode', 'entity', array(
                 'class' => 'happyCmsBundle:OnlineDoctorType',
                 'label' => 'Холбоос',
                 'property' => 'name',
                 'required' => false,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('pp')
-                        ->where('pp.parent = :par')
-                        ->setParameter('par' , $this->par);
-                },
+//
                 'attr' => array(
                     "class" => "form-control",
                 )
-            ))
-        ;
+            ));
     }
 
     /**
