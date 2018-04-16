@@ -98,7 +98,7 @@ class NurseController extends Controller
         $qb = $em->getRepository('happyCmsBundle:DoctorQpay')->createQueryBuilder('n');
         /**@var Doctors[] $nurse */
         $nurse = $qb
-            ->select('d.id as nurseId', 'd.name as nurseName', 'd.namtar as nurseNamtar', 'd.photo as nursePhoto', 'd.turshlaga as nurseTurshlaga', 'd.surguuli as NurseSurguuli', 'd.mergeshil as NurseMergeshil', 'dt.price as ServicePrice', 'dt.id as ServiceId', 'dp.id as PositionId')
+            ->select('d.id as nurseId', 'd.name as nurseName','d.like','d.dislike', 'd.namtar as nurseNamtar', 'd.photo as nursePhoto', 'd.turshlaga as nurseTurshlaga', 'd.surguuli as NurseSurguuli', 'd.mergeshil as NurseMergeshil', 'dt.price as ServicePrice', 'dt.id as ServiceId', 'dp.id as PositionId')
             ->leftJoin('n.doctor', 'd')
             ->leftJoin('n.doctorType', 'dt')
             ->leftJoin('n.doctorPosition', 'dp')
@@ -109,7 +109,6 @@ class NurseController extends Controller
             ->andWhere('d.isDoctor = 0')
             ->andWhere('d.isShow = 1')
             ->orderBy('d.createdDate', 'asc')
-            ->addOrderBy('d.star', 'desc')
             ->groupBy('d.id')
             ->getQuery()
             ->getArrayResult();
