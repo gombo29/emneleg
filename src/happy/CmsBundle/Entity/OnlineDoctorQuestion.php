@@ -73,6 +73,12 @@ class OnlineDoctorQuestion
      */
     private $descr;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="OnlineDoctorType")
+     * @ORM\JoinColumn(name="linkNode", referencedColumnName="id", nullable=true)
+     */
+    private $linkNode;
+
 
     /**
      * @var \DateTime
@@ -492,5 +498,31 @@ class OnlineDoctorQuestion
     public function getPhoto2()
     {
         return $this->photo2;
+    }
+
+
+
+    /**
+     * Set linkNode
+     *
+     * @param \happy\CmsBundle\Entity\OnlineDoctorType $linkNode
+     *
+     * @return OnlineDoctorQuestion
+     */
+    public function setLinkNode(\happy\CmsBundle\Entity\OnlineDoctorType $linkNode = null)
+    {
+        $this->linkNode = $linkNode;
+
+        return $this;
+    }
+
+    /**
+     * Get linkNode
+     *
+     * @return \happy\CmsBundle\Entity\OnlineDoctorType
+     */
+    public function getLinkNode()
+    {
+        return $this->linkNode;
     }
 }
