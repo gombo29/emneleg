@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="advice-left-nav-scrooll">
-                    {% for key ,e in advice %}
+                    {% for key ,e in new %}
                         {% include '@happyWeb/inc/inc-advice-horizental.html.twig' with{'small' : true, 'createdDate': e.createdDate,'likecount': e.likeCount, 'img': e.img , 'title': e.name, 'headline': e.headline ,'id' : e.id} %}
                     {% endfor %}
                 </div>

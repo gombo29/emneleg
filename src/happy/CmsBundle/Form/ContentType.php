@@ -27,6 +27,21 @@ class ContentType extends AbstractType
                 )
             ))
 
+            ->add('isOntsloh', 'choice',
+                array(
+                    'label' => 'Онцлох эсэх',
+                    'choices' => array(
+                        '1' => 'Тийм',
+                        '0' => 'Үгүй'
+                    ),
+                    'expanded' => true,
+                    'required' => true,
+                    'attr' => array(
+                        "class" => "form-control col-md-2 col-lg-3",
+                    )
+                )
+            )
+
             ->add('name', 'text', array(
                     'label' => 'Гарчиг',
                     'required' => true,

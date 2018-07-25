@@ -27,7 +27,7 @@ class ContentController extends Controller
     public function adviceAction(Request $request, $page)
     {
 
-        $pagesize = 11;
+        $pagesize = 2;
         $searchEntity = new Content();
         $searchform = $this->createForm(new AdviceSearchType(), $searchEntity);
         $search = false;
@@ -52,6 +52,14 @@ class ContentController extends Controller
         $advice = $qb
             ->setFirstResult(($page - 1) * $pagesize)
             ->setMaxResults($pagesize)
+            ->andWhere("n.isOntsloh = 1")
+            ->orderBy('n.likeCount', 'desc')
+            ->getQuery()
+            ->getArrayResult();
+
+        $qb = $em->getRepository('happyCmsBundle:Content')->createQueryBuilder('n');
+        $new = $qb
+            ->setMaxResults(15)
             ->orderBy('n.id', 'desc')
             ->getQuery()
             ->getArrayResult();
@@ -61,6 +69,7 @@ class ContentController extends Controller
                 'id' => 3,
                 'pagecount' => ($count % $pagesize) > 0 ? intval($count / $pagesize) + 1 : intval($count / $pagesize),
                 'advice' => $advice,
+                'new' => $new,
                 'search' => $search,
                 'pagesize' => $pagesize,
                 'page' => $page,

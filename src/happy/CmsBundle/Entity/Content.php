@@ -76,6 +76,12 @@ class Content
     public $imagefile;
 
     /**
+     * @var boolean
+     * @ORM\Column(name="is_ontsloh", type="boolean",nullable=true)
+     */
+    private $isOntsloh;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_date", type="datetime", nullable=true)
@@ -368,5 +374,29 @@ class Content
     public function getContentType()
     {
         return $this->contentType;
+    }
+
+    /**
+     * Set isOntsloh
+     *
+     * @param boolean $isOntsloh
+     *
+     * @return Content
+     */
+    public function setIsOntsloh($isOntsloh)
+    {
+        $this->isOntsloh = $isOntsloh;
+
+        return $this;
+    }
+
+    /**
+     * Get isOntsloh
+     *
+     * @return boolean
+     */
+    public function getIsOntsloh()
+    {
+        return $this->isOntsloh;
     }
 }
