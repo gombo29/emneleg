@@ -27,7 +27,7 @@ class ContentController extends Controller
     public function adviceAction(Request $request, $page)
     {
 
-        $pagesize = 2;
+        $pagesize = 11;
         $searchEntity = new Content();
         $searchform = $this->createForm(new AdviceSearchType(), $searchEntity);
         $search = false;
@@ -46,13 +46,15 @@ class ContentController extends Controller
                     ->setParameter('name', '%' . $searchEntity->getName() . '%');
             }
         }
+
+        $qb->andWhere("n.isOntsloh = 1");
+
         $countQueryBuilder = clone $qb;
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
 
         $advice = $qb
             ->setFirstResult(($page - 1) * $pagesize)
             ->setMaxResults($pagesize)
-            ->andWhere("n.isOntsloh = 1")
             ->orderBy('n.likeCount', 'desc')
             ->getQuery()
             ->getArrayResult();
@@ -123,7 +125,7 @@ class ContentController extends Controller
             ->getQuery()
             ->getArrayResult();
 
-        $count  =$this->fblikecount('http://dev.tester.em/advice/detail/' . $content->getId());
+        $count = $this->fblikecount('http://dev.tester.em/advice/detail/' . $content->getId());
 
         $content->setLikeCount($count);
         $em->flush();
