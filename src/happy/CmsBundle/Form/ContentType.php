@@ -38,7 +38,7 @@ class ContentType extends AbstractType
 
             ->add('imagefile', 'file', array(
                 'label' => 'Зураг оруулах',
-                'required' => true,
+                'required' => false,
                 'attr' => array(
                     'class' => 'btn btn-success fileinput-button',
                 )))
