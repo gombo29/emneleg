@@ -114,6 +114,11 @@ class ContentController extends Controller
             ->getQuery()
             ->getArrayResult();
 
+        $count  =$this->fblikecount('http://dev.tester.em/advice/detail/' . $content->getId());
+
+        $content->setLikeCount($count);
+        $em->flush();
+
         return $this->render('@happyWeb/Content/advice_detail.html.twig',
             array(
                 'id' => 3,
