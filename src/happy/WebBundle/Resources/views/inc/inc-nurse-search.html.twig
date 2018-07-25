@@ -2,7 +2,7 @@
     <form action="{{ path('web_nurse_index') }}" method="get" id="nurseSearch">
         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 med-search-view-type"
              style="text-align: left;margin-top: 30px;">
-            <h5 class="med-search-text" style="font-size: 30px;">Сувилагч хайлт</h5>
+            <h5 class="med-search-text" style="font-size: 30px;">Дуудлага өгөх үйлчилгээний төрөл сонгоно уу!</h5>
             <p style="color: #ffffff;text-align: justify">
                 Та авах үйлчилгээний төрөл болон, дуудлага хүлээн авах байршил сонгоно уу!
             </p>
@@ -38,6 +38,10 @@
                     <label for="radiopos{{ i.id }}">{{ i.name }}</label>
                 </div>
             {% endfor %}
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 med-search-view-type" style="text-align: center;">
+            <a class="btn btn-warning" onclick="showDetail()">Захиалга өгөх</a>
         </div>
     </form>
 </div>

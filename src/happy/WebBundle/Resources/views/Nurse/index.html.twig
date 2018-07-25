@@ -9,26 +9,26 @@
 {% endblock %}
 {% block body %}
     <div class="project-type-background">
-        <div class="medical-search" style="padding: 10px 0 10px 0;">
+        <div class="medical-search" style="padding: 65px 0 10px 0;">
             <div class="container">
                 {% include  '@happyWeb/inc/inc-nurse-search.html.twig' %}
             </div>
         </div>
         <div class="container" style="text-align: center;margin-bottom: 50px;">
-            {% set i = 1 %}
-            {% if nurse != null %}
-                {% for key,m in nurse %}
-                    {% set a = key + 1 %}
-                    <a href="javascript:void(0);"
-                       class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"
-                       onclick="showDetail({{ m.doctor.id }}, {{ key }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','{{ m.doctor.like }}','{{ m.doctor.dislike }}','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"
-                       id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>
-                        {% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': '', 'img': m.doctor.photo, 'phone': m.doctor.phone, 'id': m.doctor.id, 'name' : m.doctor.name } %}
-                    </a>
-                {% endfor %}
-            {% else %}
-                <p style="font-size: 50px;margin-top: 50px">Уучлаарай, сувилагч олдсонгүй!</p>
-            {% endif %}
+            {#{% set i = 1 %}#}
+            {#{% if nurse != null %}#}
+            {#{% for key,m in nurse %}#}
+            {#{% set a = key + 1 %}#}
+            {#<a href="javascript:void(0);"#}
+            {#class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"#}
+            {#onclick="showDetail({{ m.doctor.id }}, {{ key }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','{{ m.doctor.like }}','{{ m.doctor.dislike }}','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"#}
+            {#id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>#}
+            {#{% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': '', 'img': m.doctor.photo, 'phone': m.doctor.phone, 'id': m.doctor.id, 'name' : m.doctor.name } %}#}
+            {#</a>#}
+            {#{% endfor %}#}
+            {#{% else %}#}
+            {#<p style="font-size: 50px;margin-top: 50px">Уучлаарай, сувилагч олдсонгүй!</p>#}
+            {#{% endif %}#}
         </div>
     </div>
 {% endblock %}
@@ -50,9 +50,9 @@
         }
 
         $(document).ready(function () {
-            $('input[type="radio"]').change(function () {
-                $('#nurseSearch').submit();
-            });
+//            $('input[type="radio"]').change(function () {
+//                $('#nurseSearch').submit();
+//            });
         });
         function showDetail(id, key, img, name, likecount, dislikecount, turshlaga, mergeshil, time, imgurl, dun, service, position) {
             $('#nurseListModal').modal('show');
@@ -167,59 +167,23 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body" style="text-align: left;">
-                    <div class="row">
-
-                        <div class="nurse-block-detail col-md-4">
-                            <div class="nurse-block-detail-img">
-                                <img src="" id="detailimg">
-                            </div>
-                            <div class="nurse-block-detail-text">
-                                <h4 id="detailname" style="font-size: 16px"></h4>
-                                <div id="detailstar" style="text-align: center;height: 30px">
-                                    <a class="nurselike"><i
-                                                class="fa fa-thumbs-up"></i>
-                                        <b class="likecount">0</b></a>
-                                    <a class="nursedislike"> <i class="fa fa-thumbs-down"></i>
-                                        <b class="dislikecount">0</b></a>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="col-md-12">
-                                <div style="display: inline-block;font-weight: bold"> Туршлага:</div>
-                                <div id="detailturshlaga" style="display: inline-block;margin-left: 20px;"></div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div style="display: inline-block;font-weight: bold"> Мэргэшил:</div>
-                                <div id="detailmergeshil" style="display: inline-block;margin-left: 20px;"></div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div style="display: inline-block;font-weight: bold"> Боломжит цагийн хуваарь:</div>
-                                <div id="detailtime" style="display: inline-block;margin-left: 20px;"></div>
-                            </div>
-                            <div class="col-md-12">
-                                <div style="display: inline-block;font-weight: bold"> Лиценз:</div>
-                                Одоогоор оруулаагүй байна.
-                            </div>
-                        </div>
+                    <div class="row" style="padding: 0 20px">
+                        <p>Баярлалаа. Таны захиалгыг хүлээж авлаа. Төлбөр төлж байж таны захиалга баталгаажих тул та
+                            доор дарж төлбөрөө төлнө үү!</p>
                     </div>
+                    <div class="modal-footer">
+                        <div class="text-center">
+                            <a class="btn btn-warning" id="detailhref" style="margin-left: 0;">
+                                Төлбөр төлөх</a>
 
-                </div>
-                <div class="modal-footer">
-                    <div class="text-center">
-                        <a class="btn btn-warning" id="detailhref" style="margin-left: 0;"><i class="fa fa-phone"></i>
-                            Дуудлага өгөх</a>
-
-                        <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах
-                        </button>
+                            <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">
+                                Хаах
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
 {% endblock %}

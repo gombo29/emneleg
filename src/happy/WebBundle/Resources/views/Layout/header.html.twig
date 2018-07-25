@@ -6,20 +6,20 @@
         <div class="collapse navbar-collapse" id="navbarNav3">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('web_nurse_index') }}" style="background-color: #31bdb6;color: #ffffff"><i class="fa fa-stethoscope"></i> Сувилагч дуудах</a>
+                    <a class="nav-link" href="{{ path('web_nurse_index') }}" style="background-color: #31bdb6;color: #ffffff"><i class="fa fa-stethoscope"></i> Эмч дуудах</a>
                 </li>
-                {% if is_granted('ROLE_USER') %}
-                    <li class="nav-item">
-                        <a href="javascript:void(0);" class="user">
-                                <img src="{{ asset('recource/user.png') }}">
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="{{ path('fos_user_security_login') }}"><i class="fa fa-user"></i> Нэвтрэх</a>
-                    </li>
-                {% endif %}
+                {#{% if is_granted('ROLE_USER') %}#}
+                    {#<li class="nav-item">#}
+                        {#<a href="javascript:void(0);" class="user">#}
+                                {#<img src="{{ asset('recource/user.png') }}">#}
+                        {#</a>#}
+                    {#</li>#}
+                {#{% else %}#}
+                    {#<li class="nav-item">#}
+                        {#<a class="nav-link"#}
+                           {#href="{{ path('fos_user_security_login') }}"><i class="fa fa-user"></i> Нэвтрэх</a>#}
+                    {#</li>#}
+                {#{% endif %}#}
                 <li class="nav-item">
                     <a class="nav-link" target="_blank" href="https://www.facebook.com/Emnelegmn-103407000305985/?fref=ts"><i class="fa fa-facebook"></i></a>
                 </li>
@@ -47,7 +47,7 @@
             <div class="burger-sub-menu" >
                 <a href="{{ path('medicals') }}"> <i class="fa fa-home"></i> Эмнэлгүүд</a>
                 <a href="{{ path('advice') }}"> <i class="fa fa-plus-square"></i> Мэдээлэл</a>
-                <a href="{{ path('web_nurse_index') }}"> <i class="fa fa-stethoscope"></i> Сувилагч</a>
+                <a href="{{ path('web_nurse_index') }}"> <i class="fa fa-stethoscope"></i> Эмч дуудлага</a>
                 <a href="{{ path('online_doctor') }}"> <i class="fa fa-heartbeat"></i> Цахим эмч</a>
                 <a href="javascript:void(0);" class="sub-menu-resp"> <i class="fa fa-user"></i> Нэвтрэх</a>
                 <a href="javascript:void(0);" id="search-res" class="sub-menu-resp"> <i class="fa fa-search"></i> Хайх</a>
