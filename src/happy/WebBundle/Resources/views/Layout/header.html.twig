@@ -34,7 +34,7 @@
         </div>
 
         <a href="javascript:void(0);" class="nav-link dropdown burger-menu">
-            <div id="burger-menu">
+            <div id="burger-menu" class="open">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -42,9 +42,9 @@
         </a>
 
     </div>
-    <div id="home-sub-menu">
+    <div id="home-sub-menu" style="display: block">
         <div class="container">
-            <div class="burger-sub-menu">
+            <div class="burger-sub-menu" >
                 <a href="{{ path('medicals') }}"> <i class="fa fa-home"></i> Эмнэлгүүд</a>
                 <a href="{{ path('advice') }}"> <i class="fa fa-plus-square"></i> Мэдээлэл</a>
                 <a href="{{ path('web_nurse_index') }}"> <i class="fa fa-stethoscope"></i> Сувилагч</a>
