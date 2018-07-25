@@ -129,7 +129,8 @@ class ContentController extends Controller
         $editForm = $this->createForm('happy\CmsBundle\Form\ContentType', $content);
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid())
+        {
             $this->getDoctrine()->getManager()->flush();
 
             $em = $this->getDoctrine()->getManager();
