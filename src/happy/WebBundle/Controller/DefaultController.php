@@ -54,6 +54,7 @@ class DefaultController extends Controller
         $qb = $em->getRepository('happyCmsBundle:Content')->createQueryBuilder('n');
         $advice = $qb
             ->orderBy('n.id', 'desc')
+            ->andWhere("n.isOntsloh = 1")
             ->setMaxResults(15)
             ->getQuery()
             ->getArrayResult();
