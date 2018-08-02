@@ -28,6 +28,23 @@
         {% endif %}
     {% endfor %}
 {% endmacro %}
+
+{#{#}
+    {#roles: [ 'ROLE_NURSE_ADMIN' ],#}
+    {#icon: 'fa fa-stethoscope',#}
+    {#title: 'Сувилагч',#}
+    {#href:  path('cms_nurse_index')#}
+{#}#}
+
+
+{#{#}
+    {#roles: [ 'ROLE_NURSE_ADMIN' ],#}
+    {#icon: 'fa fa-stethoscope',#}
+    {#title: 'Сувилагч байршил',#}
+    {#href:  path('cms_nurse_position_index')#}
+{#}#}
+{#,#}
+
 {% set sidebarmenu = [
         {
             icon: 'fa fa-home',
@@ -54,29 +71,16 @@
         {
             roles: [ 'ROLE_NURSE_ADMIN' ],
             icon: 'fa fa-stethoscope',
-            title: 'Сувилагч үйлчилгээний төрөл',
+            title: 'Эмчийн үйлчилгээний төрөл',
             href:  path('cms_nurse_type_index')
         }
         ,
 
+
         {
             roles: [ 'ROLE_NURSE_ADMIN' ],
             icon: 'fa fa-stethoscope',
-            title: 'Сувилагч байршил',
-            href:  path('cms_nurse_position_index')
-        }
-        ,
-        {
-            roles: [ 'ROLE_NURSE_ADMIN' ],
-            icon: 'fa fa-stethoscope',
-            title: 'Сувилагч',
-            href:  path('cms_nurse_index')
-        }
-        ,
-        {
-            roles: [ 'ROLE_NURSE_ADMIN' ],
-            icon: 'fa fa-stethoscope',
-            title: 'Сувилагчын дуудлага',
+            title: 'Эмчийн дуудлага',
             href:  path('cms_nurse_log_index')
         }
         ,
@@ -84,7 +88,7 @@
         {
             roles: [ 'ROLE_NURSE_ADMIN' ],
             icon: 'fa fa-stethoscope',
-            title: 'Сувилагчын гомдол',
+            title: 'Эмчийн гомдол',
             href:  path('cms_nurse_feedback_index')
         }
 

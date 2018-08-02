@@ -1,5 +1,5 @@
 {% extends '@happyCms/base.html.twig' %}
-{% block pageheader %} Сувилагчийн дуудлагын жагсаалт{% endblock %}
+{% block pageheader %} Дуудлагын жагсаалт{% endblock %}
 
 {% block style %}
     <style>
@@ -11,61 +11,53 @@
 
 {% block body %}
     {% include ':inc:flashmsg.html.twig' %}
+    <ul style="list-style: none;padding: 0;">
+        <li>
+            <a href="javascript:void(0)" id="searchlink">Хайлт &DownArrowUpArrow;</a>
+        </li>
+    </ul>
+
+    <fieldset style="border:1px solid #ddd;{%if search%}display:block{%else%}display:none;{% endif %}" id="searchpad">
+        {% include '@happyCms/inc/search.html.twig' with {'route' : 'cms_nurse_log_index'} %}
+    </fieldset>
+
     <table class="table table-hover table-striped">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Сувилагч нэр</th>
-            <th>Төлбөр</th>
+            <th>Invoice Id</th>
+            <th>Дуудлага өгсөн дугаар</th>
+            <th>Мөнгөн дүн</th>
+            <th>Төлбөр амжилттай эсэх</th>
             <th>Үйлчилгээний төрөл</th>
-            <th>Дуудлага өгсөн байршил</th>
-            <th>Баталгаажсан эсэх</th>
-            <th>Тайлбар</th>
-            <th>Үүсгэсэн огноо</th>
-            <th>Өөрчилсөн огноо</th>
+            <th>Дуудлага өгсөн огноо</th>
+            <th>Төлбөр төлсөн огноо</th>
         </tr>
         </thead>
         <tbody>
-        {% for k ,con in doctorlog %}
-            {% set k = k + 1 %}
+        {% for con in doctorlog %}
             <tr>
-                <td>{{ k }}</td>
+                <td>{{ con.id }}</td>
+                <td>{{ con.phoneNumber }}</td>
+                <td>{{ con.amount }}₮</td>
+                <td>{% if con.status == 'done' %} <p style="color: green">төлөгдсөн</p> {% else %}<p style="color: orange">хүлээгдэж байгаа</p> {% endif %}</td>
                 <td>
-                    <a href="{{ path('cms_nurse_update', {'id': con.doctorId}) }}">{{ con.doctorName }}</a>
-                </td>
-                <td>{{ con.price }}₮</td>
-                <td>{{ con.type }}</td>
-                <td>{{ con.position }}</td>
-                <td>{% if con.isConfirm == 1 %}
-                        {% if con.isBack == 1 %}
-                            <p style="color: red">Буцаагдсан</p>
-
-                        {% else %}
-                            <p style="color:green">Баталгаажсан</p>
-                            <p>андуурч дарсан бол доорх товч дээр дарна уу!</p>
-                            <a onclick="if(!confirm('Итгэлтэй байна уу!'))return false;"
-                               href="{{ path('cms_nurse_log_back', {'id': con.id , 'pid': page}) }}"
-                               class="btn btn-warning">андуурсан</a>
-                        {% endif %}
-                    {% else %}
-                        <a onclick="if(!confirm('Итгэлтэй байна уу!'))return false;"
-                           href="{{ path('cms_nurse_log_check', {'id': con.id , 'pid': page}) }}"
-                           class="btn btn-default">Баталгаажуулах</a>
-                    {% endif %}
-                </td>
-                <td>
-                    <form method="post" action="{{ path('cms_nurse_log_text', {'id': con.id, 'pid': page}) }}">
-                        <textarea class="form-control" name="text"> {{ con.descr }}</textarea>
-                        <br>
-                        <input type="submit" class="btn btn-xs btn-success " value="илгээх"/>
-                    </form>
+                    {{ con.doctorType.name }}
                 </td>
                 <td>{{ con.createdDate|date('Y-m-d H:i:s') }}</td>
-                <td>{{ con.updatedDate|date('Y-m-d H:i:s') }}</td>
+                <td>{% if con.updatedDate %}{{ con.updatedDate|date('Y-m-d H:i:s') }}{% else %}-{% endif %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    {% include '@happyCms/inc/page.html.twig' with {'route' : 'cms_nurse_log_index'} %}
 {% endblock %}
 {% block js %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#searchlink').click(function () {
+                $('#searchpad').toggle();
+            });
+        });
+    </script>
 {% endblock %}

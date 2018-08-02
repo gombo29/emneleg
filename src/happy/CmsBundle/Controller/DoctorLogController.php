@@ -3,6 +3,7 @@
 namespace happy\CmsBundle\Controller;
 
 use happy\CmsBundle\Entity\DoctorLog;
+use happy\CmsBundle\Entity\QpayInvoice;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -29,11 +30,8 @@ class DoctorLogController extends Controller
     {
         $pagesize = 20;
 
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('happyCmsBundle:DoctorLog')->createQueryBuilder('n');
 
-
-        $searchEntity = new DoctorLog();
+        $searchEntity = new QpayInvoice();
         $searchForm = $this->createForm('happy\CmsBundle\Form\SearchForm\NurserLogSearchType', $searchEntity);
         $search = false;
         if ($request->get("submit") == 'submit') {
@@ -42,12 +40,12 @@ class DoctorLogController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $qb = $em->getRepository('happyCmsBundle:DoctorLog')->createQueryBuilder('n');
+        $qb = $em->getRepository('happyCmsBundle:QpayInvoice')->createQueryBuilder('n');
 
         if ($search) {
-            if ($searchEntity->getDoctorName() && $searchEntity->getDoctorName() != '') {
-                $qb->andWhere('n.doctorName like :name')
-                    ->setParameter('name', '%' . $searchEntity->getDoctorName() . '%');
+            if ($searchEntity->getPhoneNumber() && $searchEntity->getPhoneNumber() != '') {
+                $qb->andWhere('n.phoneNumber like :name')
+                    ->setParameter('name', '%' . $searchEntity->getPhoneNumber() . '%');
             }
         }
 
@@ -57,7 +55,8 @@ class DoctorLogController extends Controller
 
         /**@var DoctorLog[] $doctorLog */
         $doctorLog = $qb
-            ->andWhere('n.doctorId is not null')
+            ->leftJoin('n.doctorType', 'dt')
+            ->addSelect('dt')
             ->orderBy('n.createdDate', 'desc')
             ->setFirstResult(($page - 1) * $pagesize)
             ->setMaxResults($pagesize)
@@ -69,6 +68,9 @@ class DoctorLogController extends Controller
             'count' => $count,
             'page' => $page,
             'doctorlog' => $doctorLog,
+            'search' => $search,
+            'searchform' => $searchForm->createView(),
+            'pagesize' => $pagesize,
         ));
     }
 

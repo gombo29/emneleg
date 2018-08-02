@@ -35,6 +35,13 @@ class DoctorFeedback
     /**
      * @var string
      *
+     * @ORM\Column(name="phonenumber", type="string", length=20, nullable=false)
+     */
+    private $phonenumber;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="content", type="string", length=1000, nullable=false)
      */
     private $content;
@@ -175,5 +182,29 @@ class DoctorFeedback
     public function getDoctorId()
     {
         return $this->doctorId;
+    }
+
+    /**
+     * Set phonenumber
+     *
+     * @param string $phonenumber
+     *
+     * @return DoctorFeedback
+     */
+    public function setPhonenumber($phonenumber)
+    {
+        $this->phonenumber = $phonenumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phonenumber
+     *
+     * @return string
+     */
+    public function getPhonenumber()
+    {
+        return $this->phonenumber;
     }
 }

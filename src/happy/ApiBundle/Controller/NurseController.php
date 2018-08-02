@@ -7,6 +7,7 @@ use happy\CmsBundle\Entity\DoctorLog;
 use happy\CmsBundle\Entity\DoctorPosition;
 use happy\CmsBundle\Entity\Doctors;
 use happy\CmsBundle\Entity\DoctorType;
+use happy\CmsBundle\Entity\QpayInvoice;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -39,7 +40,8 @@ class NurseController extends Controller
 
         /**@var DoctorType[] $nurseType */
         $nurseType = $qb
-            ->select('n.id', 'n.name')
+            ->select('n.id', 'n.name', 'n.price')
+            ->where('n.isShow = 1')
             ->getQuery()
             ->getArrayResult();
 
@@ -98,7 +100,7 @@ class NurseController extends Controller
         $qb = $em->getRepository('happyCmsBundle:DoctorQpay')->createQueryBuilder('n');
         /**@var Doctors[] $nurse */
         $nurse = $qb
-            ->select('d.id as nurseId', 'd.name as nurseName','d.like','d.dislike', 'd.namtar as nurseNamtar', 'd.photo as nursePhoto', 'd.turshlaga as nurseTurshlaga', 'd.surguuli as NurseSurguuli', 'd.mergeshil as NurseMergeshil', 'dt.price as ServicePrice', 'dt.id as ServiceId', 'dp.id as PositionId')
+            ->select('d.id as nurseId', 'd.name as nurseName', 'd.like', 'd.dislike', 'd.namtar as nurseNamtar', 'd.photo as nursePhoto', 'd.turshlaga as nurseTurshlaga', 'd.surguuli as NurseSurguuli', 'd.mergeshil as NurseMergeshil', 'dt.price as ServicePrice', 'dt.id as ServiceId', 'dp.id as PositionId')
             ->leftJoin('n.doctor', 'd')
             ->leftJoin('n.doctorType', 'dt')
             ->leftJoin('n.doctorPosition', 'dp')
@@ -184,6 +186,7 @@ class NurseController extends Controller
     public function nurseFeedbackAction(Request $request)
     {
         $nurseid = $request->request->get('id');
+        $phonenumber = $request->request->get('phonenumber');
         $content = $request->request->get('content');
 
         if ($nurseid == null) {
@@ -194,6 +197,7 @@ class NurseController extends Controller
             $em = $this->container->get('doctrine')->getManager();
             $doctorFeedback = new DoctorFeedback();
             $doctorFeedback->setDoctorId($nurseid);
+            $doctorFeedback->setPhonenumber($phonenumber);
             $doctorFeedback->setContent($content);
             $em->persist($doctorFeedback);
             $em->flush();
@@ -201,8 +205,170 @@ class NurseController extends Controller
                 'status' => 'ok',
             ));
         }
+    }
 
 
+    /**
+     *
+     * @Route("/payment", name="payment_nurse")
+     * @Method("POST")
+     *
+     */
+    public function paymentAction(Request $request)
+    {
+        $typeId = $request->request->get('typeId');
+        $phone = $request->request->get('phone');
+
+        if (!$typeId or !$phone) {
+            return new JsonResponse(array(
+                'status' => 'error',
+                'message' => 'Some parameters are missing.',
+            ));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $dt = $em->getRepository('happyCmsBundle:DoctorType')->find($typeId);
+
+        $invoice = new QpayInvoice();
+        $invoice->setAmount($dt->getPrice());
+        $invoice->setCreatedDate(new \DateTime('now'));
+        $invoice->setStatus('pending');
+        $invoice->setInvoiceTypeId(1);
+        $invoice->setDoctorType($dt);
+        $invoice->setPhoneNumber($phone);
+        $em->persist($invoice);
+        $em->flush();
+
+        $text = $phone . ' дугаараас ' . $dt->getName() . ' үйлчилгээний ' . $dt->getPrice() . ' төлбөр төлөх хүсэлт явууллаа.';
+
+        $url = 'http://43.231.112.201:8080/WebServiceQPayMerchant.asmx/qPay_genInvoiceSimple';
+        $body = '{
+                    "type": "4",
+                    "merchant_code": "UBIKE",
+                    "merchant_verification_code": "NgvLrhaEz8Wbf2LE",
+                    "merchant_customer_code": "85032613",
+                    "json_data": {
+                        "operator_code": null,
+                        "invoice_code":"UBIKE_INVOICE",
+                        "merchant_branch_code": "1",
+                         "merchant_invoice_number": "' . $invoice->getId() . '",
+                        "invoice_date": "2016-09-12 10:25:56.258",
+                        "invoice_description": "' . $text . '",    
+                        "invoice_total_amount": "' . $dt->getPrice() . '",
+                        "item_btuk_code": "5654454",
+                        "vat_flag": "1"
+                    }
+                }';
+
+
+        $result = $this->restCall($url, $body);
+
+
+        $resEncode = json_encode($result);
+        $resDecode = json_decode($resEncode);
+        $data = array();
+        if ($resDecode->result_code == 0 && $resDecode->result_msg == 'SUCCESS') {
+            foreach ($resDecode->json_data->qPay_deeplink as $bankData) {
+                $data[] = array(
+                    'name' => $bankData->name,
+                    'redirectUrl' => $bankData->link
+                );
+            }
+
+            return new JsonResponse(array(
+                'status' => 'success',
+                'message' => 'амжилттай',
+                'amount' => $dt->getPrice(),
+                'amontUI' => $dt->getPrice() . '.00₮',
+                'result' => $data
+            ));
+        } else {
+            return new JsonResponse(array(
+                'status' => 'error',
+                'message' => 'алдаа гарлаа',
+            ));
+        }
+
+    }
+
+
+    public function restCall($url, $request)
+    {
+        $curl = curl_init($url);
+        $headers = array(
+            'Content-Type:application/json',
+            'Authorization: Basic ' . base64_encode("qpay_ubike:H3aybDsM")
+        );
+
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_HEADER, 1);
+        curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+        curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $request);
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+        $curl_response = curl_exec($curl);
+
+        $info = curl_getinfo($curl);
+        if ($curl_response === false) {
+            curl_close($curl);
+            return "error " . $info;
+        }
+        curl_close($curl);
+
+        $curl_response = substr($curl_response, $info['header_size']);
+        $decoded = json_decode($curl_response, true);
+        if (isset($decoded->response->status) && $decoded->response->status == 'ERROR') {
+            return $decoded->response->errormessage;
+        }
+        return $decoded;
+    }
+
+    /**
+     *
+     * @Route("/qpay/callback", name="payment_callback")
+     *
+     *
+     */
+    public function callbackAction(Request $request)
+    {
+        $invoiceId = $request->get('invoiceId');
+        if (!$invoiceId) {
+            return new JsonResponse(array(
+                'status' => 'error',
+                'message' => 'invoiceId not found'
+            ));
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository(QpayInvoice::class)->createQueryBuilder('p');
+        $invoice = $qb
+            ->where('p.id = :invoiceId')
+            ->andWhere('p.status = :stat')
+            ->setParameter('invoiceId', $invoiceId)
+            ->setParameter('stat', 'pending')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if (is_null($invoice)) {
+            return new JsonResponse(array(
+                'status' => 'error',
+                'message' => 'invoice not found'
+            ));
+        }
+
+        $invoice->setStatus('done');
+        $em->persist($invoice);
+        $em->flush();
+
+        return new JsonResponse(array(
+            'status' => 'success',
+            'message' => 'амжилттай',
+        ));
     }
 
 
