@@ -24,6 +24,24 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/phonenumber")
+     */
+    public function phonenumbetAction()
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->getRepository('happyCmsBundle:Phonenumber')->createQueryBuilder('u');
+        $data = $qb
+            ->select('u.phoneNumber')
+            ->getQuery()
+            ->getArrayResult();
+
+        return $this->render('@happyWeb/Default/phonenumber.html.twig', array(
+            'data' => $data,
+        ));
+    }
+
+    /**
      * @Route("/hidden", name="home_page")
      */
     public function homeAction()
