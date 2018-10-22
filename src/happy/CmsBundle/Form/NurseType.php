@@ -17,6 +17,16 @@ class NurseType extends AbstractType
     {
         $builder
 
+            ->add('doctorPosId', 'entity', array(
+                'class' => 'happyCmsBundle:DoctorPosition',
+                'label'=>'Байршил нэр',
+                'property' => 'name',
+                'required' => false,
+                'attr' => array(
+                    "class" => "form-control",
+                )
+            ))
+
             ->add('name', 'text', array(
                     'label' => 'Нэр',
                     'required' => true,

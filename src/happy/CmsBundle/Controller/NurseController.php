@@ -40,6 +40,8 @@ class NurseController extends Controller
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:Doctors')->createQueryBuilder('n');
 
+        $qb->leftJoin('n.doctorPosId', 'nd')
+            ->addSelect('nd');
         if ($search) {
 
             if ($searchEntity->getName() && $searchEntity->getName() != '') {
@@ -47,17 +49,24 @@ class NurseController extends Controller
                     ->setParameter('name', '%' . $searchEntity->getName() . '%');
             }
 
-            if ($searchForm->get('ehlehDate')->getData()) {
-                $qb
-                    ->andWhere('n.createdDate > :ehlehDate')
-                    ->setParameter('ehlehDate', $searchEntity->ehlehDate);
+            if ($searchEntity->getDoctorPosId() && $searchEntity->getDoctorPosId() != '') {
+                if ($searchEntity->getDoctorPosId()->getId() && $searchEntity->getDoctorPosId()->getId() != '') {
+                    $qb->andWhere('nd.id = :nid')
+                        ->setParameter('nid', $searchEntity->getDoctorPosId()->getId());
+                }
             }
 
-            if ($searchForm->get('duusahDate')->getData()) {
-                $qb
-                    ->andWhere('n.createdDate < :duusahDate')
-                    ->setParameter('duusahDate', $searchEntity->duusahDate);
-            }
+//            if ($searchForm->get('ehlehDate')->getData()) {
+//                $qb
+//                    ->andWhere('n.createdDate > :ehlehDate')
+//                    ->setParameter('ehlehDate', $searchEntity->ehlehDate);
+//            }
+//
+//            if ($searchForm->get('duusahDate')->getData()) {
+//                $qb
+//                    ->andWhere('n.createdDate < :duusahDate')
+//                    ->setParameter('duusahDate', $searchEntity->duusahDate);
+//            }
 
         }
 

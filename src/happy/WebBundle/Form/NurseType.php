@@ -33,6 +33,18 @@ class NurseType extends AbstractType
                     )
                 )
             )
+
+            ->add('doctorPosId', 'entity', array(
+                'class' => 'happyCmsBundle:DoctorPosition',
+                'label'=>'Байршил нэр',
+                'property' => 'name',
+                'required' => false,
+                'attr' => array(
+                    "class" => "form-control",
+                )
+            ))
+
+
             ->add('imagefile', 'file', array(
                 'label' => false,
                 'required' => false,

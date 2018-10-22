@@ -32,6 +32,14 @@ class Doctors
      */
     private $name;
 
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DoctorPosition")
+     * @ORM\JoinColumn(name="doctor_pos_id", referencedColumnName="id", nullable=true)
+     */
+    private $doctorPosId;
+
     /**
      * @var string
      *
@@ -642,5 +650,29 @@ class Doctors
     public function getDislike()
     {
         return $this->dislike;
+    }
+
+    /**
+     * Set doctorPosId
+     *
+     * @param \happy\CmsBundle\Entity\DoctorPosition $doctorPosId
+     *
+     * @return Doctors
+     */
+    public function setDoctorPosId(\happy\CmsBundle\Entity\DoctorPosition $doctorPosId = null)
+    {
+        $this->doctorPosId = $doctorPosId;
+
+        return $this;
+    }
+
+    /**
+     * Get doctorPosId
+     *
+     * @return \happy\CmsBundle\Entity\DoctorPosition
+     */
+    public function getDoctorPosId()
+    {
+        return $this->doctorPosId;
     }
 }

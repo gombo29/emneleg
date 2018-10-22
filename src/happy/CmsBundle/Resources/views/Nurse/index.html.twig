@@ -23,6 +23,7 @@
             <th>Id</th>
             <th>Зураг</th>
             <th>Нэр</th>
+            <th>Байршил</th>
             <th>Утас</th>
             <th>Үүсгэсэн огноо</th>
             <th>Өөрчилсөн огноо</th>
@@ -35,8 +36,11 @@
             {% set k = k + 1 %}
             <tr>
                 <td>{{ k }}</td>
-                <td><img src="{% if con.photo %}/{{ localstatfolder }}{{ con.photo }}{% else %}{{ asset('recource/nurse.png') }}{% endif %}" width="100"></td>
+                <td>
+                    <img src="{% if con.photo %}/{{ localstatfolder }}{{ con.photo }}{% else %}{{ asset('recource/nurse.png') }}{% endif %}"
+                         width="100"></td>
                 <td>{{ con.name }}</td>
+                <td>{% if con.doctorPosId %}{{ con.doctorPosId.name }}{% else %}-{% endif %}</td>
                 <td>
                     {{ con.phone }}
                 </td>

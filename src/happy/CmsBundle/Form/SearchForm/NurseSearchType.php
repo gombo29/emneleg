@@ -16,7 +16,6 @@ class NurseSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('name', 'text', array(
                     'label' => 'Нэр',
                     'required' => false,
@@ -25,22 +24,32 @@ class NurseSearchType extends AbstractType
                     )
                 )
             )
-
-            ->add('ehlehDate', 'datetime', array(
+            ->add('doctorPosId', 'entity', array(
+                'class' => 'happyCmsBundle:DoctorPosition',
+                'label' => 'Байршил нэр',
+                'property' => 'name',
                 'required' => false,
-                'label' => 'Эхлэл /Үүсгэсэн огнооноос хайна/',
-                'format' => 'yyyy-MM-dd HH:mm',
-                'widget' => 'single_text',
-                'attr' => [ 'datetime' => 'picker', 'class' => 'form-control'],
+                'attr' => array(
+                    "class" => "form-control",
+                )
             ))
 
-            ->add('duusahDate', 'datetime', array(
-                'required' => false,
-                'label' => 'Төгсгөл /Үүсгэсэн огнооноос хайна/',
-                'format' => 'yyyy-MM-dd HH:mm',
-                'widget' => 'single_text',
-                'attr' => [ 'datetime' => 'picker', 'class' => 'form-control'],
-            ));
+//            ->add('ehlehDate', 'datetime', array(
+//                'required' => false,
+//                'label' => 'Эхлэл /Үүсгэсэн огнооноос хайна/',
+//                'format' => 'yyyy-MM-dd HH:mm',
+//                'widget' => 'single_text',
+//                'attr' => [ 'datetime' => 'picker', 'class' => 'form-control'],
+//            ))
+//
+//            ->add('duusahDate', 'datetime', array(
+//                'required' => false,
+//                'label' => 'Төгсгөл /Үүсгэсэн огнооноос хайна/',
+//                'format' => 'yyyy-MM-dd HH:mm',
+//                'widget' => 'single_text',
+//                'attr' => [ 'datetime' => 'picker', 'class' => 'form-control'],
+//            ))
+        ;
     }
 
     /**

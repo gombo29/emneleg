@@ -91,7 +91,21 @@
             title: 'Эмчийн гомдол',
             href:  path('cms_nurse_feedback_index')
         }
+        ,
+        {
+            roles: [ 'ROLE_NURSE_ADMIN' ],
+            icon: 'fa fa-stethoscope',
+            title: 'ЭМЧ',
+            href:  path('cms_nurse_index')
+        }
+        ,
 
+        {
+        roles: [ 'ROLE_NURSE_ADMIN' ],
+        icon: 'fa fa-stethoscope',
+        title: 'Эмчийн байршил',
+        href:  path('cms_nurse_position_index')
+        }
         ,
 
         {
