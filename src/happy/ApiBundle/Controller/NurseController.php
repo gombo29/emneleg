@@ -244,12 +244,12 @@ class NurseController extends Controller
         $url = 'http://43.231.112.201:8080/WebServiceQPayMerchant.asmx/qPay_genInvoiceSimple';
         $body = '{
                     "type": "4",
-                    "merchant_code": "UBIKE",
-                    "merchant_verification_code": "NgvLrhaEz8Wbf2LE",
+                    "merchant_code": "INTRFRON_ALPHA",
+                    "merchant_verification_code": "Scst9P2RhFzSVqn9",
                     "merchant_customer_code": "85032613",
                     "json_data": {
                         "operator_code": null,
-                        "invoice_code":"UBIKE_INVOICE",
+                        "invoice_code":"INTRFRON_ALPHA_INVOICE",
                         "merchant_branch_code": "1",
                          "merchant_invoice_number": "' . $invoice->getId() . '",
                         "invoice_date": "2016-09-12 10:25:56.258",
@@ -297,7 +297,7 @@ class NurseController extends Controller
         $curl = curl_init($url);
         $headers = array(
             'Content-Type:application/json',
-            'Authorization: Basic ' . base64_encode("qpay_ubike:H3aybDsM")
+            'Authorization: Basic ' . base64_encode("qpay_intrfron_alpha:xVTn3nEd")
         );
 
         curl_setopt($curl, CURLOPT_URL, $url);

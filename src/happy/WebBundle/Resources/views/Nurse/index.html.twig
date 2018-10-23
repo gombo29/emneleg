@@ -10,180 +10,193 @@
 {% block body %}
     <div class="project-type-background">
         <div class="medical-search" style="padding: 65px 0 10px 0;">
-            <div class="container">
-                {% include  '@happyWeb/inc/inc-nurse-search.html.twig' %}
+            <div class="container" style="margin-top: 100px;margin-bottom:100px;text-align: center">
+                <p style="text-align: center;color: #ffffff;font-size: 30px">Та манай мобайл аппликэшн татаж
+                    аван эмч дуудах боломжтой.</p>
+
+                <a href="#" target="_blank" style="display: block"><img src="{{ asset('resources/apple.png') }}" style="width: 400px"></a>
+                <a href="https://play.google.com/store/apps/details?id=mn.fullstream.emneleg" target="_blank"  style="display: block"><img
+                            src="{{ asset('resources/google.png') }}" style="width: 400px"></a>
+
+                {#<div class="container">#}
+                {#{% include  '@happyWeb/inc/inc-nurse-search.html.twig' %}#}
+                {#</div>#}
             </div>
         </div>
-        <div class="container" style="text-align: center;margin-bottom: 50px;">
-            {#{% set i = 1 %}#}
-            {#{% if nurse != null %}#}
-            {#{% for key,m in nurse %}#}
-            {#{% set a = key + 1 %}#}
-            {#<a href="javascript:void(0);"#}
-            {#class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"#}
-            {#onclick="showDetail({{ m.doctor.id }}, {{ key }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','{{ m.doctor.like }}','{{ m.doctor.dislike }}','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"#}
-            {#id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>#}
-            {#{% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': '', 'img': m.doctor.photo, 'phone': m.doctor.phone, 'id': m.doctor.id, 'name' : m.doctor.name } %}#}
-            {#</a>#}
-            {#{% endfor %}#}
-            {#{% else %}#}
-            {#<p style="font-size: 50px;margin-top: 50px">Уучлаарай, сувилагч олдсонгүй!</p>#}
-            {#{% endif %}#}
-        </div>
+        {#<div class="container" style="text-align: center;margin-bottom: 50px;">#}
+
+
+
+        {#{% set i = 1 %}#}
+        {#{% if nurse != null %}#}
+        {#{% for key,m in nurse %}#}
+        {#{% set a = key + 1 %}#}
+        {#<a href="javascript:void(0);"#}
+        {#class="nurse col-lg-2 col-md-3 col-sm-3  col-xs-6 width {% if a%5 == 0 %} hidden-sm-down{% endif %}"#}
+        {#onclick="showDetail({{ m.doctor.id }}, {{ key }}, '{% if m.doctor.photo != null %}/{{ localstatfolder }}{{ m.doctor.photo }}{% else %}{{ asset('recource/nurse-list.jpg') }}{% endif %}','{{ m.doctor.name }}','{{ m.doctor.like }}','{{ m.doctor.dislike }}','{{ m.doctor.turshlaga }}','{{ m.doctor.mergeshil }}' ,'{{ m.doctor.timeTable }}', '/{{ localstatfolder }}{{ m.doctorType.photo }}', '{{ m.doctorType.price }}', '{{ m.doctorType.name }}','{{ m.doctorPosition.name }}')"#}
+        {#id="nurse{{ m.id }}" {% if a%5 == 0 %}style="margin-right: 0;"{% endif %}>#}
+        {#{% include  '@happyWeb/inc/inc-nurse.html.twig' with {'star': '', 'img': m.doctor.photo, 'phone': m.doctor.phone, 'id': m.doctor.id, 'name' : m.doctor.name } %}#}
+        {#</a>#}
+        {#{% endfor %}#}
+        {#{% else %}#}
+        {#<p style="font-size: 50px;margin-top: 50px">Уучлаарай, сувилагч олдсонгүй!</p>#}
+        {#{% endif %}#}
+        {#</div>#}
     </div>
 {% endblock %}
-{% block js %}
-    <script>
-        function submitData(imgurl, dun, nurseid, nursename, service, position) {
-            $('#nurseListModal').modal('hide');
-            $('#nurseModal').modal('show');
-            $('#suvilagchqr').attr('src', imgurl);
-            $('#suvilagchdun').html(dun);
-            $.ajax({
-                url: "{{ path('cms_nurse_call_register') }}",
-                data: {nurseid: nurseid, nursename: nursename, price: dun, service: service, position: position},
-                type: "POST",
-                dataType: "JSON"
-            }).done(function (data) {
-            }).error(function () {
-            })
-        }
+{#{% block js %}#}
+    {#<script>#}
+        {#function submitData(imgurl, dun, nurseid, nursename, service, position) {#}
+            {#$('#nurseListModal').modal('hide');#}
+            {#$('#nurseModal').modal('show');#}
+            {#$('#suvilagchqr').attr('src', imgurl);#}
+            {#$('#suvilagchdun').html(dun);#}
+            {#$.ajax({#}
+                {#url: "{{ path('cms_nurse_call_register') }}",#}
+                {#data: {nurseid: nurseid, nursename: nursename, price: dun, service: service, position: position},#}
+                {#type: "POST",#}
+                {#dataType: "JSON"#}
+            {#}).done(function (data) {#}
+            {#}).error(function () {#}
+            {#})#}
+        {#}#}
 
-        $(document).ready(function () {
-//            $('input[type="radio"]').change(function () {
-//                $('#nurseSearch').submit();
-//            });
-        });
-        function showDetail(id, key, img, name, likecount, dislikecount, turshlaga, mergeshil, time, imgurl, dun, service, position) {
-            $('#nurseListModal').modal('show');
+        {#$(document).ready(function () {#}
+{#//            $('input[type="radio"]').change(function () {#}
+{#//                $('#nurseSearch').submit();#}
+{#//            });#}
+        {#});#}
+        {#function showDetail(id, key, img, name, likecount, dislikecount, turshlaga, mergeshil, time, imgurl, dun, service, position) {#}
+            {#$('#nurseListModal').modal('show');#}
 
-            $('#detailimg').attr('src', img);
-            $('#detailname').html(name);
-            $('#detailturshlaga').html(turshlaga);
-            $('#detailmergeshil').html(mergeshil);
-            $('#detailtime').html(time);
+            {#$('#detailimg').attr('src', img);#}
+            {#$('#detailname').html(name);#}
+            {#$('#detailturshlaga').html(turshlaga);#}
+            {#$('#detailmergeshil').html(mergeshil);#}
+            {#$('#detailtime').html(time);#}
 
-            if (!likecount) {
-                $('.likecount').html(0);
-            } else {
-                $('.likecount').html(likecount);
-            }
+            {#if (!likecount) {#}
+                {#$('.likecount').html(0);#}
+            {#} else {#}
+                {#$('.likecount').html(likecount);#}
+            {#}#}
 
-            if (!dislikecount) {
-                $('.dislikecount').html(0);
-            } else {
-                $('.dislikecount').html(dislikecount);
-            }
+            {#if (!dislikecount) {#}
+                {#$('.dislikecount').html(0);#}
+            {#} else {#}
+                {#$('.dislikecount').html(dislikecount);#}
+            {#}#}
 
-            $('.nurselike').attr('onclick', 'addLike(' + id + ')');
-            $('.nursedislike').attr('onclick', 'disLike(' + id + ')');
-            $('#detailhref').attr('onclick', "submitData('" + imgurl + "','" + dun + "','" + id + "','" + name + "','" + service + "','" + position + "')");
-        }
+            {#$('.nurselike').attr('onclick', 'addLike(' + id + ')');#}
+            {#$('.nursedislike').attr('onclick', 'disLike(' + id + ')');#}
+            {#$('#detailhref').attr('onclick', "submitData('" + imgurl + "','" + dun + "','" + id + "','" + name + "','" + service + "','" + position + "')");#}
+        {#}#}
 
-        function addLike(id) {
+        {#function addLike(id) {#}
 
-            $.ajax({
-                url: "{{ path('cms_nurse_like') }}",
-                data: {nurseId: id},
-                type: "POST",
-                dataType: "JSON"
-            }).done(function (data) {
-                if (data.code == 0) {
-                    console.log(data.result);
-                    $('.likecount').html(data.result);
-                }
-            }).error(function () {
-            })
+            {#$.ajax({#}
+                {#url: "{{ path('cms_nurse_like') }}",#}
+                {#data: {nurseId: id},#}
+                {#type: "POST",#}
+                {#dataType: "JSON"#}
+            {#}).done(function (data) {#}
+                {#if (data.code == 0) {#}
+                    {#console.log(data.result);#}
+                    {#$('.likecount').html(data.result);#}
+                {#}#}
+            {#}).error(function () {#}
+            {#})#}
 
-        }
+        {#}#}
 
-        function disLike(id) {
-            $.ajax({
-                url: "{{ path('cms_nurse_dislike') }}",
-                data: {nurseId: id},
-                type: "POST",
-                dataType: "JSON"
-            }).done(function (data) {
+        {#function disLike(id) {#}
+            {#$.ajax({#}
+                {#url: "{{ path('cms_nurse_dislike') }}",#}
+                {#data: {nurseId: id},#}
+                {#type: "POST",#}
+                {#dataType: "JSON"#}
+            {#}).done(function (data) {#}
 
-                if (data.code == 0) {
+                {#if (data.code == 0) {#}
 
-                    $('.dislikecount').html(data.result);
-                }
-            }).error(function () {
-            })
-        }
-    </script>
-{% endblock %}
+                    {#$('.dislikecount').html(data.result);#}
+                {#}#}
+            {#}).error(function () {#}
+            {#})#}
+        {#}#}
+    {#</script>#}
+{#{% endblock %}#}
 
-{% block modal %}
-    <div class="modal fade" id="nurseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h3 style="text-align: center;">Таны дуудлага бүртгэгдлээ.</h3>
-                    <p style="text-align: justify">
-                        <b> Та дуудлагаа баталгаажуулахын тулд манай үйлчилгээний данслуу урьдчилгаа төлбөр шилжүүлэх
-                            хэрэгтэй.</b> Үүний тулд та доорх QR Code-г аль ч банкны QPay үйлчилгээ ашиглан
-                        шилжүүлэх боломжтой.
-                    </p>
-                    <img src="" width="200" id="suvilagchqr">
+{#{% block modal %}#}
+    {#<div class="modal fade" id="nurseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"#}
+         {#aria-hidden="true">#}
+        {#<div class="modal-dialog" role="document">#}
+            {#<div class="modal-content">#}
+                {#<div class="modal-body">#}
+                    {#<h3 style="text-align: center;">Таны дуудлага бүртгэгдлээ.</h3>#}
+                    {#<p style="text-align: justify">#}
+                        {#<b> Та дуудлагаа баталгаажуулахын тулд манай үйлчилгээний данслуу урьдчилгаа төлбөр шилжүүлэх#}
+                            {#хэрэгтэй.</b> Үүний тулд та доорх QR Code-г аль ч банкны QPay үйлчилгээ ашиглан#}
+                        {#шилжүүлэх боломжтой.#}
+                    {#</p>#}
+                    {#<img src="" width="200" id="suvilagchqr">#}
 
-                    <p style="color: red">Жич: QPay үйлчилгээгээр гүйлгээ хийхдээ гүйлгээний утга дээр утасны дугаараа
-                        бичнэ үү!</p>
+                    {#<p style="color: red">Жич: QPay үйлчилгээгээр гүйлгээ хийхдээ гүйлгээний утга дээр утасны дугаараа#}
+                        {#бичнэ үү!</p>#}
 
-                    <p style="text-align: justify">
-                        Та Qpay үйлчилгээг ашиглах боломжгүй байгаа бол доорх данслуу урьдчилгаа төлбөр шилжүүлнэ үү!
-                    </p>
-
-
-                    <ul style="text-align: left;margin-left: 40px;font-weight: bold">
-                        <li>Хүлээн авах банк: <i>Худалдаа хөгжлийн банк</i></li>
-                        <li>Дансны дугаар: <i>472020237</i></li>
-                        <li>Данс эзэмшигч: Emneleg.mn<i></i></li>
-                        <li>Дүн: <i id="suvilagchdun"></i>₮</li>
-                        <li>Утга: <i>та өөрийн утасны дугаар оруулна уу.</i></li>
-                    </ul>
-
-                    <h5>Асуух зүйл байвал: 99031675</h5>
-
-                    <h5 style="text-align: center;">Та дуудлагаа баталгаажуулсан тохиолдолд бид 5 минутын дотор таньтай
-                        эргэн холбогдох болно.</h5>
+                    {#<p style="text-align: justify">#}
+                        {#Та Qpay үйлчилгээг ашиглах боломжгүй байгаа бол доорх данслуу урьдчилгаа төлбөр шилжүүлнэ үү!#}
+                    {#</p>#}
 
 
-                    <div class="text-center">
-                        <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                    {#<ul style="text-align: left;margin-left: 40px;font-weight: bold">#}
+                        {#<li>Хүлээн авах банк: <i>Худалдаа хөгжлийн банк</i></li>#}
+                        {#<li>Дансны дугаар: <i>472020237</i></li>#}
+                        {#<li>Данс эзэмшигч: Emneleg.mn<i></i></li>#}
+                        {#<li>Дүн: <i id="suvilagchdun"></i>₮</li>#}
+                        {#<li>Утга: <i>та өөрийн утасны дугаар оруулна уу.</i></li>#}
+                    {#</ul>#}
+
+                    {#<h5>Асуух зүйл байвал: 99031675</h5>#}
+
+                    {#<h5 style="text-align: center;">Та дуудлагаа баталгаажуулсан тохиолдолд бид 5 минутын дотор таньтай#}
+                        {#эргэн холбогдох болно.</h5>#}
+
+
+                    {#<div class="text-center">#}
+                        {#<button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">Хаах#}
+                        {#</button>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
 
 
 
-    <div class="modal fade" id="nurseListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body" style="text-align: left;">
-                    <div class="row" style="padding: 0 20px">
-                        <p>Баярлалаа. Таны захиалгыг хүлээж авлаа. Төлбөр төлж байж таны захиалга баталгаажих тул та
-                            доор дарж төлбөрөө төлнө үү!</p>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="text-center">
-                            <a class="btn btn-warning" style="margin-left: 0;" href="http://qpay.mn/q/?q=77290102176187326227926533949749378091818495269307">
-                                Төлбөр төлөх</a>
+    {#<div class="modal fade" id="nurseListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"#}
+         {#aria-hidden="true">#}
+        {#<div class="modal-dialog" role="document">#}
+            {#<div class="modal-content">#}
+                {#<div class="modal-body" style="text-align: left;">#}
+                    {#<div class="row" style="padding: 0 20px">#}
+                        {#<p>Баярлалаа. Таны захиалгыг хүлээж авлаа. Төлбөр төлж байж таны захиалга баталгаажих тул та#}
+                            {#доор дарж төлбөрөө төлнө үү!</p>#}
+                    {#</div>#}
+                    {#<div class="modal-footer">#}
+                        {#<div class="text-center">#}
+                            {#<a class="btn btn-warning" style="margin-left: 0;"#}
+                               {#href="http://qpay.mn/q/?q=77290102176187326227926533949749378091818495269307">#}
+                                {#Төлбөр төлөх</a>#}
 
-                            <button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">
-                                Хаах
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            {#<button type="button" class="btn btn-warning waves-effect waves-light" data-dismiss="modal">#}
+                                {#Хаах#}
+                            {#</button>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
 
 
-{% endblock %}
+{#{% endblock %}#}

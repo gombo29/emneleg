@@ -69,14 +69,16 @@ class NurseController extends Controller
 //            }
 
         }
+        $qb
+            ->orderBy('n.createdDate', 'desc')
+            ->andWhere('n.isDoctor = 0')
+            ->andWhere('n.isShow = 1');
 
         $countQueryBuilder = clone $qb;
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
+
         /**@var Doctors[] $nurse */
         $nurse = $qb
-            ->orderBy('n.createdDate', 'desc')
-            ->andWhere('n.isDoctor = 0')
-            ->andWhere('n.isShow = 1')
             ->setFirstResult(($page - 1) * $pagesize)
             ->setMaxResults($pagesize)
             ->getQuery()

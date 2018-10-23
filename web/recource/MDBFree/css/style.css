@@ -1918,3 +1918,29 @@ label, output {
 .nursedislike:hover {
     font-size: 16px;
 }
+
+.store-icons {
+    width: 100px;
+    position: fixed;
+    bottom: 65px;
+    right: 50px;
+    z-index: 1000;
+}
+
+.store-icons img {
+    width: 100%
+}
+
+.footer-store-icons {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .store-icons {
+        display: none;
+    }
+
+    .footer-store-icons {
+        display: block;
+    }
+}
