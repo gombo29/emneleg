@@ -44,6 +44,12 @@ class QpayInvoice
     private $doctorType;
 
     /**
+     * @ORM\ManyToOne(targetEntity="DoctorPosition")
+     * @ORM\JoinColumn(name="doctor_position", referencedColumnName="id", nullable=true)
+     */
+    private $doctorPosition;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=100, nullable=true)
@@ -267,5 +273,29 @@ class QpayInvoice
     public function getDoctorType()
     {
         return $this->doctorType;
+    }
+
+    /**
+     * Set doctorPosition
+     *
+     * @param \happy\CmsBundle\Entity\DoctorPosition $doctorPosition
+     *
+     * @return QpayInvoice
+     */
+    public function setDoctorPosition(\happy\CmsBundle\Entity\DoctorPosition $doctorPosition = null)
+    {
+        $this->doctorPosition = $doctorPosition;
+
+        return $this;
+    }
+
+    /**
+     * Get doctorPosition
+     *
+     * @return \happy\CmsBundle\Entity\DoctorPosition
+     */
+    public function getDoctorPosition()
+    {
+        return $this->doctorPosition;
     }
 }

@@ -217,6 +217,7 @@ class NurseController extends Controller
     public function paymentAction(Request $request)
     {
         $typeId = $request->request->get('typeId');
+        $positionId = $request->request->get('positionId');
         $phone = $request->request->get('phone');
 
         if (!$typeId or !$phone) {
@@ -229,19 +230,27 @@ class NurseController extends Controller
         $em = $this->getDoctrine()->getManager();
         $dt = $em->getRepository('happyCmsBundle:DoctorType')->find($typeId);
 
+
         $invoice = new QpayInvoice();
         $invoice->setAmount($dt->getPrice());
         $invoice->setCreatedDate(new \DateTime('now'));
         $invoice->setStatus('pending');
         $invoice->setInvoiceTypeId(1);
         $invoice->setDoctorType($dt);
+        if ($positionId) {
+            $dp = $em->getRepository('happyCmsBundle:DoctorPosition')->find($positionId);
+            $invoice->setDoctorPosition($dp);
+        }
+
         $invoice->setPhoneNumber($phone);
         $em->persist($invoice);
         $em->flush();
 
         $text = $phone . ' дугаараас ' . $dt->getName() . ' үйлчилгээний ' . $dt->getPrice() . ' төлбөр төлөх хүсэлт явууллаа.';
 
+//99686817
         $url = 'http://43.231.112.201:8080/WebServiceQPayMerchant.asmx/qPay_genInvoiceSimple';
+//        $url = 'http://43.231.112.201:8080/WebServiceQPayMerchant.asmx/qPay_genInvoiceWithAccount';
         $body = '{
                     "type": "4",
                     "merchant_code": "INTRFRON_ALPHA",
@@ -267,6 +276,10 @@ class NurseController extends Controller
         $resEncode = json_encode($result);
         $resDecode = json_decode($resEncode);
         $data = array();
+
+        var_dump($result);
+        exit();
+
         if ($resDecode->result_code == 0 && $resDecode->result_msg == 'SUCCESS') {
             foreach ($resDecode->json_data->qPay_deeplink as $bankData) {
                 $data[] = array(
