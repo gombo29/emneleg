@@ -277,8 +277,8 @@ class NurseController extends Controller
         $resDecode = json_decode($resEncode);
         $data = array();
 
-        var_dump($result);
-        exit();
+       
+        
 
         if ($resDecode->result_code == 0 && $resDecode->result_msg == 'SUCCESS') {
             foreach ($resDecode->json_data->qPay_deeplink as $bankData) {
