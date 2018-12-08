@@ -146,25 +146,21 @@ class MedicalController extends Controller
             ->getArrayResult();
 
         if ($medicalMedIds != null) {
-
-            
-  
-            if ($labIds != null) {
-                $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
-                $medicalMedIds = $qblab
-                    ->select('m.id')
-                    ->leftJoin('n.medical', 'm')
-                    ->where($qblab->expr()->in('n.labType', ':p1'))
-                    ->setParameter('p1', $labIds)
-                    ->andWhere($qblab->expr()->in('n.medical', ':p2'))
-                    ->setParameter('p2', $medicalMedIds)
-                    ->groupBy('m.id')
-                    ->having('COUNT(m.id) = :labcount')
-                    ->setParameter('labcount', sizeof($labIds))
-                    ->getQuery()
-                    ->getArrayResult();
-            }
-
+//            if ($labIds != null) {
+//                 $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
+//                 $medicalMedIds = $qblab
+//                     ->select('m.id')
+//                     ->leftJoin('n.medical', 'm')
+//                     ->where($qblab->expr()->in('n.labType', ':p1'))
+//                     ->setParameter('p1', $labIds)
+//                     ->andWhere($qblab->expr()->in('n.medical', ':p2'))
+//                     ->setParameter('p2', $medicalMedIds)
+//                     ->groupBy('m.id')
+//                     ->having('COUNT(m.id) = :labcount')
+//                     ->setParameter('labcount', sizeof($labIds))
+//                     ->getQuery()
+//                     ->getArrayResult();
+//             }
             $qb
                 ->andWhere($qb->expr()->in('n.id', ':medIds'))
                 ->setParameter(':medIds', $medicalMedIds);
