@@ -145,7 +145,7 @@ class MedicalController extends Controller
             ->getQuery()
             ->getArrayResult();
           if ($labIds == null) {
-              labIds = 1;
+              $labIds = 1;
           }
 
         if ($medicalMedIds != null) {
