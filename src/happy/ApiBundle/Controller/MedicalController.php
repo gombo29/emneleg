@@ -161,21 +161,21 @@ class MedicalController extends Controller
 //                     ->getQuery()
 //                     ->getArrayResult();
 //             }
-            $qb
-                ->andWhere($qb->expr()->in('n.id', ':medIds'))
-                ->setParameter(':medIds', $medicalMedIds);
+//             $qb
+//                 ->andWhere($qb->expr()->in('n.id', ':medIds'))
+//                 ->setParameter(':medIds', $medicalMedIds);
         }
 
-        if ($keyword) {
-            $qb
-                ->andWhere($qb->expr()->orX(
-                    $qb->expr()->like('n.name', ':medName'),
-                    $qb->expr()->like('n.nameLat', ':medName')
-                ))
-                ->setParameter('medName', '%' . $keyword . '%');
-            var_dump('bn');
-            exit();
-        }
+//         if ($keyword) {
+//             $qb
+//                 ->andWhere($qb->expr()->orX(
+//                     $qb->expr()->like('n.name', ':medName'),
+//                     $qb->expr()->like('n.nameLat', ':medName')
+//                 ))
+//                 ->setParameter('medName', '%' . $keyword . '%');
+//             var_dump('bn');
+//             exit();
+//         }
 
         $countQueryBuilder = clone $qb;
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
