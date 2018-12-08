@@ -148,7 +148,7 @@ class MedicalController extends Controller
         
      
           if ($labIds == null) {
-              $labIds = array(1,4,7,10,13,16,19);
+              $labIds = [1,13];
           }
 
         if ($medicalMedIds != null) {
