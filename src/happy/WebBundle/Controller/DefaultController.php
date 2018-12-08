@@ -51,8 +51,8 @@ class DefaultController extends Controller
 
         /**@var Medicals[] $medical */
         $medical = $qb
-            ->orderBy('n.createdDate', 'desc')
             ->addOrderBy('n.isOntsloh', 'desc')
+            ->orderBy('n.createdDate', 'asc')
             ->where('n.isOntsloh = 1')
             ->andWhere('n.isRemove = 0')
             ->getQuery()
