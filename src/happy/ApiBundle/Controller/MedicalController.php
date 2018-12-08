@@ -224,7 +224,7 @@ class MedicalController extends Controller
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('happyCmsBundle:MedicalPhoto')->createQueryBuilder('n');
         $medicalPhoto = $qb
-            ->select('n.stamp_path')
+            ->select('n.path')
             ->where('n.medical = :medid')
             ->setParameter('medid', $medical)
             ->orderBy('n.sortId', 'asc')
