@@ -190,6 +190,7 @@ class MedicalController extends Controller
             ->select('n.id', 'n.name', 'n.headline', 'n.phone', 'n.photo', 'n.isParking', 'n.isCard', 'n.isWifi', 'n.longLat')
             ->addOrderBy('n.createdDate', 'desc')
             ->addOrderBy('n.isOntsloh', 'desc')
+            
             ->setFirstResult(($page - 1) * $pagesize)
             ->setMaxResults($pagesize)
             ->getQuery()
