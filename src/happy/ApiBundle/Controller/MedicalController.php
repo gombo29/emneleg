@@ -144,6 +144,9 @@ class MedicalController extends Controller
             ->groupBy('m.id')
             ->getQuery()
             ->getArrayResult();
+          if ($labIds == null) {
+              labIds = 1;
+          }
 
         if ($medicalMedIds != null) {
            if ($labIds != null) {
