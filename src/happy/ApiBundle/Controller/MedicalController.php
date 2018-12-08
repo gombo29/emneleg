@@ -146,36 +146,36 @@ class MedicalController extends Controller
             ->getArrayResult();
 
         if ($medicalMedIds != null) {
-//            if ($labIds != null) {
-//                 $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
-//                 $medicalMedIds = $qblab
-//                     ->select('m.id')
-//                     ->leftJoin('n.medical', 'm')
-//                     ->where($qblab->expr()->in('n.labType', ':p1'))
-//                     ->setParameter('p1', $labIds)
-//                     ->andWhere($qblab->expr()->in('n.medical', ':p2'))
-//                     ->setParameter('p2', $medicalMedIds)
-//                     ->groupBy('m.id')
-//                     ->having('COUNT(m.id) = :labcount')
-//                     ->setParameter('labcount', sizeof($labIds))
-//                     ->getQuery()
-//                     ->getArrayResult();
-//             }
-//             $qb
-//                 ->andWhere($qb->expr()->in('n.id', ':medIds'))
-//                 ->setParameter(':medIds', $medicalMedIds);
+           if ($labIds != null) {
+                $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
+                $medicalMedIds = $qblab
+                    ->select('m.id')
+                    ->leftJoin('n.medical', 'm')
+                    ->where($qblab->expr()->in('n.labType', ':p1'))
+                    ->setParameter('p1', $labIds)
+                    ->andWhere($qblab->expr()->in('n.medical', ':p2'))
+                    ->setParameter('p2', $medicalMedIds)
+                    ->groupBy('m.id')
+                    ->having('COUNT(m.id) = :labcount')
+                    ->setParameter('labcount', sizeof($labIds))
+                    ->getQuery()
+                    ->getArrayResult();
+            }
+            $qb
+                ->andWhere($qb->expr()->in('n.id', ':medIds'))
+                ->setParameter(':medIds', $medicalMedIds);
         }
 
-//         if ($keyword) {
-//             $qb
-//                 ->andWhere($qb->expr()->orX(
-//                     $qb->expr()->like('n.name', ':medName'),
-//                     $qb->expr()->like('n.nameLat', ':medName')
-//                 ))
-//                 ->setParameter('medName', '%' . $keyword . '%');
-//             var_dump('bn');
-//             exit();
-//         }
+        if ($keyword) {
+            $qb
+                ->andWhere($qb->expr()->orX(
+                    $qb->expr()->like('n.name', ':medName'),
+                    $qb->expr()->like('n.nameLat', ':medName')
+                ))
+                ->setParameter('medName', '%' . $keyword . '%');
+            var_dump('bn');
+            exit();
+        }
 
         $countQueryBuilder = clone $qb;
         $count = $countQueryBuilder->select('count(n.id)')->getQuery()->getSingleScalarResult();
