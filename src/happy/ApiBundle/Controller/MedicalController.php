@@ -188,8 +188,8 @@ class MedicalController extends Controller
         /**@var Medicals[] $medical */
         $medical = $qb
             ->select('n.id', 'n.name', 'n.headline', 'n.phone', 'n.photo', 'n.isParking', 'n.isCard', 'n.isWifi', 'n.longLat')
-            ->addOrderBy('n.createdDate', 'desc')
-            ->addOrderBy('n.isOntsloh', 'desc')
+            ->addOrderBy('n.createdDate', 'asc')
+            ->addOrderBy('n.isOntsloh', 'asc')
             
             ->setFirstResult(($page - 1) * $pagesize)
             ->setMaxResults($pagesize)
