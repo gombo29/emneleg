@@ -144,10 +144,10 @@ class MedicalController extends Controller
             ->groupBy('m.id')
             ->getQuery()
             ->getArrayResult();
-$labIds = 1;
-        if ($medicalMedIds) {
 
-            if ($labIds) {
+        if ($medicalMedIds != null) {
+
+            if ($labIds != null) {
                 $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
                 $medicalMedIds = $qblab
                     ->select('m.id')
