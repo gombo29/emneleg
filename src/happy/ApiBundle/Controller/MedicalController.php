@@ -175,6 +175,8 @@ class MedicalController extends Controller
                     $qb->expr()->like('n.nameLat', ':medName')
                 ))
                 ->setParameter('medName', '%' . $keyword . '%');
+            var_dump('bn');
+            exit();
         }
 
         $countQueryBuilder = clone $qb;
