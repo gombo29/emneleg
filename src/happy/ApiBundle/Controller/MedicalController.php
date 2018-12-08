@@ -148,8 +148,7 @@ class MedicalController extends Controller
         if ($medicalMedIds != null) {
 
             
-            var_dump($labIds);
-            exit();
+  
             if ($labIds != null) {
                 $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
                 $medicalMedIds = $qblab
