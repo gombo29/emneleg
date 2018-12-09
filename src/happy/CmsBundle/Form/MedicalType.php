@@ -115,7 +115,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => false,
+                    'required' => true,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -123,7 +123,7 @@ class MedicalType extends AbstractType
             )
             ->add('parkingPrice', 'text', array(
                     'label' => 'Эмнэлгийн зогсоолын үнэ',
-                    'required' => false,
+                    'required' => true,
                     'attr' => array(
                         "class" => "form-control",
                     )
@@ -137,7 +137,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => false,
+                    'required' => true,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
@@ -151,7 +151,7 @@ class MedicalType extends AbstractType
                         '0' => 'Үгүй'
                     ),
                     'expanded' => true,
-                    'required' => false,
+                    'required' => true,
                     'attr' => array(
                         "class" => "form-control col-md-2 col-lg-3",
                     )
