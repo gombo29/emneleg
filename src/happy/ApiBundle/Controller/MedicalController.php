@@ -128,7 +128,7 @@ class MedicalController extends Controller
      */
     public function indexAction(Request $request, $page, $typeId)
     {
-        $pagesize = 10;
+        $pagesize = 3;
         $em = $this->getDoctrine()->getManager();
 
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
@@ -199,10 +199,10 @@ class MedicalController extends Controller
             ->getArrayResult();
 
 
-        foreach ($medical as $key => $m) {
-            $phones = explode(";", $m['phone']);
-            $medical[$key]['phone'] = $phones[0];
-        }
+//         foreach ($medical as $key => $m) {
+//             $phones = explode(";", $m['phone']);
+//             $medical[$key]['phone'] = $phones[0];
+//         }
 
         return new JsonResponse(
             array(
