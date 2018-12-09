@@ -247,11 +247,11 @@ class MedicalType extends AbstractType
             )
             ->add('longLat', 'text', array(
                     'label' => "Байршил",
-                    'required' => false,
+                    'required' => true,
                     'attr' => array(
                         "class" => "form-control",
                     ),
-                    'read_only' => true
+                    'read_only' => false
                 )
 
             )
