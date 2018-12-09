@@ -155,7 +155,7 @@ class MedicalController extends Controller
         if ($medicalMedIds != null) {
            if ($labIds != null) {
                 $qblab = $em->getRepository('happyCmsBundle:MedicalLabType')->createQueryBuilder('n');
-                $medicalMedIdsm = $qblab
+                $medicalMedIds = $qblab
                     ->select('m.id')
                     ->leftJoin('n.medical', 'm')
                     ->where($qblab->expr()->in('n.labType', ':p1'))
@@ -168,7 +168,7 @@ class MedicalController extends Controller
                     ->getQuery()
                     ->getArrayResult();
                
-               array_push($medicalMedIds , $medicalMedIdsm);
+            //   array_push($medicalMedIds , $medicalMedIdsm);
             }
             $qb
                 ->andWhere($qb->expr()->in('n.id', ':medIds'))
