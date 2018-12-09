@@ -128,7 +128,7 @@ class MedicalController extends Controller
      */
     public function indexAction(Request $request, $page, $typeId)
     {
-        $pagesize = 3;
+        $pagesize = 5;
         $em = $this->getDoctrine()->getManager();
 
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
