@@ -233,7 +233,6 @@ class NurseController extends Controller
 
         $invoice = new QpayInvoice();
         $invoice->setAmount($dt->getPrice());
-        $invoice->setCreatedDate(new \DateTime('now'));
         $invoice->setStatus('pending');
         $invoice->setInvoiceTypeId(1);
         $invoice->setDoctorType($dt);

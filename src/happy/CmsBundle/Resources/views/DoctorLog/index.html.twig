@@ -43,7 +43,7 @@
                 <td>
                     {{ con.doctorType.name }}
                 </td>
-                <td>{{ con.createdDate|date('Y-m-d H:i:s') }}</td>
+                <td>{% if con.createdDate %}{{ con.createdDate|date('Y-m-d H:i:s') }}{% else %}-{% endif %}</td>
                 <td>{% if con.updatedDate %}{{ con.updatedDate|date('Y-m-d H:i:s') }}{% else %}-{% endif %}</td>
             </tr>
         {% endfor %}
