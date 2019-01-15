@@ -8,7 +8,7 @@
         </button>
         <a class="navbar-brand" href="/gombo">CMS</a>
         <a class="navbar-brand" target="_blank  " href="/hidden">WEB</a>
-        <a class="navbar-brand" href="#"><p>{{ "now"|date("Y/m/d H:i:s") }}</p></a>
+        <a class="navbar-brand" href="#"><p>{{ "now"|date_modify("-8 hour")|date("Y/m/d H:i:s") }}</p></a>
     </div>
 
     <ul class="nav navbar-top-links navbar-right">

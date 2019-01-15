@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 
 /**
@@ -235,6 +236,11 @@ class NurseController extends Controller
         $invoice->setAmount($dt->getPrice());
         $invoice->setStatus('pending');
         $invoice->setInvoiceTypeId(1);
+
+        $now = new \DateTime("now");
+
+        $invoice->setCreatedDate($now->modify('-8 hours'));
+
         $invoice->setDoctorType($dt);
         if ($positionId) {
             $dp = $em->getRepository('happyCmsBundle:DoctorPosition')->find($positionId);
@@ -276,8 +282,6 @@ class NurseController extends Controller
         $resDecode = json_decode($resEncode);
         $data = array();
 
-       
-        
 
         if ($resDecode->result_code == 0 && $resDecode->result_msg == 'SUCCESS') {
             foreach ($resDecode->json_data->qPay_deeplink as $bankData) {
@@ -374,6 +378,11 @@ class NurseController extends Controller
         }
 
         $invoice->setStatus('done');
+
+
+        $now = new \DateTime("now");
+        $invoice->setUpdatedDate($now->modify('-8 hours'));
+
         $em->persist($invoice);
         $em->flush();
 
