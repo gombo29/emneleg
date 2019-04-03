@@ -233,7 +233,10 @@ class MedicalController extends Controller
             ->orderBy('n.sortId', 'asc')
             ->getQuery()
             ->getArrayResult();
-
+        
+         foreach ($medicalPhoto as $key => $photo) {
+            $medicalPhoto[$key]['stamp_path'] = 'thumb/'. $photo['stamp_path'];
+        }
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
         $generalinfo = $qb
             ->select('n.name', 'n.headline', 'n.address', 'n.phone', 'n.email', 'n.fbAddress',
