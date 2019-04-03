@@ -235,7 +235,9 @@ class MedicalController extends Controller
             ->getArrayResult();
         
          foreach ($medicalPhoto as $key => $photo) {
-            $medicalPhoto[$key]['stamp_path'] = 'thumb/'. $photo['stamp_path'];
+            $medicalPhoto[$key]['stamp_path'] =  $photo['stamp_path'];
+              $medicalPhoto[$key]['path'] = 'resources/thumb/'. $photo['stamp_path'];
+          
         }
         $qb = $em->getRepository('happyCmsBundle:Medicals')->createQueryBuilder('n');
         $generalinfo = $qb
